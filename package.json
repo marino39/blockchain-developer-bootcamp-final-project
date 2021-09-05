@@ -1,0 +1,13 @@
+{
+  "name": "dadvrtmarket",
+  "version": "1.0.0",
+  "description": "The decentralised market for digital advertising boards.",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+  },
+  "author": "Marcin Gorzynski",
+  "license": "ISC"
+}
