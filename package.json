@@ -10,5 +10,8 @@
     "run_development_blockchain": "truffle development"
   },
   "author": "Marcin Gorzynski",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.3.1"
+  }
 }
