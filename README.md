@@ -13,7 +13,7 @@ like boards, stands, TV or other advertisement surfaces. The infrastructure prov
 is tokenized as a NFT and can be freely traded on the market. 
 
 The Advertisers are people that want to have their advertisement displayed. They are able
-to query for surfaces that meet their requirements and bid for time and surface that they
+to search for surfaces that meet their requirements and bid for time and surface that they
 want to use to display it e.g.
 2021-12-24 16:00:00 UTC - 2021-12-24 16:15:00 UTC
 @
