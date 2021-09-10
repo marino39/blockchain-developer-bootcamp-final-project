@@ -1,5 +1,7 @@
 # Decentralised Advertising Market
 
+## Preface
+
 The global advertisement market is 649.22bn $ and annual 11% growth rate. This 
 market currently is dominated by big corporate agencies that do not want to talk
 with smaller players. The whole process of getting advertisement is long,
@@ -18,6 +20,12 @@ want to use to display it e.g.
 2021-12-24 16:00:00 UTC - 2021-12-24 16:15:00 UTC
 @
 [New York Times Square Board](https://www.couturefashionweek.com/wp-content/uploads/2016/07/nasdaq-billboard-8in.jpg)
+
+This project follows KISS principle. There are many issues that need to be addressed
+in order to make such a market possible in real world e.g. check advertisements for adult content, make
+sure that operator actually runs the contracted advertisement and many more. This issues can be addressed,
+however solving them would make this project overly complicated. Therefore, I will implement the simplest
+possible form of such a market.
 
 ## User Stories
 
@@ -45,9 +53,9 @@ advertisements with the highest bid in given time frame.
 ### Operator - Fee collection
 
 1. User open dApp page
-2. User go to My Surfaces page
-3. User selects advertisement surface
-4. User submit collect transaction and receives Dai
+2. They go to My Surfaces page
+3. They select advertisement surface
+4. They submit collect transaction and receives Dai
 
 ### Advertiser - Submit Advertisement
 
