@@ -18,10 +18,13 @@
  *
  */
 
-// const HDWalletProvider = require('@truffle/hdwallet-provider');
-//
-// const fs = require('fs');
-// const mnemonic = fs.readFileSync(".secret").toString().trim();
+const HDWalletProvider = require('@truffle/hdwallet-provider');
+
+const fs = require('fs');
+const dotnet = require("dotenv");
+const mnemonic = fs.readFileSync(".secret").toString().trim();
+
+dotnet.config();
 
 module.exports = {
   /**
@@ -50,6 +53,13 @@ module.exports = {
       host: "127.0.0.1",
       port: 7545,
       network_id: "5777",
+    },
+    mainnet: {
+      provider: () => new HDWalletProvider(mnemonic, process.env.INFURA_URL),
+      network_id: 1,
+      confirmations: 3,
+      timeoutBlocks: 200,
+      production: true
     },
     // Another network with more advanced options...
     // advanced: {
