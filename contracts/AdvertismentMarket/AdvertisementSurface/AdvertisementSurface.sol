@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
-// @author Marcin Górzyński
+// @author Marcin Gorzynski
 // @title The Advertisement Surface NFT
 // @description The contract used to tokenize advertisement infrastructure and bid on it's usage.
 contract AdvertisementSurface is ERC721 {
@@ -34,7 +34,16 @@ contract AdvertisementSurface is ERC721 {
 
     constructor() ERC721("Advertisement Surface", "ADS") {}
 
-    function mint(AdvertisementSurfaceInfo memory _AdsInfo) external {
+    function getAdvertisementSurfaceInfo(uint256 _tokenId) public view returns(AdvertisementSurfaceInfo memory) {
+        return tokenIdToAdvertisementSurfaceInfo[_tokenId];
+    }
+
+    // @description The function that tokenize the advertisement surface. Once activated
+    // advertisement time slots can be auctioned to clients.
+    // @param _AdsInfo The advertisement surface description that consists of on-chain data
+    // necessary for auctioning process and off-chain metadata useful for clients e.g. location,
+    // size, resolution.
+    function registerAdvertisementSurface(AdvertisementSurfaceInfo memory _AdsInfo) external {
         _mint(_AdsInfo);
     }
 
