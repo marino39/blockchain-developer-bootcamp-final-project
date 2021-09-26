@@ -33,6 +33,8 @@ contract AdvertisementSurface is ERC721Enumerable {
 
     constructor() ERC721("Advertisement Surface", "ADS") {}
 
+    // @description It gets AdvertisementSurfaceInfo by the token id.
+    // @param _tokenId The id of the token for which the info is returned.
     function getAdvertisementSurfaceInfo(uint256 _tokenId) public view returns(AdvertisementSurfaceInfo memory) {
         return tokenIdToAdvertisementSurfaceInfo[_tokenId];
     }
