@@ -9,12 +9,22 @@ import "@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol";
 interface IAdvertisementSurface is IERC721Enumerable {
 
     struct AdvertisementSurfaceInfo {
-        address erc20;           // The address of ERC20 token contract used for payments.
-        uint256 minBid;          // Minimal bid for advertisement per 1 second.
-        address defaultERC721;   // The default contract address for advertisement.
-        uint256 defaultTokenId;  // The default advertisement that's shown if no bids available.
-        string metadataURI;      // The off-chain AdvertisementSurfaceInfo metadata.
-        bytes32 metadataHash;    // The hash of off-chain AdvertisementSurfaceInfo metadata.
+        address erc20;             // The address of ERC20 token contract used for payments.
+        uint256 minBid;            // Minimal bid for advertisement per 1 second.
+        string metadataURI;        // The off-chain AdvertisementSurfaceInfo metadata.
+        bytes32 metadataHash;      // The hash of off-chain AdvertisementSurfaceInfo metadata.
+        // --- off-chain coming from ipfs or any other hosting as json
+        // string name;             // The name of the surface.
+        // string description;      // The description of the surface.
+        // []number resolution;     // The resolution of the surface.
+        // []number size;           // The size of the advertisement surface.
+        // float latitude;          // The latitude of surface location.
+        // float longitude;         // The longitude of surface location.
+        // string address_line1;    // The surface address.
+        // string address_line2;    // The surface address.
+        // string address_line3;    // The surface address.
+        // string defaultERC721;    // The default contract address for advertisement.
+        // number defaultTokenId;   // The default advertisement that's shown if no bids available.
     }
 
     // @description It gets AdvertisementSurfaceInfo by the token id.
