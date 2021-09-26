@@ -2,12 +2,13 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
+
 
 // @author Marcin Gorzynski
 // @title The Advertisement Surface NFT
 // @description The contract used to tokenize advertisement infrastructure and bid on it's usage.
-contract AdvertisementSurface is ERC721 {
+contract AdvertisementSurface is ERC721Enumerable {
 
     using SafeMath for uint256;
 
@@ -30,8 +31,6 @@ contract AdvertisementSurface is ERC721 {
 
     mapping (uint256 => AdvertisementSurfaceInfo) private tokenIdToAdvertisementSurfaceInfo;
 
-    uint256 private advertisementSurfaceCount;
-
     constructor() ERC721("Advertisement Surface", "ADS") {}
 
     function getAdvertisementSurfaceInfo(uint256 _tokenId) public view returns(AdvertisementSurfaceInfo memory) {
@@ -48,10 +47,8 @@ contract AdvertisementSurface is ERC721 {
     }
 
     function _mint(AdvertisementSurfaceInfo memory _AdsInfo) private {
-        advertisementSurfaceCount = advertisementSurfaceCount.add(1);
-
-        tokenIdToAdvertisementSurfaceInfo[advertisementSurfaceCount] = _AdsInfo;
-        _safeMint(msg.sender, advertisementSurfaceCount);
+        _safeMint(msg.sender, totalSupply() + 1);
+        tokenIdToAdvertisementSurfaceInfo[totalSupply()] = _AdsInfo;
     }
 
 }
