@@ -55,6 +55,10 @@ contract AdvertisementSurface is IAdvertisementSurface, ERC721URIStorage, ERC721
         return ERC721URIStorage.tokenURI(tokenId);
     }
 
+    function _baseURI() internal view override returns (string memory) {
+        return "ipfs://";
+    }
+
     function _beforeTokenTransfer(
         address from,
         address to,
