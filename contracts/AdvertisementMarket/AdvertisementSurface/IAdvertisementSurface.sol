@@ -2,40 +2,41 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol";
 
 // @author Marcin Gorzynski
 // @title The Advertisement Surface NFT interface
 // @description The contract used to tokenize advertisement infrastructure and bid on it's usage.
-interface IAdvertisementSurface is IERC721Enumerable {
+interface IAdvertisementSurface is IERC721Metadata, IERC721Enumerable {
 
-    struct AdvertisementSurfaceInfo {
-        address erc20;             // The address of ERC20 token contract used for payments.
-        uint256 minBid;            // Minimal bid for advertisement per 1 second.
-        string metadataURI;        // The off-chain AdvertisementSurfaceInfo metadata.
-        bytes32 metadataHash;      // The hash of off-chain AdvertisementSurfaceInfo metadata.
-        // --- off-chain coming from ipfs or any other hosting as json
-        // string name;             // The name of the surface.
-        // string description;      // The description of the surface.
-        // []number resolution;     // The resolution of the surface.
-        // []number size;           // The size of the advertisement surface.
-        // float latitude;          // The latitude of surface location.
-        // float longitude;         // The longitude of surface location.
-        // string address_line1;    // The surface address.
-        // string address_line2;    // The surface address.
-        // string address_line3;    // The surface address.
-        // string defaultERC721;    // The default contract address for advertisement.
-        // number defaultTokenId;   // The default advertisement that's shown if no bids available.
+    // @description The structure used to define how owner of the surface is paid.
+    struct PaymentInfo {
+        address erc20;    // The address of ERC20 token contract used for payments.
+        uint256 minBid;   // Minimal bid for advertisement per 1 second.
     }
 
-    // @description It gets AdvertisementSurfaceInfo by the token id.
-    // @param _tokenId The id of the token for which the info is returned.
-    function getAdvertisementSurfaceInfo(uint256 _tokenId) external view returns(AdvertisementSurfaceInfo memory);
+    struct Bid {
+        address erc721;    // The contract address for advertisement ERC721 token.
+        uint256 tokenId;   // The advertisement to be shown.
+        uint256 bid;       // The bid for unit of time(second). The total is bid * duration.
+        uint64 startTime;  // The start of the advertisement.
+        uint64 duration;   // The duration of the advertisement.
+    }
 
     // @description The function that tokenize the advertisement surface. Once activated
     // advertisement time slots can be auctioned to clients.
     // @param _AdsInfo The advertisement surface description that consists of on-chain data
     // necessary for auctioning process and off-chain metadata useful for clients e.g. location,
     // size, resolution.
-    function registerAdvertisementSurface(AdvertisementSurfaceInfo memory _AdsInfo) external;
+    function registerAdvertisementSurface(string memory _tokenURI, PaymentInfo memory _paymentInfo) external;
+
+    // @description It gets PaymentInfo by the token id.
+    // @param _tokenId The id of the token for which the info is returned.
+    function getPaymentInfo(uint256 _tokenId) external view returns(PaymentInfo memory);
+
+    // @description It sets PaymentInfo by the token id.
+    // @param _tokenId The id of the token for which the info is set.
+    // @param _paymentInfo The paymentInfo to update.
+    function setPaymentInfo(uint256 _tokenId, PaymentInfo memory _paymentInfo) external;
 
 }
