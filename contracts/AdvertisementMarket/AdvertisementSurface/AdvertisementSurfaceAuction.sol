@@ -3,9 +3,10 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
-import "./IAdvertisementSurfacePayments.sol";
+import "./IAdvertisementSurfaceAuction.sol";
+import "./AdvertisementSurfacePayments.sol";
 
-abstract contract AdvertisementSurfaceAuction is IAdvertisementSurfacePayments {
+abstract contract AdvertisementSurfaceAuction is AdvertisementSurfacePayments, IAdvertisementSurfaceAuction {
 
     using SafeMath for uint256;
 
@@ -110,15 +111,15 @@ abstract contract AdvertisementSurfaceAuction is IAdvertisementSurfacePayments {
         surTokenIdToActiveBidIds[_bid.surTokenId].push(index);
         addressToBidIds[msg.sender].push(index);
 
-        _executePayment(_bid);
+        // todo: execute payment
     }
 
     function refundBid(uint256 _bidId) isOutBid(_bidId) public {
-        _executeRefund(bids[_bidId]);
+        // todo: execute refund
     }
 
     function collectBid(uint256 _bidId) isFinished(_bidId) public {
-        _executeCollect(bids[_bidId]);
+        // todo: execute collect
     }
 
     function getBidWorth(Bid memory _bid) public pure returns(uint256) {
@@ -172,11 +173,5 @@ abstract contract AdvertisementSurfaceAuction is IAdvertisementSurfacePayments {
     }
 
     function _surfaceExists(uint256 tokenId) internal view virtual returns(bool) { return false; }
-
-    function _executePayment(Bid memory bid) internal virtual {}
-
-    function _executeRefund(Bid storage bid) internal virtual {}
-
-    function _executeCollect(Bid storage bid) internal virtual {}
 
 }

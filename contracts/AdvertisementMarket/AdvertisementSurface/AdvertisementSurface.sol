@@ -14,8 +14,6 @@ contract AdvertisementSurface is AdvertisementSurfaceAuction, IAdvertisementSurf
 
     using SafeMath for uint256;
 
-    mapping (uint256 => PaymentInfo) private tokenIdToPaymentInfo;
-
     constructor() ERC721("Advertisement Surface", "ADS") {}
 
     function supportsInterface(
@@ -30,18 +28,18 @@ contract AdvertisementSurface is AdvertisementSurfaceAuction, IAdvertisementSurf
 
         uint256 tokenId = _mint();
         _setTokenURI(tokenId, _tokenURI);
-        tokenIdToPaymentInfo[tokenId] = _paymentInfo;
+        _setPaymentInfo(tokenId, _paymentInfo);
     }
 
     function getPaymentInfo(uint256 _tokenId) override public view returns(PaymentInfo memory) {
         require(_exists(_tokenId));
-        return tokenIdToPaymentInfo[_tokenId];
+        return _getPaymentInfo(_tokenId);
     }
 
     function setPaymentInfo(uint256 _tokenId, PaymentInfo memory _paymentInfo) external override {
         require(_exists(_tokenId));
         require(msg.sender == ownerOf(_tokenId));
-        tokenIdToPaymentInfo[_tokenId] = _paymentInfo;
+        _setPaymentInfo(_tokenId, _paymentInfo);
     }
 
     function _mint() private returns(uint256) {
