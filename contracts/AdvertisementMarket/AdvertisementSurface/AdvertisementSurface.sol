@@ -6,14 +6,16 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 
 import "./IAdvertisementSurface.sol";
+import "./AdvertisementSurfaceAuction.sol";
 
 // @author Marcin Gorzynski
 // @title The Advertisement Surface NFT
-contract AdvertisementSurface is IAdvertisementSurface, ERC721URIStorage, ERC721Enumerable {
+contract AdvertisementSurface is AdvertisementSurfaceAuction, IAdvertisementSurface, ERC721URIStorage, ERC721Enumerable {
 
     using SafeMath for uint256;
 
     mapping (uint256 => PaymentInfo) private tokenIdToPaymentInfo;
+    mapping (uint256 => int64) private tokenIdToLastTimePaid;
 
     constructor() ERC721("Advertisement Surface", "ADS") {}
 
@@ -69,5 +71,9 @@ contract AdvertisementSurface is IAdvertisementSurface, ERC721URIStorage, ERC721
 
     function _burn(uint256 tokenId) internal virtual override(ERC721, ERC721URIStorage) {
         ERC721URIStorage._burn(tokenId);
+    }
+
+    function _surfaceExists(uint256 tokenId) internal view override returns(bool) {
+        return _exists(tokenId);
     }
 }

@@ -15,14 +15,6 @@ interface IAdvertisementSurface is IERC721Metadata, IERC721Enumerable {
         uint256 minBid;   // Minimal bid for advertisement per 1 second.
     }
 
-    struct Bid {
-        address erc721;    // The contract address for advertisement ERC721 token.
-        uint256 tokenId;   // The advertisement to be shown.
-        uint256 bid;       // The bid for unit of time(second). The total is bid * duration.
-        uint64 startTime;  // The start of the advertisement.
-        uint64 duration;   // The duration of the advertisement.
-    }
-
     // @description The function that tokenize the advertisement surface. Once activated
     // advertisement time slots can be auctioned to clients.
     // @param _AdsInfo The advertisement surface description that consists of on-chain data
