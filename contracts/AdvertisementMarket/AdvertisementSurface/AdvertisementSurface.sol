@@ -15,7 +15,6 @@ contract AdvertisementSurface is AdvertisementSurfaceAuction, IAdvertisementSurf
     using SafeMath for uint256;
 
     mapping (uint256 => PaymentInfo) private tokenIdToPaymentInfo;
-    mapping (uint256 => int64) private tokenIdToLastTimePaid;
 
     constructor() ERC721("Advertisement Surface", "ADS") {}
 

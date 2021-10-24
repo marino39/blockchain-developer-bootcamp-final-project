@@ -3,7 +3,9 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
-abstract contract AdvertisementSurfaceAuction {
+import "./IAdvertisementSurfacePayments.sol";
+
+abstract contract AdvertisementSurfaceAuction is IAdvertisementSurfacePayments {
 
     using SafeMath for uint256;
 
@@ -17,7 +19,7 @@ abstract contract AdvertisementSurfaceAuction {
         uint256 bid;          // The bid for unit of time(second). The total is bid * duration.
         uint64 startTime;     // The start of the advertisement.
         uint64 duration;      // The duration of the advertisement.
-        BidState state;          // The bid state.
+        BidState state;       // The bid state.
     }
 
     uint256 bidCount;
@@ -28,8 +30,14 @@ abstract contract AdvertisementSurfaceAuction {
     mapping (address => uint256[]) private addressToBidIds;
 
     modifier validateBid(Bid memory _bid) {
-        // todo: validation in here
         require(_surfaceExists(_bid.surTokenId), "advertisement surface do not exist");
+        require(_bid.bidder == msg.sender, "bidder must be the same as transaction sender");
+        require(_bid.advERC721 != address(0), "the advERC721 can not be 0 address");
+        require(_bid.advTokenId != 0, "the advTokenId need to be grater than 0");
+        // todo: use oracle here for time
+        require(_bid.startTime > block.timestamp, "the startTime needs to be in the future");
+        require(_bid.duration > 0, "the duration needs to be grater than 0");
+        require(_bid.state == BidState.Active);
         _;
     }
 
@@ -70,6 +78,8 @@ abstract contract AdvertisementSurfaceAuction {
         surTokenIdToBidIds[_bid.surTokenId].push(index);
         surTokenIdToActiveBidIds[_bid.surTokenId].push(index);
         addressToBidIds[msg.sender].push(index);
+
+        _executePayment(_bid);
     }
 
     function getBidWorth(Bid memory _bid) public pure returns(uint256) {
@@ -124,6 +134,10 @@ abstract contract AdvertisementSurfaceAuction {
 
     function _surfaceExists(uint256 tokenId) internal view virtual returns(bool) { return false; }
 
-    function _executePayment(Bid storage bid) internal virtual {}
+    function _executePayment(Bid memory bid) internal virtual {}
+
+    function _executeRefund(Bid storage bid) internal virtual {}
+
+    function _executeCollect(Bid storage bid) internal virtual {}
 
 }
