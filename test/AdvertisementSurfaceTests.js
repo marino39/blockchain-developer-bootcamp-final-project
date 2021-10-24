@@ -1,3 +1,5 @@
+const { constants } = require('@openzeppelin/test-helpers');
+
 const AdvertisementSurface = artifacts.require("AdvertisementSurface");
 const AdvertisementSurfaceAuction = artifacts.require("AdvertisementSurfaceAuction");
 
@@ -284,7 +286,7 @@ contract("AdvertisementSurface", accounts => {
                 "surTokenId": surfaceOne,
                 "advERC721":  erc721NFT,
                 "advTokenId": BigInt("1"),
-                "bid":        BigInt("10"),
+                "bid":        BigInt("100"),
                 "startTime":  BigInt(unixTime + 240),
                 "duration":   BigInt("20"),
                 "state": AdvertisementSurfaceAuction.enums.BidState.Active,
@@ -331,6 +333,126 @@ contract("AdvertisementSurface", accounts => {
                 "startTime":  BigInt(unixTime + 100),
                 "duration":   BigInt("120"),
                 "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+            }));
+        });
+
+        it("add single bid for startTime that already passed", async () => {
+            let unixTime = Math.floor(Date.now() / 1000);
+
+            await catchRevert(advSurface.newBid({
+                "bidder": bob,
+                "surTokenId": surfaceOne,
+                "advERC721":  erc721NFT,
+                "advTokenId": BigInt("1"),
+                "bid":        BigInt("10000"),
+                "startTime":  BigInt(100),
+                "duration":   BigInt("120"),
+                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+            }));
+        });
+
+        it("add single bid for bidder with zero address", async () => {
+            let unixTime = Math.floor(Date.now() / 1000);
+
+            await catchRevert(advSurface.newBid({
+                "bidder": constants.ZERO_ADDRESS,
+                "surTokenId": surfaceOne,
+                "advERC721":  erc721NFT,
+                "advTokenId": BigInt("1"),
+                "bid":        BigInt("10000"),
+                "startTime":  BigInt(unixTime + 100),
+                "duration":   BigInt("120"),
+                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+            }));
+        });
+
+        it("add single bid for ERC721 zero address", async () => {
+            let unixTime = Math.floor(Date.now() / 1000);
+
+            await catchRevert(advSurface.newBid({
+                "bidder": bob,
+                "surTokenId": surfaceOne,
+                "advERC721":  constants.ZERO_ADDRESS,
+                "advTokenId": BigInt("1"),
+                "bid":        BigInt("10000"),
+                "startTime":  BigInt(unixTime + 100),
+                "duration":   BigInt("120"),
+                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+            }));
+        });
+
+        it("add single bid for ERC721 zero token id", async () => {
+            let unixTime = Math.floor(Date.now() / 1000);
+
+            await catchRevert(advSurface.newBid({
+                "bidder": bob,
+                "surTokenId": surfaceOne,
+                "advERC721":  erc721NFT,
+                "advTokenId": BigInt("0"),
+                "bid":        BigInt("10000"),
+                "startTime":  BigInt(unixTime + 100),
+                "duration":   BigInt("120"),
+                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+            }));
+        });
+
+        it("add single bid for bid 0", async () => {
+            let unixTime = Math.floor(Date.now() / 1000);
+
+            await catchRevert(advSurface.newBid({
+                "bidder": bob,
+                "surTokenId": surfaceOne,
+                "advERC721":  erc721NFT,
+                "advTokenId": BigInt("1"),
+                "bid":        BigInt("0"),
+                "startTime":  BigInt(unixTime + 100),
+                "duration":   BigInt("120"),
+                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+            }));
+        });
+
+        it("add single bid for bid less minimal bid", async () => {
+            let unixTime = Math.floor(Date.now() / 1000);
+
+            await catchRevert(advSurface.newBid({
+                "bidder": bob,
+                "surTokenId": surfaceOne,
+                "advERC721":  erc721NFT,
+                "advTokenId": BigInt("1"),
+                "bid":        BigInt("10"),
+                "startTime":  BigInt(unixTime + 100),
+                "duration":   BigInt("120"),
+                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+            }));
+        });
+
+        it("add single bid for duration 0", async () => {
+            let unixTime = Math.floor(Date.now() / 1000);
+
+            await catchRevert(advSurface.newBid({
+                "bidder": bob,
+                "surTokenId": surfaceOne,
+                "advERC721":  erc721NFT,
+                "advTokenId": BigInt("1"),
+                "bid":        BigInt("1000"),
+                "startTime":  BigInt(unixTime + 100),
+                "duration":   BigInt("0"),
+                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+            }));
+        });
+
+        it("add single bid for state not active", async () => {
+            let unixTime = Math.floor(Date.now() / 1000);
+
+            await catchRevert(advSurface.newBid({
+                "bidder": bob,
+                "surTokenId": surfaceOne,
+                "advERC721":  erc721NFT,
+                "advTokenId": BigInt("1"),
+                "bid":        BigInt("1000"),
+                "startTime":  BigInt(unixTime + 100),
+                "duration":   BigInt("100"),
+                "state": AdvertisementSurfaceAuction.enums.BidState.Outbid,
             }));
         });
 
