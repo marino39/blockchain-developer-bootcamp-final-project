@@ -247,8 +247,8 @@ contract("AdvertisementSurface", accounts => {
 
             let oldBid = await advSurface.getMyBid(BigInt("0"));
             let newBid = await advSurface.getMyBid(BigInt("1"));
-            assert.equal(AdvertisementSurfaceAuction.enums.BidState.Outbid, oldBid.state);
-            assert.equal(AdvertisementSurfaceAuction.enums.BidState.Active, newBid.state);
+            assert.equal(AdvertisementSurfaceAuction.enums.BidState.Outbid, oldBid[1].state);
+            assert.equal(AdvertisementSurfaceAuction.enums.BidState.Active, newBid[1].state);
         });
 
         it("add two bids overlap inner bigger worth 3 bids", async () => {
@@ -300,9 +300,9 @@ contract("AdvertisementSurface", accounts => {
             let oldBid = await advSurface.getMyBid(BigInt("0"));
             let old2Bid = await advSurface.getMyBid(BigInt("1"));
             let newBid = await advSurface.getMyBid(BigInt("2"));
-            assert.equal(AdvertisementSurfaceAuction.enums.BidState.Outbid, oldBid.state);
-            assert.equal(AdvertisementSurfaceAuction.enums.BidState.Outbid, old2Bid.state);
-            assert.equal(AdvertisementSurfaceAuction.enums.BidState.Active, newBid.state);
+            assert.equal(AdvertisementSurfaceAuction.enums.BidState.Outbid, oldBid[1].state);
+            assert.equal(AdvertisementSurfaceAuction.enums.BidState.Outbid, old2Bid[1].state);
+            assert.equal(AdvertisementSurfaceAuction.enums.BidState.Active, newBid[1].state);
         });
 
         it("add single bid to not existing surface", async () => {

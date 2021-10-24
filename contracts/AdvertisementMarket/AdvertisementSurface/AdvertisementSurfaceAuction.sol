@@ -41,6 +41,30 @@ abstract contract AdvertisementSurfaceAuction is IAdvertisementSurfacePayments {
         _;
     }
 
+    modifier isOutBid(uint256 _bidId) {
+        require(bids[_bidId].state == BidState.Outbid);
+        _;
+    }
+
+    modifier isActive(uint256 _bidId) {
+        require(bids[_bidId].state == BidState.Active);
+        _;
+    }
+
+    modifier isFinished(uint256 _bidId) {
+        // todo: use oracle here for time
+        require(
+            bids[_bidId].state == BidState.Active && bids[_bidId].startTime + bids[_bidId].duration < block.timestamp
+            || bids[_bidId].state == BidState.Finished
+        );
+        _;
+    }
+
+    modifier isFinishedPaid(uint256 _bidId) {
+        require(bids[_bidId].state == BidState.FinishedPaid);
+        _;
+    }
+
     function getBidCount() public view returns(uint256) {
         return bids.length;
     }
@@ -53,20 +77,27 @@ abstract contract AdvertisementSurfaceAuction is IAdvertisementSurfacePayments {
         return addressToBidIds[msg.sender].length;
     }
 
-    function getMyBid(uint256 index) public view returns(Bid memory) {
-        return bids[addressToBidIds[msg.sender][index]];
+    function getMyBid(uint256 index) public view returns(uint256, Bid memory) {
+        uint256 bidId = addressToBidIds[msg.sender][index];
+        return (bidId, bids[bidId]);
     }
 
     function getSurfaceBidCount(uint256 tokenId) public view returns(uint256) {
         return surTokenIdToBidIds[tokenId].length;
     }
 
-    function getSurfaceBid(uint256 tokenId, uint256 index) public view returns(Bid memory) {
-        return bids[surTokenIdToBidIds[tokenId][index]];
+    function getSurfaceBid(uint256 tokenId, uint256 index) public view returns(uint256, Bid memory) {
+        uint256 bidId = surTokenIdToBidIds[tokenId][index];
+        return (bidId, bids[bidId]);
     }
 
-    function getActiveBidCount(uint256 tokenId)  public view returns(uint256) {
+    function getActiveBidCount(uint256 tokenId) public view returns(uint256) {
         return surTokenIdToActiveBidIds[tokenId].length;
+    }
+
+    function getActiveBid(uint256 tokenId, uint256 index) public view returns(uint256, Bid memory) {
+        uint256 bidId = surTokenIdToActiveBidIds[tokenId][index];
+        return (bidId, bids[bidId]);
     }
 
     function newBid(Bid memory _bid) public validateBid(_bid) {
@@ -80,6 +111,14 @@ abstract contract AdvertisementSurfaceAuction is IAdvertisementSurfacePayments {
         addressToBidIds[msg.sender].push(index);
 
         _executePayment(_bid);
+    }
+
+    function refundBid(uint256 _bidId) isOutBid(_bidId) public {
+        _executeRefund(bids[_bidId]);
+    }
+
+    function collectBid(uint256 _bidId) isFinished(_bidId) public {
+        _executeCollect(bids[_bidId]);
     }
 
     function getBidWorth(Bid memory _bid) public pure returns(uint256) {
