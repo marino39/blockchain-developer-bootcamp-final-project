@@ -57,6 +57,10 @@ abstract contract AdvertisementSurfaceAuction {
         return bids[surTokenIdToBidIds[tokenId][index]];
     }
 
+    function getActiveBidCount(uint256 tokenId)  public view returns(uint256) {
+        return surTokenIdToActiveBidIds[tokenId].length;
+    }
+
     function newBid(Bid memory _bid) public validateBid(_bid) {
         require(_isBetterBid(_bid));
         _bid.state = BidState.Active;
@@ -91,7 +95,8 @@ abstract contract AdvertisementSurfaceAuction {
 
         bool isBetter = getBidWorth(_bid) > overlapBidsWorth;
         if (isBetter) {
-            for (uint256 i = 0; i < activeBids.length; i++) {
+            uint256 i = 0;
+            while (i < activeBids.length) {
                 uint256 _bid2Id = activeBids[i];
                 Bid storage _bid2 = bids[_bid2Id];
                 if (_bid.startTime <= _bid2.startTime && _bid.startTime + _bid.duration > _bid2.startTime) {
@@ -104,6 +109,7 @@ abstract contract AdvertisementSurfaceAuction {
                     _removeBidFromActive(activeBids, i);
                     continue;
                 }
+                i++;
             }
         }
 
