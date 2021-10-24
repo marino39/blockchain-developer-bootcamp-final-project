@@ -9,6 +9,7 @@ let { catchRevert } = require("./exceptionsHelpers.js");
 contract("AdvertisementSurface", accounts => {
     let advSurface;
     let erc20Dai;
+    let erc721NFT;
     let surfaceOne = BigInt("1");
     let surfaceNotExistOne = BigInt("1000000");
 
@@ -23,6 +24,8 @@ contract("AdvertisementSurface", accounts => {
         await erc20Dai.mint(bob, BigInt("100000000000000000"));
         await erc20Dai.mint(alice, BigInt("100000000000000000"));
         await erc20Dai.mint(matt, BigInt("100000000000000000"));
+
+        erc721NFT = "0xc1912fEE45d61C87Cc5EA59DaE31190FFFFf232d";
     });
 
     describe("The ERC721 functionality", () => {
@@ -66,7 +69,7 @@ contract("AdvertisementSurface", accounts => {
             await advSurface.newBid({
                 "bidder": bob,
                 "surTokenId": surfaceOne,
-                "advERC721":  erc20Dai.address,
+                "advERC721":  erc721NFT,
                 "advTokenId": BigInt("1"),
                 "bid":        BigInt("10000"),
                 "startTime":  BigInt(unixTime + 100),
@@ -89,7 +92,7 @@ contract("AdvertisementSurface", accounts => {
             await advSurface.newBid({
                 "bidder": bob,
                 "surTokenId": surfaceOne,
-                "advERC721":  erc20Dai.address,
+                "advERC721":  erc721NFT,
                 "advTokenId": BigInt("1"),
                 "bid":        BigInt("10000"),
                 "startTime":  BigInt(unixTime + 100),
@@ -100,7 +103,7 @@ contract("AdvertisementSurface", accounts => {
             await advSurface.newBid({
                 "bidder": bob,
                 "surTokenId": surfaceOne,
-                "advERC721":  erc20Dai.address,
+                "advERC721":  erc721NFT,
                 "advTokenId": BigInt("1"),
                 "bid":        BigInt("10000"),
                 "startTime":  BigInt(unixTime + 220),
@@ -123,7 +126,7 @@ contract("AdvertisementSurface", accounts => {
             await advSurface.newBid({
                 "bidder": bob,
                 "surTokenId": surfaceOne,
-                "advERC721":  erc20Dai.address,
+                "advERC721":  erc721NFT,
                 "advTokenId": BigInt("1"),
                 "bid":        BigInt("100000"),
                 "startTime":  BigInt(unixTime + 100),
@@ -134,7 +137,7 @@ contract("AdvertisementSurface", accounts => {
             await catchRevert(advSurface.newBid({
                 "bidder": bob,
                 "surTokenId": surfaceOne,
-                "advERC721":  erc20Dai.address,
+                "advERC721":  erc721NFT,
                 "advTokenId": BigInt("1"),
                 "bid":        BigInt("10000"),
                 "startTime":  BigInt(unixTime + 120),
@@ -149,7 +152,7 @@ contract("AdvertisementSurface", accounts => {
             await advSurface.newBid({
                 "bidder": bob,
                 "surTokenId": surfaceOne,
-                "advERC721":  erc20Dai.address,
+                "advERC721":  erc721NFT,
                 "advTokenId": BigInt("1"),
                 "bid":        BigInt("100000"),
                 "startTime":  BigInt(unixTime + 100),
@@ -160,7 +163,7 @@ contract("AdvertisementSurface", accounts => {
             await catchRevert(advSurface.newBid({
                 "bidder": bob,
                 "surTokenId": surfaceOne,
-                "advERC721":  erc20Dai.address,
+                "advERC721":  erc721NFT,
                 "advTokenId": BigInt("1"),
                 "bid":        BigInt("10000"),
                 "startTime":  BigInt(unixTime + 80),
@@ -175,7 +178,7 @@ contract("AdvertisementSurface", accounts => {
             await advSurface.newBid({
                 "bidder": bob,
                 "surTokenId": surfaceOne,
-                "advERC721":  erc20Dai.address,
+                "advERC721":  erc721NFT,
                 "advTokenId": BigInt("1"),
                 "bid":        BigInt("100000"),
                 "startTime":  BigInt(unixTime + 100),
@@ -186,7 +189,7 @@ contract("AdvertisementSurface", accounts => {
             await catchRevert(advSurface.newBid({
                 "bidder": bob,
                 "surTokenId": surfaceOne,
-                "advERC721":  erc20Dai.address,
+                "advERC721":  erc721NFT,
                 "advTokenId": BigInt("1"),
                 "bid":        BigInt("10000"),
                 "startTime":  BigInt(unixTime + 120),
@@ -201,7 +204,7 @@ contract("AdvertisementSurface", accounts => {
             await advSurface.newBid({
                 "bidder": bob,
                 "surTokenId": surfaceOne,
-                "advERC721":  erc20Dai.address,
+                "advERC721":  erc721NFT,
                 "advTokenId": BigInt("1"),
                 "bid":        BigInt("100000"),
                 "startTime":  BigInt(unixTime + 100),
@@ -212,7 +215,7 @@ contract("AdvertisementSurface", accounts => {
             await catchRevert(advSurface.newBid({
                 "bidder": bob,
                 "surTokenId": surfaceOne,
-                "advERC721":  erc20Dai.address,
+                "advERC721":  erc721NFT,
                 "advTokenId": BigInt("1"),
                 "bid":        BigInt("10000"),
                 "startTime":  BigInt(unixTime + 80),
@@ -227,7 +230,7 @@ contract("AdvertisementSurface", accounts => {
             await advSurface.newBid({
                 "bidder": bob,
                 "surTokenId": surfaceOne,
-                "advERC721":  erc20Dai.address,
+                "advERC721":  erc721NFT,
                 "advTokenId": BigInt("1"),
                 "bid":        BigInt("1000"),
                 "startTime":  BigInt(unixTime + 100),
@@ -238,7 +241,7 @@ contract("AdvertisementSurface", accounts => {
             await advSurface.newBid({
                 "bidder": bob,
                 "surTokenId": surfaceOne,
-                "advERC721":  erc20Dai.address,
+                "advERC721":  erc721NFT,
                 "advTokenId": BigInt("1"),
                 "bid":        BigInt("10000"),
                 "startTime":  BigInt(unixTime + 120),
@@ -268,7 +271,7 @@ contract("AdvertisementSurface", accounts => {
             await advSurface.newBid({
                 "bidder": bob,
                 "surTokenId": surfaceOne,
-                "advERC721":  erc20Dai.address,
+                "advERC721":  erc721NFT,
                 "advTokenId": BigInt("1"),
                 "bid":        BigInt("1000"),
                 "startTime":  BigInt(unixTime + 100),
@@ -279,7 +282,7 @@ contract("AdvertisementSurface", accounts => {
             await advSurface.newBid({
                 "bidder": bob,
                 "surTokenId": surfaceOne,
-                "advERC721":  erc20Dai.address,
+                "advERC721":  erc721NFT,
                 "advTokenId": BigInt("1"),
                 "bid":        BigInt("10"),
                 "startTime":  BigInt(unixTime + 240),
@@ -290,7 +293,7 @@ contract("AdvertisementSurface", accounts => {
             await advSurface.newBid({
                 "bidder": bob,
                 "surTokenId": surfaceOne,
-                "advERC721":  erc20Dai.address,
+                "advERC721":  erc721NFT,
                 "advTokenId": BigInt("1"),
                 "bid":        BigInt("10000"),
                 "startTime":  BigInt(unixTime + 80),
@@ -322,7 +325,7 @@ contract("AdvertisementSurface", accounts => {
             await catchRevert(advSurface.newBid({
                 "bidder": bob,
                 "surTokenId": surfaceNotExistOne,
-                "advERC721":  erc20Dai.address,
+                "advERC721":  erc721NFT,
                 "advTokenId": BigInt("1"),
                 "bid":        BigInt("10000"),
                 "startTime":  BigInt(unixTime + 100),
