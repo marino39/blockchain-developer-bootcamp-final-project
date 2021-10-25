@@ -18,4 +18,6 @@ interface IAdvertisementSurface is IAdvertisementSurfacePayments, IERC721Metadat
     // size, resolution.
     function registerAdvertisementSurface(string memory _tokenURI, PaymentInfo memory _paymentInfo) external;
 
+    function advertisementSurfaceExists(uint256 _tokenId) external view returns(bool);
+
 }

@@ -5,10 +5,15 @@ import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
 import "./IAdvertisementSurfaceAuction.sol";
 import "./AdvertisementSurfacePayments.sol";
+import "./IAdvertisementSurface.sol";
 
-abstract contract AdvertisementSurfaceAuction is AdvertisementSurfacePayments, IAdvertisementSurfaceAuction {
+// @author Marcin Gorzynski
+// @title The Advertisement Surface Auction functionality
+contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
 
     using SafeMath for uint256;
+
+    IAdvertisementSurface advertisementSurface;
 
     enum BidState {Outbid, Active, Finished, FinishedPaid}
 
@@ -35,7 +40,7 @@ abstract contract AdvertisementSurfaceAuction is AdvertisementSurfacePayments, I
         require(_bid.bidder == msg.sender, "bidder must be the same as transaction sender");
         require(_bid.advERC721 != address(0), "the advERC721 can not be 0 address");
         require(_bid.advTokenId != 0, "the advTokenId need to be grater than 0");
-        require(_bid.bid >= _getPaymentInfo(_bid.surTokenId).minBid, "bid must be greater or equal to minBid");
+        require(_bid.bid >= advertisementSurface.getPaymentInfo(_bid.surTokenId).minBid, "bid must be greater or equal to minBid");
         // todo: use oracle here for time
         require(_bid.startTime > block.timestamp, "the startTime needs to be in the future");
         require(_bid.duration > 0, "the duration needs to be grater than 0");
@@ -43,13 +48,15 @@ abstract contract AdvertisementSurfaceAuction is AdvertisementSurfacePayments, I
         _;
     }
 
-    modifier isOutBid(uint256 _bidId) {
-        require(bids[_bidId].state == BidState.Outbid);
+    modifier checkPayment(uint256 _tokenId, uint256 _amount) {
+        IERC20 erc20 = IERC20(advertisementSurface.getPaymentInfo(_tokenId).erc20);
+        require(erc20.allowance(msg.sender, address(this)) >= _amount, "allowance missing for token transfer");
+        require(erc20.balanceOf(msg.sender) >= _amount, "not enough token balance");
         _;
     }
 
-    modifier isActive(uint256 _bidId) {
-        require(bids[_bidId].state == BidState.Active);
+    modifier isOutBid(uint256 _bidId) {
+        require(bids[_bidId].state == BidState.Outbid);
         _;
     }
 
@@ -62,9 +69,8 @@ abstract contract AdvertisementSurfaceAuction is AdvertisementSurfacePayments, I
         _;
     }
 
-    modifier isFinishedPaid(uint256 _bidId) {
-        require(bids[_bidId].state == BidState.FinishedPaid);
-        _;
+    constructor(address _advertisementSurface) {
+        advertisementSurface = IAdvertisementSurface(_advertisementSurface);
     }
 
     function getBidCount() public view returns(uint256) {
@@ -102,7 +108,7 @@ abstract contract AdvertisementSurfaceAuction is AdvertisementSurfacePayments, I
         return (bidId, bids[bidId]);
     }
 
-    function newBid(Bid memory _bid) public validateBid(_bid) {
+    function newBid(Bid memory _bid) public validateBid(_bid) checkPayment(_bid.surTokenId, _bid.bid * _bid.duration) {
         require(_isBetterBid(_bid));
         _bid.state = BidState.Active;
 
@@ -112,7 +118,8 @@ abstract contract AdvertisementSurfaceAuction is AdvertisementSurfacePayments, I
         surTokenIdToActiveBidIds[_bid.surTokenId].push(index);
         addressToBidIds[msg.sender].push(index);
 
-        // todo: execute payment
+        IAdvertisementSurface.PaymentInfo memory paymentInfo = advertisementSurface.getPaymentInfo(_bid.surTokenId);
+        IERC20(paymentInfo.erc20).transferFrom(msg.sender, address(this), _bid.bid * _bid.duration);
     }
 
     function refundBid(uint256 _bidId) isOutBid(_bidId) public {
@@ -173,6 +180,8 @@ abstract contract AdvertisementSurfaceAuction is AdvertisementSurfacePayments, I
         array.pop();
     }
 
-    function _surfaceExists(uint256 tokenId) internal view virtual returns(bool) { return false; }
+    function _surfaceExists(uint256 _tokenId) internal view returns(bool) {
+        return advertisementSurface.advertisementSurfaceExists(_tokenId);
+    }
 
 }

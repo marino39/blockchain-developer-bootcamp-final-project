@@ -4,8 +4,13 @@ pragma solidity ^0.8.0;
 import "./IAdvertisementSurfacePayments.sol";
 
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
+// @author Marcin Gorzynski
+// @title The Advertisement Surface Payments functionality
 abstract contract AdvertisementSurfacePayments is IAdvertisementSurfacePayments {
+
+    using SafeMath for uint256;
 
     mapping (uint256 => PaymentInfo) private tokenIdToPaymentInfo;
 
