@@ -29,9 +29,10 @@ contract("AdvertisementSurface", accounts => {
 
         await erc20Dai.mint(bob, BigInt("100000000000000000"));
         await erc20Dai.mint(alice, BigInt("100000000000000000"));
-        await erc20Dai.mint(matt, BigInt("100000000000000000"));
+        await erc20Dai.mint(matt, BigInt("10"));
 
         await erc20Dai.approve(advSurfaceAuction.address, BigInt("100000000000000000"))
+        await erc20Dai.mint(matt, BigInt("100000000000000000"), {from: matt});
 
         erc721NFT = "0xc1912fEE45d61C87Cc5EA59DaE31190FFFFf232d";
     });
@@ -460,6 +461,36 @@ contract("AdvertisementSurface", accounts => {
                 "duration":   BigInt("100"),
                 "state": AdvertisementSurfaceAuction.enums.BidState.Outbid,
             }));
+        });
+
+        it("add single bid for no allowance to transfer", async () => {
+            let unixTime = Math.floor(Date.now() / 1000);
+
+            await catchRevert(advSurfaceAuction.newBid({
+                "bidder": bob,
+                "surTokenId": surfaceOne,
+                "advERC721":  erc721NFT,
+                "advTokenId": BigInt("1"),
+                "bid":        BigInt("1000"),
+                "startTime":  BigInt(unixTime + 100),
+                "duration":   BigInt("100"),
+                "state": AdvertisementSurfaceAuction.enums.BidState.Outbid,
+            }, {from: alice}));
+        });
+
+        it("add single bid for too small balance to transfer", async () => {
+            let unixTime = Math.floor(Date.now() / 1000);
+
+            await catchRevert(advSurfaceAuction.newBid({
+                "bidder": bob,
+                "surTokenId": surfaceOne,
+                "advERC721":  erc721NFT,
+                "advTokenId": BigInt("1"),
+                "bid":        BigInt("1000"),
+                "startTime":  BigInt(unixTime + 100),
+                "duration":   BigInt("100"),
+                "state": AdvertisementSurfaceAuction.enums.BidState.Outbid,
+            }, {from: matt}));
         });
 
     });

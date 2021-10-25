@@ -39,7 +39,7 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
         require(_bid.bidder == msg.sender, "bidder must be the same as transaction sender");
         require(_bid.advERC721 != address(0), "the advERC721 can not be 0 address");
         require(_bid.advTokenId != 0, "the advTokenId need to be grater than 0");
-        require(_bid.bid >= advertisementSurface.getPaymentInfo(_bid.surTokenId).minBid, "bid must be greater or equal to minBid");
+        require(_bid.bid >= _paymentInfo(_bid.surTokenId).minBid, "bid must be greater or equal to minBid");
         // todo: use oracle here for time
         require(_bid.startTime > block.timestamp, "the startTime needs to be in the future");
         require(_bid.duration > 0, "the duration needs to be grater than 0");
@@ -183,8 +183,8 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
         return advertisementSurface.advertisementSurfaceExists(_tokenId);
     }
 
-    function _paymentInfo(uint256 _tokenId) internal view returns(IAdvertisementSurface.PaymentInfo) {
-        return advertisementSurface.getPaymentInfo(_bid.surTokenId);
+    function _paymentInfo(uint256 _tokenId) internal view returns(IAdvertisementSurface.PaymentInfo memory) {
+        return advertisementSurface.getPaymentInfo(_tokenId);
     }
 
 }
