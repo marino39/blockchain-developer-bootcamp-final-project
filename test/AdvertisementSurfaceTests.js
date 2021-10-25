@@ -65,16 +65,18 @@ contract("AdvertisementSurface", accounts => {
     });
 
     describe("The Auction System", async () => {
+        let unixTime;
+
         beforeEach(async () => {
             await advSurface.registerAdvertisementSurface("abc", {
                 "erc20": erc20Dai.address,
                 "minBid": BigInt("100")
             });
+
+            unixTime = Math.floor(Date.now() / 1000);
         });
 
         it("add single bid simple", async () => {
-            let unixTime = Math.floor(Date.now() / 1000);
-
             await advSurfaceAuction.newBid({
                 "bidder": bob,
                 "surTokenId": surfaceOne,
@@ -96,8 +98,6 @@ contract("AdvertisementSurface", accounts => {
         });
 
         it("add two bids simple", async () => {
-            let unixTime = Math.floor(Date.now() / 1000);
-
             await advSurfaceAuction.newBid({
                 "bidder": bob,
                 "surTokenId": surfaceOne,
@@ -130,8 +130,6 @@ contract("AdvertisementSurface", accounts => {
         });
 
         it("add two bids overlap right", async () => {
-            let unixTime = Math.floor(Date.now() / 1000);
-
             await advSurfaceAuction.newBid({
                 "bidder": bob,
                 "surTokenId": surfaceOne,
@@ -156,8 +154,6 @@ contract("AdvertisementSurface", accounts => {
         });
 
         it("add two bids overlap left", async () => {
-            let unixTime = Math.floor(Date.now() / 1000);
-
             await advSurfaceAuction.newBid({
                 "bidder": bob,
                 "surTokenId": surfaceOne,
@@ -182,8 +178,6 @@ contract("AdvertisementSurface", accounts => {
         });
 
         it("add two bids overlap inner", async () => {
-            let unixTime = Math.floor(Date.now() / 1000);
-
             await advSurfaceAuction.newBid({
                 "bidder": bob,
                 "surTokenId": surfaceOne,
@@ -208,8 +202,6 @@ contract("AdvertisementSurface", accounts => {
         });
 
         it("add two bids overlap outer", async () => {
-            let unixTime = Math.floor(Date.now() / 1000);
-
             await advSurfaceAuction.newBid({
                 "bidder": bob,
                 "surTokenId": surfaceOne,
@@ -234,8 +226,6 @@ contract("AdvertisementSurface", accounts => {
         });
 
         it("add two bids overlap inner bigger worth", async () => {
-            let unixTime = Math.floor(Date.now() / 1000);
-
             await advSurfaceAuction.newBid({
                 "bidder": bob,
                 "surTokenId": surfaceOne,
@@ -274,9 +264,95 @@ contract("AdvertisementSurface", accounts => {
             assert.equal(AdvertisementSurfaceAuction.enums.BidState.Active, newBid[1].state);
         });
 
-        it("add two bids overlap inner bigger worth 3 bids", async () => {
-            let unixTime = Math.floor(Date.now() / 1000);
+        it("add two bids overlap inner bigger worth refund outbid bid", async () => {
+            await advSurfaceAuction.newBid({
+                "bidder": bob,
+                "surTokenId": surfaceOne,
+                "advERC721":  erc721NFT,
+                "advTokenId": BigInt("1"),
+                "bid":        BigInt("1000"),
+                "startTime":  BigInt(unixTime + 100),
+                "duration":   BigInt("120"),
+                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+            });
 
+            await advSurfaceAuction.newBid({
+                "bidder": bob,
+                "surTokenId": surfaceOne,
+                "advERC721":  erc721NFT,
+                "advTokenId": BigInt("1"),
+                "bid":        BigInt("10000"),
+                "startTime":  BigInt(unixTime + 120),
+                "duration":   BigInt("20"),
+                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+            })
+
+            let oldBid = await advSurfaceAuction.getMyBid(BigInt("0"));
+
+            const daiBalanceBefore = await erc20Dai.balanceOf(bob);
+            await advSurfaceAuction.refundBid(oldBid[0]);
+            const daiBalanceAfter = await erc20Dai.balanceOf(bob);
+
+            oldBid = await advSurfaceAuction.getMyBid(BigInt("0"));
+            assert.equal(daiBalanceBefore.add(new web3.utils.BN(120*1000)).toString(), daiBalanceAfter.toString());
+            assert.equal(AdvertisementSurfaceAuction.enums.BidState.FinishedPaid, oldBid[1].state);
+        });
+
+        it("add two bids overlap inner bigger worth refund outbid bid not bidder", async () => {
+            await advSurfaceAuction.newBid({
+                "bidder": bob,
+                "surTokenId": surfaceOne,
+                "advERC721":  erc721NFT,
+                "advTokenId": BigInt("1"),
+                "bid":        BigInt("1000"),
+                "startTime":  BigInt(unixTime + 100),
+                "duration":   BigInt("120"),
+                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+            });
+
+            await advSurfaceAuction.newBid({
+                "bidder": bob,
+                "surTokenId": surfaceOne,
+                "advERC721":  erc721NFT,
+                "advTokenId": BigInt("1"),
+                "bid":        BigInt("10000"),
+                "startTime":  BigInt(unixTime + 120),
+                "duration":   BigInt("20"),
+                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+            })
+
+            let oldBid = await advSurfaceAuction.getMyBid(BigInt("0"));
+            await catchRevert(advSurfaceAuction.refundBid(oldBid[0], {from: alice}));
+        });
+
+        it("add two bids overlap inner bigger worth refund active bid", async () => {
+            await advSurfaceAuction.newBid({
+                "bidder": bob,
+                "surTokenId": surfaceOne,
+                "advERC721":  erc721NFT,
+                "advTokenId": BigInt("1"),
+                "bid":        BigInt("1000"),
+                "startTime":  BigInt(unixTime + 100),
+                "duration":   BigInt("120"),
+                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+            });
+
+            await advSurfaceAuction.newBid({
+                "bidder": bob,
+                "surTokenId": surfaceOne,
+                "advERC721":  erc721NFT,
+                "advTokenId": BigInt("1"),
+                "bid":        BigInt("10000"),
+                "startTime":  BigInt(unixTime + 120),
+                "duration":   BigInt("20"),
+                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+            })
+
+            let newBid = await advSurfaceAuction.getMyBid(BigInt("1"));
+            await catchRevert(advSurfaceAuction.refundBid(newBid[0]));
+        });
+
+        it("add two bids overlap inner bigger worth 3 bids", async () => {
             await advSurfaceAuction.newBid({
                 "bidder": bob,
                 "surTokenId": surfaceOne,
@@ -329,8 +405,6 @@ contract("AdvertisementSurface", accounts => {
         });
 
         it("add single bid to not existing surface", async () => {
-            let unixTime = Math.floor(Date.now() / 1000);
-
             await catchRevert(advSurfaceAuction.newBid({
                 "bidder": bob,
                 "surTokenId": surfaceNotExistOne,
@@ -344,8 +418,6 @@ contract("AdvertisementSurface", accounts => {
         });
 
         it("add single bid for startTime that already passed", async () => {
-            let unixTime = Math.floor(Date.now() / 1000);
-
             await catchRevert(advSurfaceAuction.newBid({
                 "bidder": bob,
                 "surTokenId": surfaceOne,
@@ -359,8 +431,6 @@ contract("AdvertisementSurface", accounts => {
         });
 
         it("add single bid for bidder with zero address", async () => {
-            let unixTime = Math.floor(Date.now() / 1000);
-
             await catchRevert(advSurfaceAuction.newBid({
                 "bidder": constants.ZERO_ADDRESS,
                 "surTokenId": surfaceOne,
@@ -374,8 +444,6 @@ contract("AdvertisementSurface", accounts => {
         });
 
         it("add single bid for ERC721 zero address", async () => {
-            let unixTime = Math.floor(Date.now() / 1000);
-
             await catchRevert(advSurfaceAuction.newBid({
                 "bidder": bob,
                 "surTokenId": surfaceOne,
@@ -389,8 +457,6 @@ contract("AdvertisementSurface", accounts => {
         });
 
         it("add single bid for ERC721 zero token id", async () => {
-            let unixTime = Math.floor(Date.now() / 1000);
-
             await catchRevert(advSurfaceAuction.newBid({
                 "bidder": bob,
                 "surTokenId": surfaceOne,
@@ -404,8 +470,6 @@ contract("AdvertisementSurface", accounts => {
         });
 
         it("add single bid for bid 0", async () => {
-            let unixTime = Math.floor(Date.now() / 1000);
-
             await catchRevert(advSurfaceAuction.newBid({
                 "bidder": bob,
                 "surTokenId": surfaceOne,
@@ -419,8 +483,6 @@ contract("AdvertisementSurface", accounts => {
         });
 
         it("add single bid for bid less minimal bid", async () => {
-            let unixTime = Math.floor(Date.now() / 1000);
-
             await catchRevert(advSurfaceAuction.newBid({
                 "bidder": bob,
                 "surTokenId": surfaceOne,
@@ -434,8 +496,6 @@ contract("AdvertisementSurface", accounts => {
         });
 
         it("add single bid for duration 0", async () => {
-            let unixTime = Math.floor(Date.now() / 1000);
-
             await catchRevert(advSurfaceAuction.newBid({
                 "bidder": bob,
                 "surTokenId": surfaceOne,
@@ -449,8 +509,6 @@ contract("AdvertisementSurface", accounts => {
         });
 
         it("add single bid for state not active", async () => {
-            let unixTime = Math.floor(Date.now() / 1000);
-
             await catchRevert(advSurfaceAuction.newBid({
                 "bidder": bob,
                 "surTokenId": surfaceOne,
@@ -464,8 +522,6 @@ contract("AdvertisementSurface", accounts => {
         });
 
         it("add single bid for no allowance to transfer", async () => {
-            let unixTime = Math.floor(Date.now() / 1000);
-
             await catchRevert(advSurfaceAuction.newBid({
                 "bidder": bob,
                 "surTokenId": surfaceOne,
@@ -479,8 +535,6 @@ contract("AdvertisementSurface", accounts => {
         });
 
         it("add single bid for too small balance to transfer", async () => {
-            let unixTime = Math.floor(Date.now() / 1000);
-
             await catchRevert(advSurfaceAuction.newBid({
                 "bidder": bob,
                 "surTokenId": surfaceOne,

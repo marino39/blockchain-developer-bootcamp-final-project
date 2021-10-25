@@ -22,7 +22,7 @@ contract AdvertisementSurface is IAdvertisementSurface, AdvertisementSurfacePaym
         return ERC721Enumerable.supportsInterface(interfaceId);
     }
 
-    function registerAdvertisementSurface(string memory _tokenURI, PaymentInfo memory _paymentInfo) override external {
+    function registerAdvertisementSurface(string memory _tokenURI, PaymentInfo memory _paymentInfo) external override {
         require(_paymentInfo.erc20 != address(0));
         require(_paymentInfo.minBid != 0);
 
@@ -31,12 +31,12 @@ contract AdvertisementSurface is IAdvertisementSurface, AdvertisementSurfacePaym
         _setPaymentInfo(tokenId, _paymentInfo);
     }
 
-    function advertisementSurfaceExists(uint256 _tokenId) override external view returns(bool) {
+    function advertisementSurfaceExists(uint256 _tokenId) external view override returns(bool) {
         return _exists(_tokenId);
     }
 
 
-    function getPaymentInfo(uint256 _tokenId) override public view returns(PaymentInfo memory) {
+    function getPaymentInfo(uint256 _tokenId) public view override returns(PaymentInfo memory) {
         require(_exists(_tokenId));
         return _getPaymentInfo(_tokenId);
     }

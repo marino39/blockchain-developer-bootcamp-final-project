@@ -43,7 +43,7 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
         // todo: use oracle here for time
         require(_bid.startTime > block.timestamp, "the startTime needs to be in the future");
         require(_bid.duration > 0, "the duration needs to be grater than 0");
-        require(_bid.state == BidState.Active);
+        require(_bid.state == BidState.Active, "the bid must be active");
         _;
     }
 
@@ -54,8 +54,18 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
         _;
     }
 
+    modifier isBidder(uint256 _bidId) {
+        require(msg.sender == bids[_bidId].bidder, "you must be a bidder");
+        _;
+    }
+
+    modifier isSurfaceOwner(uint256 _bidId) {
+        require(msg.sender == advertisementSurface.ownerOf(bids[_bidId].surTokenId), "you must be surface owner");
+        _;
+    }
+
     modifier isOutBid(uint256 _bidId) {
-        require(bids[_bidId].state == BidState.Outbid);
+        require(bids[_bidId].state == BidState.Outbid, "the state needs to be outbid");
         _;
     }
 
@@ -63,7 +73,7 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
         // todo: use oracle here for time
         require(
             bids[_bidId].state == BidState.Active && bids[_bidId].startTime + bids[_bidId].duration < block.timestamp
-            || bids[_bidId].state == BidState.Finished
+            || bids[_bidId].state == BidState.Finished, "the auction must be finished and delivered"
         );
         _;
     }
@@ -108,7 +118,7 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
     }
 
     function newBid(Bid memory _bid) public validateBid(_bid) checkPayment(_bid.surTokenId, _bid.bid * _bid.duration) {
-        require(_isBetterBid(_bid));
+        require(_isBetterBid(_bid), "the bid needs to be better than current bids");
         _bid.state = BidState.Active;
 
         bids.push(_bid);
@@ -121,12 +131,29 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
         IERC20(paymentInfo.erc20).transferFrom(msg.sender, address(this), _bid.bid * _bid.duration);
     }
 
-    function refundBid(uint256 _bidId) isOutBid(_bidId) public {
-        // todo: execute refund
+    function refundBid(uint256 _bidId) isBidder(_bidId) isOutBid(_bidId) public {
+        Bid storage bid = bids[_bidId];
+        bid.state = BidState.FinishedPaid;
+
+        IAdvertisementSurface.PaymentInfo memory paymentInfo = _paymentInfo(bid.surTokenId);
+        IERC20(paymentInfo.erc20).transfer(msg.sender, bid.bid * bid.duration);
     }
 
-    function collectBid(uint256 _bidId) isFinished(_bidId) public {
-        // todo: execute collect
+    function collectBid(uint256 _bidId) isSurfaceOwner(_bidId) isFinished(_bidId) public {
+        Bid storage bid = bids[_bidId];
+        if (bid.state == BidState.Active) {
+            uint256[] storage activeBids = surTokenIdToActiveBidIds[bid.surTokenId];
+            for (uint256 i = 0; i < activeBids.length; i++) {
+                if (activeBids[i] == _bidId) {
+                    _removeBidFromActive(activeBids, i);
+                    break;
+                }
+            }
+        }
+        bid.state = BidState.FinishedPaid;
+
+        IAdvertisementSurface.PaymentInfo memory paymentInfo = _paymentInfo(bid.surTokenId);
+        IERC20(paymentInfo.erc20).transfer(msg.sender, bid.bid * bid.duration);
     }
 
     function getBidWorth(Bid memory _bid) public pure returns(uint256) {
@@ -174,7 +201,7 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
     }
 
     function _removeBidFromActive(uint256[] storage _array, uint256 _index) internal {
-        require(_index < _array.length);
+        require(_index < _array.length, "index out of bounds");
         _array[_index] = _array[_array.length-1];
         _array.pop();
     }
