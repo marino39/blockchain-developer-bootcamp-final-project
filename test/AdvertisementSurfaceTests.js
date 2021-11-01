@@ -7,6 +7,9 @@ const MockDai = artifacts.require("MockDai");
 
 let { catchRevert } = require("./exceptionsHelpers.js");
 
+function sleep(millis) {
+    return new Promise(resolve => setTimeout(resolve, millis));
+}
 
 contract("AdvertisementSurface", accounts => {
     let advSurface;
@@ -246,7 +249,7 @@ contract("AdvertisementSurface", accounts => {
                 "startTime":  BigInt(unixTime + 120),
                 "duration":   BigInt("20"),
                 "state": AdvertisementSurfaceAuction.enums.BidState.Active,
-            })
+            });
 
             let bidCount = await advSurfaceAuction.getBidCount();
             let myBidCount = await advSurfaceAuction.getMyBidsCount();
@@ -285,7 +288,7 @@ contract("AdvertisementSurface", accounts => {
                 "startTime":  BigInt(unixTime + 120),
                 "duration":   BigInt("20"),
                 "state": AdvertisementSurfaceAuction.enums.BidState.Active,
-            })
+            });
 
             let oldBid = await advSurfaceAuction.getMyBid(BigInt("0"));
 
@@ -319,7 +322,7 @@ contract("AdvertisementSurface", accounts => {
                 "startTime":  BigInt(unixTime + 120),
                 "duration":   BigInt("20"),
                 "state": AdvertisementSurfaceAuction.enums.BidState.Active,
-            })
+            });
 
             let oldBid = await advSurfaceAuction.getMyBid(BigInt("0"));
             await catchRevert(advSurfaceAuction.refundBid(oldBid[0], {from: alice}));
@@ -346,7 +349,7 @@ contract("AdvertisementSurface", accounts => {
                 "startTime":  BigInt(unixTime + 120),
                 "duration":   BigInt("20"),
                 "state": AdvertisementSurfaceAuction.enums.BidState.Active,
-            })
+            });
 
             let newBid = await advSurfaceAuction.getMyBid(BigInt("1"));
             await catchRevert(advSurfaceAuction.refundBid(newBid[0]));
@@ -373,7 +376,7 @@ contract("AdvertisementSurface", accounts => {
                 "startTime":  BigInt(unixTime + 240),
                 "duration":   BigInt("20"),
                 "state": AdvertisementSurfaceAuction.enums.BidState.Active,
-            })
+            });
 
             await advSurfaceAuction.newBid({
                 "bidder": bob,
@@ -384,7 +387,7 @@ contract("AdvertisementSurface", accounts => {
                 "startTime":  BigInt(unixTime + 80),
                 "duration":   BigInt("300"),
                 "state": AdvertisementSurfaceAuction.enums.BidState.Active,
-            })
+            });
 
             let bidCount = await advSurfaceAuction.getBidCount();
             let myBidCount = await advSurfaceAuction.getMyBidsCount();
@@ -545,6 +548,49 @@ contract("AdvertisementSurface", accounts => {
                 "duration":   BigInt("100"),
                 "state": AdvertisementSurfaceAuction.enums.BidState.Outbid,
             }, {from: matt}));
+        });
+
+        it("collect", async () => {
+            await advSurfaceAuction.newBid({
+                "bidder": bob,
+                "surTokenId": surfaceOne,
+                "advERC721":  erc721NFT,
+                "advTokenId": BigInt("1"),
+                "bid":        BigInt("100"),
+                "startTime":  BigInt(unixTime + 1),
+                "duration":   BigInt("1"),
+                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+            });
+
+            let myBid = await advSurfaceAuction.getMyBid(BigInt("0"));
+
+            await sleep(3000);
+
+            const daiBalanceBefore = await erc20Dai.balanceOf(bob);
+            await advSurfaceAuction.collectBid(myBid[0]);
+            const daiBalanceAfter = await erc20Dai.balanceOf(bob);
+
+            myBid = await advSurfaceAuction.getMyBid(BigInt("0"));
+
+            assert.equal(daiBalanceBefore.add(new web3.utils.BN(100)).toString(), daiBalanceAfter.toString());
+            assert.equal(AdvertisementSurfaceAuction.enums.BidState.FinishedPaid, myBid[1].state);
+        });
+
+        it("collect not finished", async () => {
+            await advSurfaceAuction.newBid({
+                "bidder": bob,
+                "surTokenId": surfaceOne,
+                "advERC721":  erc721NFT,
+                "advTokenId": BigInt("1"),
+                "bid":        BigInt("100"),
+                "startTime":  BigInt(unixTime + 1),
+                "duration":   BigInt("1"),
+                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+            });
+
+            let myBid = await advSurfaceAuction.getMyBid(BigInt("0"));
+
+            await catchRevert(advSurfaceAuction.collectBid(myBid[0]));
         });
 
     });
