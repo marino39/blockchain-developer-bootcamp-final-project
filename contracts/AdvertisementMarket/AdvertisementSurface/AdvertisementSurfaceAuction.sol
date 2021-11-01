@@ -15,7 +15,7 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
 
     IAdvertisementSurface advertisementSurface;
 
-    enum BidState {Outbid, Active, Finished, FinishedPaid}
+    enum BidState {Outbid, Active, FinishedPaid}
 
     struct Bid {
         address bidder;       // The address making a bid.
@@ -27,6 +27,10 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
         uint64 duration;      // The duration of the advertisement.
         BidState state;       // The bid state.
     }
+
+    event LogActive(uint256 indexed tokenId, address indexed bidder, uint256 indexed bidId);
+    event LogOutbid(uint256 indexed tokenId, address indexed bidder, uint256 indexed bidId);
+    event LogFinishedPaid(uint256 indexed tokenId, address indexed receiver, uint256 indexed bidId);
 
     Bid[] private bids;
 
@@ -72,8 +76,8 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
     modifier isFinished(uint256 _bidId) {
         // todo: use oracle here for time
         require(
-            bids[_bidId].state == BidState.Active && bids[_bidId].startTime + bids[_bidId].duration < block.timestamp
-            || bids[_bidId].state == BidState.Finished, "the auction must be finished and delivered"
+            bids[_bidId].state == BidState.Active && bids[_bidId].startTime + bids[_bidId].duration < block.timestamp,
+                "the auction must be finished and delivered"
         );
         _;
     }
@@ -129,6 +133,8 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
 
         IAdvertisementSurface.PaymentInfo memory paymentInfo = _paymentInfo(_bid.surTokenId);
         IERC20(paymentInfo.erc20).transferFrom(msg.sender, address(this), _bid.bid * _bid.duration);
+
+        emit LogActive(_bid.surTokenId, _bid.bidder, index);
     }
 
     function refundBid(uint256 _bidId) isBidder(_bidId) isOutBid(_bidId) public {
@@ -137,6 +143,8 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
 
         IAdvertisementSurface.PaymentInfo memory paymentInfo = _paymentInfo(bid.surTokenId);
         IERC20(paymentInfo.erc20).transfer(msg.sender, bid.bid * bid.duration);
+
+        emit LogFinishedPaid(bid.surTokenId, msg.sender, _bidId);
     }
 
     function collectBid(uint256 _bidId) isSurfaceOwner(_bidId) isFinished(_bidId) public {
@@ -154,6 +162,8 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
 
         IAdvertisementSurface.PaymentInfo memory paymentInfo = _paymentInfo(bid.surTokenId);
         IERC20(paymentInfo.erc20).transfer(msg.sender, bid.bid * bid.duration);
+
+        emit LogFinishedPaid(bid.surTokenId, msg.sender, _bidId);
     }
 
     function getBidWorth(Bid memory _bid) public pure returns(uint256) {
@@ -186,11 +196,17 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
                 if (_bid.startTime <= _bid2.startTime && _bid.startTime + _bid.duration > _bid2.startTime) {
                     _bid2.state = BidState.Outbid;
                     _removeBidFromActive(activeBids, i);
+
+                    emit LogOutbid(_bid2.surTokenId, _bid2.bidder, _bid2Id);
+
                     continue;
                 }
                 if (_bid.startTime >= _bid2.startTime && _bid.startTime < _bid2.startTime + _bid2.duration) {
                     _bid2.state = BidState.Outbid;
                     _removeBidFromActive(activeBids, i);
+
+                    emit LogOutbid(_bid2.surTokenId, _bid2.bidder, _bid2Id);
+
                     continue;
                 }
                 i++;
