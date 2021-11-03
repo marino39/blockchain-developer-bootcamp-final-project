@@ -298,7 +298,7 @@ contract("AdvertisementSurface", accounts => {
 
             oldBid = await advSurfaceAuction.getMyBid(BigInt("0"));
             assert.equal(daiBalanceBefore.add(new web3.utils.BN(120*1000)).toString(), daiBalanceAfter.toString());
-            assert.equal(AdvertisementSurfaceAuction.enums.BidState.FinishedPaid, oldBid[1].state);
+            assert.equal(AdvertisementSurfaceAuction.enums.BidState.Finished, oldBid[1].state);
         });
 
         it("add two bids overlap inner bigger worth refund outbid bid not bidder", async () => {
@@ -573,7 +573,7 @@ contract("AdvertisementSurface", accounts => {
             myBid = await advSurfaceAuction.getMyBid(BigInt("0"));
 
             assert.equal(daiBalanceBefore.add(new web3.utils.BN(100)).toString(), daiBalanceAfter.toString());
-            assert.equal(AdvertisementSurfaceAuction.enums.BidState.FinishedPaid, myBid[1].state);
+            assert.equal(AdvertisementSurfaceAuction.enums.BidState.Finished, myBid[1].state);
         });
 
         it("collect not finished", async () => {
@@ -591,6 +591,82 @@ contract("AdvertisementSurface", accounts => {
             let myBid = await advSurfaceAuction.getMyBid(BigInt("0"));
 
             await catchRevert(advSurfaceAuction.collectBid(myBid[0]));
+        });
+
+        it("events LogActive", async () => {
+            const tx = await advSurfaceAuction.newBid({
+                "bidder": bob,
+                "surTokenId": surfaceOne,
+                "advERC721":  erc721NFT,
+                "advTokenId": BigInt("1"),
+                "bid":        BigInt("100"),
+                "startTime":  BigInt(unixTime + 1),
+                "duration":   BigInt("1"),
+                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+            });
+
+            assert.equal("LogActive", tx.logs[0].event);
+            assert.equal((new web3.utils.BN(1)).toString(), tx.logs[0].args.tokenId.toString());
+            assert.equal(bob, tx.logs[0].args.bidder);
+            assert.equal((new web3.utils.BN(0)).toString(), tx.logs[0].args.bidId.toString());
+        });
+
+        it("events LogOutbid", async () => {
+            await advSurfaceAuction.newBid({
+                "bidder": bob,
+                "surTokenId": surfaceOne,
+                "advERC721":  erc721NFT,
+                "advTokenId": BigInt("1"),
+                "bid":        BigInt("100"),
+                "startTime":  BigInt(unixTime + 100),
+                "duration":   BigInt("1"),
+                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+            });
+
+            const tx = await advSurfaceAuction.newBid({
+                "bidder": bob,
+                "surTokenId": surfaceOne,
+                "advERC721":  erc721NFT,
+                "advTokenId": BigInt("1"),
+                "bid":        BigInt("1000"),
+                "startTime":  BigInt(unixTime + 100),
+                "duration":   BigInt("2"),
+                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+            });
+
+            assert.equal("LogOutbid", tx.logs[0].event);
+            assert.equal((new web3.utils.BN(1)).toString(), tx.logs[0].args.tokenId.toString());
+            assert.equal(bob, tx.logs[0].args.bidder);
+            assert.equal((new web3.utils.BN(0)).toString(), tx.logs[0].args.bidId.toString());
+
+            assert.equal("LogActive", tx.logs[1].event);
+            assert.equal((new web3.utils.BN(1)).toString(), tx.logs[1].args.tokenId.toString());
+            assert.equal(bob, tx.logs[1].args.bidder);
+            assert.equal((new web3.utils.BN(1)).toString(), tx.logs[1].args.bidId.toString());
+        });
+
+        it("events LogFinished", async () => {
+            await advSurfaceAuction.newBid({
+                "bidder": bob,
+                "surTokenId": surfaceOne,
+                "advERC721":  erc721NFT,
+                "advTokenId": BigInt("1"),
+                "bid":        BigInt("100"),
+                "startTime":  BigInt(unixTime + 1),
+                "duration":   BigInt("1"),
+                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+            });
+
+            let myBid = await advSurfaceAuction.getMyBid(BigInt("0"));
+
+            await sleep(3000);
+
+            const tx = await advSurfaceAuction.collectBid(myBid[0]);
+
+            assert.equal("LogFinished", tx.logs[0].event);
+            assert.equal((new web3.utils.BN(1)).toString(), tx.logs[0].args.tokenId.toString());
+            assert.equal(bob, tx.logs[0].args.receiver);
+            assert.equal((new web3.utils.BN(0)).toString(), tx.logs[0].args.bidId.toString());
         });
 
     });

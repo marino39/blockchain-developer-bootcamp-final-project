@@ -15,7 +15,7 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
 
     IAdvertisementSurface advertisementSurface;
 
-    enum BidState {Outbid, Active, FinishedPaid}
+    enum BidState {Outbid, Active, Finished}
 
     struct Bid {
         address bidder;       // The address making a bid.
@@ -30,7 +30,7 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
 
     event LogActive(uint256 indexed tokenId, address indexed bidder, uint256 indexed bidId);
     event LogOutbid(uint256 indexed tokenId, address indexed bidder, uint256 indexed bidId);
-    event LogFinishedPaid(uint256 indexed tokenId, address indexed receiver, uint256 indexed bidId);
+    event LogFinished(uint256 indexed tokenId, address indexed receiver, uint256 indexed bidId);
 
     Bid[] private bids;
 
@@ -139,12 +139,12 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
 
     function refundBid(uint256 _bidId) isBidder(_bidId) isOutBid(_bidId) public {
         Bid storage bid = bids[_bidId];
-        bid.state = BidState.FinishedPaid;
+        bid.state = BidState.Finished;
 
         IAdvertisementSurface.PaymentInfo memory paymentInfo = _paymentInfo(bid.surTokenId);
         IERC20(paymentInfo.erc20).transfer(msg.sender, bid.bid * bid.duration);
 
-        emit LogFinishedPaid(bid.surTokenId, msg.sender, _bidId);
+        emit LogFinished(bid.surTokenId, msg.sender, _bidId);
     }
 
     function collectBid(uint256 _bidId) isSurfaceOwner(_bidId) isFinished(_bidId) public {
@@ -158,12 +158,12 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
                 }
             }
         }
-        bid.state = BidState.FinishedPaid;
+        bid.state = BidState.Finished;
 
         IAdvertisementSurface.PaymentInfo memory paymentInfo = _paymentInfo(bid.surTokenId);
         IERC20(paymentInfo.erc20).transfer(msg.sender, bid.bid * bid.duration);
 
-        emit LogFinishedPaid(bid.surTokenId, msg.sender, _bidId);
+        emit LogFinished(bid.surTokenId, msg.sender, _bidId);
     }
 
     function getBidWorth(Bid memory _bid) public pure returns(uint256) {
