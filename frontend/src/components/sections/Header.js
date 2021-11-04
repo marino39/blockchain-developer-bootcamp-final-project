@@ -1,6 +1,7 @@
 import React from "react"
 import { Link } from "react-router-dom"
 import { Box, Flex, Text, Button, Stack, PseudoBox } from "@chakra-ui/react"
+import {BiX, BiMenu} from "react-icons/bi";
 import Logo from "../ui/Logo"
 
 const MenuItems = props => {
@@ -28,7 +29,6 @@ const Header = props => {
             justify="space-between"
             wrap="wrap"
             w="100%"
-            mb={8}
             p={8}
             bg={["primary.500", "primary.500", "transparent", "transparent"]}
             color={["white", "white", "primary.700", "primary.700"]}
@@ -42,7 +42,7 @@ const Header = props => {
             </Flex>
 
             <Box display={{ base: "block", md: "none" }} onClick={toggleMenu}>
-                {show ? <div>x</div> : <div>Menu</div>}
+                {show ? <BiX/> : <BiMenu/>}
             </Box>
 
             <Box
