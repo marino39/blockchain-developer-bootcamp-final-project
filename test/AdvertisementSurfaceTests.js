@@ -559,14 +559,14 @@ contract("AdvertisementSurface", accounts => {
                 "advERC721":  erc721NFT,
                 "advTokenId": BigInt("1"),
                 "bid":        BigInt("100"),
-                "startTime":  BigInt(unixTime + 1),
+                "startTime":  BigInt(unixTime + 2),
                 "duration":   BigInt("1"),
                 "state": IAdvertisementSurfaceAuction.enums.BidState.Active,
             });
 
             let myBid = await advSurfaceAuction.getMyBid(BigInt("0"));
 
-            await sleep(3000);
+            await sleep(4000);
 
             const daiBalanceBefore = await erc20Dai.balanceOf(bob);
             await advSurfaceAuction.collectBid(myBid[0]);
@@ -654,14 +654,14 @@ contract("AdvertisementSurface", accounts => {
                 "advERC721":  erc721NFT,
                 "advTokenId": BigInt("1"),
                 "bid":        BigInt("100"),
-                "startTime":  BigInt(unixTime + 1),
+                "startTime":  BigInt(unixTime + 2),
                 "duration":   BigInt("1"),
                 "state": IAdvertisementSurfaceAuction.enums.BidState.Active,
             });
 
             let myBid = await advSurfaceAuction.getMyBid(BigInt("0"));
 
-            await sleep(3000);
+            await sleep(4000);
 
             const tx = await advSurfaceAuction.collectBid(myBid[0]);
 

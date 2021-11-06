@@ -156,7 +156,13 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
         bid.state = BidState.Finished;
 
         IAdvertisementSurface.PaymentInfo memory paymentInfo = _paymentInfo(bid.surTokenId);
-        IERC20(paymentInfo.erc20).transfer(msg.sender, bid.bid * bid.duration);
+        IERC20 erc20Contract = IERC20(paymentInfo.erc20);
+
+        uint256 preBalance = erc20Contract.balanceOf(address(this));
+        erc20Contract.transfer(msg.sender, bid.bid * bid.duration);
+
+        // this will never happen as re-entrance would fail at validateBid, however it's here to satisfy project requirements
+        assert(preBalance - erc20Contract.balanceOf(address(this)) == bid.bid * bid.duration);
 
         emit LogFinished(bid.surTokenId, msg.sender, _bidId);
     }
@@ -177,7 +183,13 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
         bid.state = BidState.Finished;
 
         IAdvertisementSurface.PaymentInfo memory paymentInfo = _paymentInfo(bid.surTokenId);
-        IERC20(paymentInfo.erc20).transfer(msg.sender, bid.bid * bid.duration);
+        IERC20 erc20Contract = IERC20(paymentInfo.erc20);
+
+        uint256 preBalance = erc20Contract.balanceOf(address(this));
+        erc20Contract.transfer(msg.sender, bid.bid * bid.duration);
+
+        // this will never happen as re-entrance would fail at validateBid, however it's here to satisfy project requirements
+        assert(preBalance - erc20Contract.balanceOf(address(this)) == bid.bid * bid.duration);
 
         emit LogFinished(bid.surTokenId, msg.sender, _bidId);
     }
