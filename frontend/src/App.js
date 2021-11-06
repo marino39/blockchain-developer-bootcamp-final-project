@@ -3,6 +3,9 @@ import Web3 from 'web3'
 import Web3Provider from 'web3-react'
 
 import Landing from "./pages/Landing"
+import MySurfaces from "./pages/MySurfaces";
+import MyBids from "./pages/MyBids";
+import Advertise from "./pages/Advertise";
 
 import { BrowserRouter, Switch, Route } from "react-router-dom"
 import { ChakraProvider } from "@chakra-ui/react"
@@ -19,8 +22,17 @@ export default function App() {
           <Web3Provider connectors={ connectors } libraryName={'web3.js'} web3Api={ Web3 }>
               <BrowserRouter>
               <Switch>
-                <Route path="/">
-                  <Landing />
+                <Route exact path="/">
+                  <Landing/>
+                </Route>
+                <Route path="/mySurfaces">
+                  <MySurfaces/>
+                </Route>
+                <Route path="/myBids">
+                  <MyBids/>
+                </Route>
+                <Route path="/advertise">
+                  <Advertise/>
                 </Route>
               </Switch>
             </BrowserRouter>

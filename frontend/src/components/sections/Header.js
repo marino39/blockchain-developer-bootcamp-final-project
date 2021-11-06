@@ -5,8 +5,6 @@ import {
     Flex,
     Text,
     Button,
-    Stack,
-    PseudoBox,
     useDisclosure,
     Modal,
     ModalOverlay,
@@ -96,6 +94,7 @@ const Header = props => {
     let menuItems = [];
     if (context.active === true) {
         menuItems.push(<MenuItems to="/mySurfaces">My Surfaces</MenuItems>);
+        menuItems.push(<MenuItems to="/myBids">My Bids</MenuItems>);
         menuItems.push(<MenuItems to="/advertise">Advertise</MenuItems>);
     }
     menuItems.push(<WalletStateMenuItem/>)
