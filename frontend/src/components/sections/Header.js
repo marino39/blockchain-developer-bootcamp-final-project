@@ -112,10 +112,12 @@ const Header = props => {
             {...props}
         >
             <Flex align="center">
-                <Logo
-                    w="100px"
-                    color={["white", "white", "primary.500", "primary.500"]}
-                />
+                <Link to={'/'}>
+                  <Logo
+                      w="100px"
+                      color={["white", "white", "primary.500", "primary.500"]}
+                  />
+                </Link>
             </Flex>
 
             <Box display={{ base: "block", md: "none" }} onClick={toggleMenu}>

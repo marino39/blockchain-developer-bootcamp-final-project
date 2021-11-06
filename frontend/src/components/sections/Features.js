@@ -8,6 +8,8 @@ import {
     SimpleGrid, Image,
 } from '@chakra-ui/react';
 
+import FeaturedImage from "../../images/featured.png"
+
 export default function StatsGridWithImage() {
     return (
         <Box bg={'gray.800'} w={'100%'} position={'relative'}>
@@ -15,9 +17,7 @@ export default function StatsGridWithImage() {
                 h={'300px'}
                 w={'full'}
                 rounded={10}
-                src={
-                    'https://nowyjork.pl/wp-content/uploads/2021/01/new-york-city-may-11-times-square-with-tourists-on-may-11-20_Times-Square-shutterstock_1429324979-scaled.jpg'
-                }
+                src={ FeaturedImage }
                 objectFit={'cover'}
             />
             <Container maxW={'7xl'} zIndex={10} position={'relative'}>
@@ -27,7 +27,7 @@ export default function StatsGridWithImage() {
                         color={'gray.400'}
                         justify={{ lg: 'center' }}
                         py={{ base: 4, md: 10, xl: 10 }}>
-                        <Box mb={{ base: 8, md: 20 }}>
+                        <Box mb={{ base: 8, md: 15 }}>
                             <Text
                                 fontFamily={'heading'}
                                 fontWeight={700}
