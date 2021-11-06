@@ -8,16 +8,19 @@ import "./IAdvertisementSurfacePayments.sol";
 
 // @author Marcin Gorzynski
 // @title The Advertisement Surface NFT interface
-// @description The contract used to tokenize advertisement infrastructure and bid on it's usage.
+// @notice The contract used to tokenize advertisement infrastructure and bid on it's usage.
 interface IAdvertisementSurface is IAdvertisementSurfacePayments, IERC721Metadata, IERC721Enumerable {
 
-    // @description The function that tokenize the advertisement surface. Once activated
+    // @notice The function that tokenize the advertisement surface. Once activated
     // advertisement time slots can be auctioned to clients.
     // @param _AdsInfo The advertisement surface description that consists of on-chain data
     // necessary for auctioning process and off-chain metadata useful for clients e.g. location,
     // size, resolution.
     function registerAdvertisementSurface(string memory _tokenURI, PaymentInfo memory _paymentInfo) external;
 
+    // @notice The function that checks is given tokenId exists
+    // @param _tokenId The id of the advertisement surface
+    // @returns If token id exists
     function advertisementSurfaceExists(uint256 _tokenId) external view returns(bool);
 
 }

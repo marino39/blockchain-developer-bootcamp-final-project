@@ -8,6 +8,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 // @author Marcin Gorzynski
 // @title The Advertisement Surface Payments functionality
+// @notice The abstract contract that keeps track of payment method for given advertisement surface token id
 abstract contract AdvertisementSurfacePayments is IAdvertisementSurfacePayments {
 
     using SafeMath for uint256;

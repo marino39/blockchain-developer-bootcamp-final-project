@@ -9,24 +9,12 @@ import "./IAdvertisementSurface.sol";
 
 // @author Marcin Gorzynski
 // @title The Advertisement Surface Auction functionality
+// @notice The contract used to auctioning advertisement on advertisement surfaces
 contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
 
     using SafeMath for uint256;
 
     IAdvertisementSurface advertisementSurface;
-
-    enum BidState {Outbid, Active, Finished}
-
-    struct Bid {
-        address bidder;       // The address making a bid.
-        uint256 surTokenId;   // The surface token id;
-        address advERC721;    // The contract address for advertisement ERC721 token.
-        uint256 advTokenId;   // The advertisement to be shown.
-        uint256 bid;          // The bid for unit of time(second). The total is bid * duration.
-        uint64 startTime;     // The start of the advertisement.
-        uint64 duration;      // The duration of the advertisement.
-        BidState state;       // The bid state.
-    }
 
     event LogActive(uint256 indexed tokenId, address indexed bidder, uint256 indexed bidId);
     event LogOutbid(uint256 indexed tokenId, address indexed bidder, uint256 indexed bidId);
@@ -86,42 +74,68 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
         advertisementSurface = IAdvertisementSurface(_advertisementSurface);
     }
 
-    function getBidCount() public view returns(uint256) {
+    /// @notice Gets the number of bids in the contract
+    /// @return Number of bids
+    function getBidCount() external override view returns(uint256) {
         return bids.length;
     }
 
-    function getBid(uint256 _bidId) public view returns(Bid memory) {
+    /// @notice Gets bid structure for given bid id
+    /// @param _bidId The id of the bid
+    /// @return The bid structure
+    function getBid(uint256 _bidId) external override view returns(Bid memory) {
         return bids[_bidId];
     }
 
-    function getMyBidsCount() public view returns(uint256) {
+    /// @notice Gets the number of the bids made by msg sender
+    /// @return The number of bids made by msg sender
+    function getMyBidsCount() external override view returns(uint256) {
         return addressToBidIds[msg.sender].length;
     }
 
-    function getMyBid(uint256 _index) public view returns(uint256, Bid memory) {
+    /// @notice Gets bid id and bid structure for given index od msg sender bids
+    /// @param _index The index in the array
+    /// @return The bid id and bid structure
+    function getMyBid(uint256 _index) external override view returns(uint256, Bid memory) {
         uint256 bidId = addressToBidIds[msg.sender][_index];
         return (bidId, bids[bidId]);
     }
 
-    function getSurfaceBidCount(uint256 _tokenId) public view returns(uint256) {
+    /// @notice Gets the number of bids for given advertisement surface
+    /// @param _tokenId The advertisement surface id
+    /// @return The number of bids for advertisement surface
+    function getSurfaceBidCount(uint256 _tokenId) external override view returns(uint256) {
         return surTokenIdToBidIds[_tokenId].length;
     }
 
-    function getSurfaceBid(uint256 _tokenId, uint256 _index) public view returns(uint256, Bid memory) {
+    /// @notice Gets bid id and bid structure for advertisement surface id and index
+    /// @param _tokenId The advertisement surface id
+    /// @param _index The index of the bid
+    /// @return The bid id and bid structure
+    function getSurfaceBid(uint256 _tokenId, uint256 _index) external override view returns(uint256, Bid memory) {
         uint256 bidId = surTokenIdToBidIds[_tokenId][_index];
         return (bidId, bids[bidId]);
     }
 
-    function getActiveBidCount(uint256 _tokenId) public view returns(uint256) {
+    /// @notice Get active bid count. The active bid is winning bid.
+    /// @param _tokenId The advertisement surface id
+    /// @return The number of active bids
+    function getActiveBidCount(uint256 _tokenId) external override view returns(uint256) {
         return surTokenIdToActiveBidIds[_tokenId].length;
     }
 
-    function getActiveBid(uint256 _tokenId, uint256 _index) public view returns(uint256, Bid memory) {
+    /// @notice Gets active bid id and bid structure for advertisement surface id and index
+    /// @param _tokenId The advertisement surface id
+    /// @param _index The index of the bid
+    /// @return The bid id and bid structure
+    function getActiveBid(uint256 _tokenId, uint256 _index) external override view returns(uint256, Bid memory) {
         uint256 bidId = surTokenIdToActiveBidIds[_tokenId][_index];
         return (bidId, bids[bidId]);
     }
 
-    function newBid(Bid memory _bid) public validateBid(_bid) checkPayment(_bid.surTokenId, _bid.bid * _bid.duration) {
+    /// @notice Creates new bid for advertisement surface
+    /// @param _bid The bid structure defining the bid
+    function newBid(Bid memory _bid) external override validateBid(_bid) checkPayment(_bid.surTokenId, _bid.bid * _bid.duration) {
         require(_isBetterBid(_bid), "the bid needs to be better than current bids");
         _bid.state = BidState.Active;
 
@@ -137,7 +151,9 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
         emit LogActive(_bid.surTokenId, _bid.bidder, index);
     }
 
-    function refundBid(uint256 _bidId) isBidder(_bidId) isOutBid(_bidId) public {
+    /// @notice Refunds bid in case this bid has been outbid by someone else
+    /// @param _bidId The bid id to refund payment
+    function refundBid(uint256 _bidId) isBidder(_bidId) isOutBid(_bidId) external override {
         Bid storage bid = bids[_bidId];
         bid.state = BidState.Finished;
 
@@ -147,7 +163,9 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
         emit LogFinished(bid.surTokenId, msg.sender, _bidId);
     }
 
-    function collectBid(uint256 _bidId) isSurfaceOwner(_bidId) isFinished(_bidId) public {
+    /// @notice Collects payment from bid in when advertisement has been already shown
+    /// @param _bidId The bid id to collect payment
+    function collectBid(uint256 _bidId) isSurfaceOwner(_bidId) isFinished(_bidId) external override {
         Bid storage bid = bids[_bidId];
         if (bid.state == BidState.Active) {
             uint256[] storage activeBids = surTokenIdToActiveBidIds[bid.surTokenId];
@@ -166,7 +184,14 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
         emit LogFinished(bid.surTokenId, msg.sender, _bidId);
     }
 
-    function getBidWorth(Bid memory _bid) public pure returns(uint256) {
+    /// @notice Calculates how much the bid is worth. It's required to decide which bid outbids the other bid.
+    /// @param _bid The bid structure
+    /// @return The number of tokens that can be collected or refunded from the bid
+    function getBidWorth(Bid memory _bid) external override pure returns(uint256) {
+        return _getBidWorth(_bid);
+    }
+
+    function _getBidWorth(Bid memory _bid) internal pure returns(uint256) {
         return _bid.duration * _bid.bid;
     }
 
@@ -178,16 +203,16 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
             uint256 _bid2Id = activeBids[i];
             Bid memory _bid2 = bids[_bid2Id];
             if (_bid.startTime <= _bid2.startTime && _bid.startTime + _bid.duration > _bid2.startTime) {
-                overlapBidsWorth += getBidWorth(_bid2);
+                overlapBidsWorth += _getBidWorth(_bid2);
                 continue;
             }
             if (_bid.startTime >= _bid2.startTime && _bid.startTime < _bid2.startTime + _bid2.duration) {
-                overlapBidsWorth += getBidWorth(_bid2);
+                overlapBidsWorth += _getBidWorth(_bid2);
                 continue;
             }
         }
 
-        bool isBetter = getBidWorth(_bid) > overlapBidsWorth;
+        bool isBetter = _getBidWorth(_bid) > overlapBidsWorth;
         if (isBetter) {
             uint256 i = 0;
             while (i < activeBids.length) {
