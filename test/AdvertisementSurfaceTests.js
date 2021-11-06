@@ -2,6 +2,8 @@ const { constants } = require('@openzeppelin/test-helpers');
 
 const AdvertisementSurface = artifacts.require("AdvertisementSurface");
 const AdvertisementSurfaceAuction = artifacts.require("AdvertisementSurfaceAuction");
+const IAdvertisementSurfaceAuction = artifacts.require("IAdvertisementSurfaceAuction");
+
 
 const MockDai = artifacts.require("MockDai");
 
@@ -88,7 +90,7 @@ contract("AdvertisementSurface", accounts => {
                 "bid":        BigInt("10000"),
                 "startTime":  BigInt(unixTime + 100),
                 "duration":   BigInt("120"),
-                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+                "state": IAdvertisementSurfaceAuction.enums.BidState.Active,
             });
 
             let bidCount = await advSurfaceAuction.getBidCount();
@@ -109,7 +111,7 @@ contract("AdvertisementSurface", accounts => {
                 "bid":        BigInt("10000"),
                 "startTime":  BigInt(unixTime + 100),
                 "duration":   BigInt("120"),
-                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+                "state": IAdvertisementSurfaceAuction.enums.BidState.Active,
             });
 
             await advSurfaceAuction.newBid({
@@ -120,7 +122,7 @@ contract("AdvertisementSurface", accounts => {
                 "bid":        BigInt("10000"),
                 "startTime":  BigInt(unixTime + 220),
                 "duration":   BigInt("120"),
-                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+                "state": IAdvertisementSurfaceAuction.enums.BidState.Active,
             });
 
             let bidCount = await advSurfaceAuction.getBidCount();
@@ -141,7 +143,7 @@ contract("AdvertisementSurface", accounts => {
                 "bid":        BigInt("100000"),
                 "startTime":  BigInt(unixTime + 100),
                 "duration":   BigInt("120"),
-                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+                "state": IAdvertisementSurfaceAuction.enums.BidState.Active,
             });
 
             await catchRevert(advSurfaceAuction.newBid({
@@ -152,7 +154,7 @@ contract("AdvertisementSurface", accounts => {
                 "bid":        BigInt("10000"),
                 "startTime":  BigInt(unixTime + 120),
                 "duration":   BigInt("120"),
-                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+                "state": IAdvertisementSurfaceAuction.enums.BidState.Active,
             }));
         });
 
@@ -165,7 +167,7 @@ contract("AdvertisementSurface", accounts => {
                 "bid":        BigInt("100000"),
                 "startTime":  BigInt(unixTime + 100),
                 "duration":   BigInt("120"),
-                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+                "state": IAdvertisementSurfaceAuction.enums.BidState.Active,
             });
 
             await catchRevert(advSurfaceAuction.newBid({
@@ -176,7 +178,7 @@ contract("AdvertisementSurface", accounts => {
                 "bid":        BigInt("10000"),
                 "startTime":  BigInt(unixTime + 80),
                 "duration":   BigInt("120"),
-                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+                "state": IAdvertisementSurfaceAuction.enums.BidState.Active,
             }));
         });
 
@@ -189,7 +191,7 @@ contract("AdvertisementSurface", accounts => {
                 "bid":        BigInt("100000"),
                 "startTime":  BigInt(unixTime + 100),
                 "duration":   BigInt("120"),
-                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+                "state": IAdvertisementSurfaceAuction.enums.BidState.Active,
             });
 
             await catchRevert(advSurfaceAuction.newBid({
@@ -200,7 +202,7 @@ contract("AdvertisementSurface", accounts => {
                 "bid":        BigInt("10000"),
                 "startTime":  BigInt(unixTime + 120),
                 "duration":   BigInt("20"),
-                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+                "state": IAdvertisementSurfaceAuction.enums.BidState.Active,
             }));
         });
 
@@ -213,7 +215,7 @@ contract("AdvertisementSurface", accounts => {
                 "bid":        BigInt("100000"),
                 "startTime":  BigInt(unixTime + 100),
                 "duration":   BigInt("120"),
-                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+                "state": IAdvertisementSurfaceAuction.enums.BidState.Active,
             });
 
             await catchRevert(advSurfaceAuction.newBid({
@@ -224,7 +226,7 @@ contract("AdvertisementSurface", accounts => {
                 "bid":        BigInt("10000"),
                 "startTime":  BigInt(unixTime + 80),
                 "duration":   BigInt("200"),
-                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+                "state": IAdvertisementSurfaceAuction.enums.BidState.Active,
             }));
         });
 
@@ -237,7 +239,7 @@ contract("AdvertisementSurface", accounts => {
                 "bid":        BigInt("1000"),
                 "startTime":  BigInt(unixTime + 100),
                 "duration":   BigInt("120"),
-                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+                "state": IAdvertisementSurfaceAuction.enums.BidState.Active,
             });
 
             await advSurfaceAuction.newBid({
@@ -248,7 +250,7 @@ contract("AdvertisementSurface", accounts => {
                 "bid":        BigInt("10000"),
                 "startTime":  BigInt(unixTime + 120),
                 "duration":   BigInt("20"),
-                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+                "state": IAdvertisementSurfaceAuction.enums.BidState.Active,
             });
 
             let bidCount = await advSurfaceAuction.getBidCount();
@@ -263,8 +265,8 @@ contract("AdvertisementSurface", accounts => {
 
             let oldBid = await advSurfaceAuction.getMyBid(BigInt("0"));
             let newBid = await advSurfaceAuction.getMyBid(BigInt("1"));
-            assert.equal(AdvertisementSurfaceAuction.enums.BidState.Outbid, oldBid[1].state);
-            assert.equal(AdvertisementSurfaceAuction.enums.BidState.Active, newBid[1].state);
+            assert.equal(IAdvertisementSurfaceAuction.enums.BidState.Outbid, oldBid[1].state);
+            assert.equal(IAdvertisementSurfaceAuction.enums.BidState.Active, newBid[1].state);
         });
 
         it("add two bids overlap inner bigger worth refund outbid bid", async () => {
@@ -276,7 +278,7 @@ contract("AdvertisementSurface", accounts => {
                 "bid":        BigInt("1000"),
                 "startTime":  BigInt(unixTime + 100),
                 "duration":   BigInt("120"),
-                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+                "state": IAdvertisementSurfaceAuction.enums.BidState.Active,
             });
 
             await advSurfaceAuction.newBid({
@@ -287,7 +289,7 @@ contract("AdvertisementSurface", accounts => {
                 "bid":        BigInt("10000"),
                 "startTime":  BigInt(unixTime + 120),
                 "duration":   BigInt("20"),
-                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+                "state": IAdvertisementSurfaceAuction.enums.BidState.Active,
             });
 
             let oldBid = await advSurfaceAuction.getMyBid(BigInt("0"));
@@ -298,7 +300,7 @@ contract("AdvertisementSurface", accounts => {
 
             oldBid = await advSurfaceAuction.getMyBid(BigInt("0"));
             assert.equal(daiBalanceBefore.add(new web3.utils.BN(120*1000)).toString(), daiBalanceAfter.toString());
-            assert.equal(AdvertisementSurfaceAuction.enums.BidState.Finished, oldBid[1].state);
+            assert.equal(IAdvertisementSurfaceAuction.enums.BidState.Finished, oldBid[1].state);
         });
 
         it("add two bids overlap inner bigger worth refund outbid bid not bidder", async () => {
@@ -310,7 +312,7 @@ contract("AdvertisementSurface", accounts => {
                 "bid":        BigInt("1000"),
                 "startTime":  BigInt(unixTime + 100),
                 "duration":   BigInt("120"),
-                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+                "state": IAdvertisementSurfaceAuction.enums.BidState.Active,
             });
 
             await advSurfaceAuction.newBid({
@@ -321,7 +323,7 @@ contract("AdvertisementSurface", accounts => {
                 "bid":        BigInt("10000"),
                 "startTime":  BigInt(unixTime + 120),
                 "duration":   BigInt("20"),
-                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+                "state": IAdvertisementSurfaceAuction.enums.BidState.Active,
             });
 
             let oldBid = await advSurfaceAuction.getMyBid(BigInt("0"));
@@ -337,7 +339,7 @@ contract("AdvertisementSurface", accounts => {
                 "bid":        BigInt("1000"),
                 "startTime":  BigInt(unixTime + 100),
                 "duration":   BigInt("120"),
-                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+                "state": IAdvertisementSurfaceAuction.enums.BidState.Active,
             });
 
             await advSurfaceAuction.newBid({
@@ -348,7 +350,7 @@ contract("AdvertisementSurface", accounts => {
                 "bid":        BigInt("10000"),
                 "startTime":  BigInt(unixTime + 120),
                 "duration":   BigInt("20"),
-                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+                "state": IAdvertisementSurfaceAuction.enums.BidState.Active,
             });
 
             let newBid = await advSurfaceAuction.getMyBid(BigInt("1"));
@@ -364,7 +366,7 @@ contract("AdvertisementSurface", accounts => {
                 "bid":        BigInt("1000"),
                 "startTime":  BigInt(unixTime + 100),
                 "duration":   BigInt("120"),
-                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+                "state": IAdvertisementSurfaceAuction.enums.BidState.Active,
             });
 
             await advSurfaceAuction.newBid({
@@ -375,7 +377,7 @@ contract("AdvertisementSurface", accounts => {
                 "bid":        BigInt("100"),
                 "startTime":  BigInt(unixTime + 240),
                 "duration":   BigInt("20"),
-                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+                "state": IAdvertisementSurfaceAuction.enums.BidState.Active,
             });
 
             await advSurfaceAuction.newBid({
@@ -386,7 +388,7 @@ contract("AdvertisementSurface", accounts => {
                 "bid":        BigInt("10000"),
                 "startTime":  BigInt(unixTime + 80),
                 "duration":   BigInt("300"),
-                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+                "state": IAdvertisementSurfaceAuction.enums.BidState.Active,
             });
 
             let bidCount = await advSurfaceAuction.getBidCount();
@@ -402,9 +404,9 @@ contract("AdvertisementSurface", accounts => {
             let oldBid = await advSurfaceAuction.getMyBid(BigInt("0"));
             let old2Bid = await advSurfaceAuction.getMyBid(BigInt("1"));
             let newBid = await advSurfaceAuction.getMyBid(BigInt("2"));
-            assert.equal(AdvertisementSurfaceAuction.enums.BidState.Outbid, oldBid[1].state);
-            assert.equal(AdvertisementSurfaceAuction.enums.BidState.Outbid, old2Bid[1].state);
-            assert.equal(AdvertisementSurfaceAuction.enums.BidState.Active, newBid[1].state);
+            assert.equal(IAdvertisementSurfaceAuction.enums.BidState.Outbid, oldBid[1].state);
+            assert.equal(IAdvertisementSurfaceAuction.enums.BidState.Outbid, old2Bid[1].state);
+            assert.equal(IAdvertisementSurfaceAuction.enums.BidState.Active, newBid[1].state);
         });
 
         it("add single bid to not existing surface", async () => {
@@ -416,7 +418,7 @@ contract("AdvertisementSurface", accounts => {
                 "bid":        BigInt("10000"),
                 "startTime":  BigInt(unixTime + 100),
                 "duration":   BigInt("120"),
-                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+                "state": IAdvertisementSurfaceAuction.enums.BidState.Active,
             }));
         });
 
@@ -429,7 +431,7 @@ contract("AdvertisementSurface", accounts => {
                 "bid":        BigInt("10000"),
                 "startTime":  BigInt(100),
                 "duration":   BigInt("120"),
-                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+                "state": IAdvertisementSurfaceAuction.enums.BidState.Active,
             }));
         });
 
@@ -442,7 +444,7 @@ contract("AdvertisementSurface", accounts => {
                 "bid":        BigInt("10000"),
                 "startTime":  BigInt(unixTime + 100),
                 "duration":   BigInt("120"),
-                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+                "state": IAdvertisementSurfaceAuction.enums.BidState.Active,
             }));
         });
 
@@ -455,7 +457,7 @@ contract("AdvertisementSurface", accounts => {
                 "bid":        BigInt("10000"),
                 "startTime":  BigInt(unixTime + 100),
                 "duration":   BigInt("120"),
-                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+                "state": IAdvertisementSurfaceAuction.enums.BidState.Active,
             }));
         });
 
@@ -468,7 +470,7 @@ contract("AdvertisementSurface", accounts => {
                 "bid":        BigInt("10000"),
                 "startTime":  BigInt(unixTime + 100),
                 "duration":   BigInt("120"),
-                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+                "state": IAdvertisementSurfaceAuction.enums.BidState.Active,
             }));
         });
 
@@ -481,7 +483,7 @@ contract("AdvertisementSurface", accounts => {
                 "bid":        BigInt("0"),
                 "startTime":  BigInt(unixTime + 100),
                 "duration":   BigInt("120"),
-                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+                "state": IAdvertisementSurfaceAuction.enums.BidState.Active,
             }));
         });
 
@@ -494,7 +496,7 @@ contract("AdvertisementSurface", accounts => {
                 "bid":        BigInt("10"),
                 "startTime":  BigInt(unixTime + 100),
                 "duration":   BigInt("120"),
-                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+                "state": IAdvertisementSurfaceAuction.enums.BidState.Active,
             }));
         });
 
@@ -507,7 +509,7 @@ contract("AdvertisementSurface", accounts => {
                 "bid":        BigInt("1000"),
                 "startTime":  BigInt(unixTime + 100),
                 "duration":   BigInt("0"),
-                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+                "state": IAdvertisementSurfaceAuction.enums.BidState.Active,
             }));
         });
 
@@ -520,7 +522,7 @@ contract("AdvertisementSurface", accounts => {
                 "bid":        BigInt("1000"),
                 "startTime":  BigInt(unixTime + 100),
                 "duration":   BigInt("100"),
-                "state": AdvertisementSurfaceAuction.enums.BidState.Outbid,
+                "state": IAdvertisementSurfaceAuction.enums.BidState.Outbid,
             }));
         });
 
@@ -533,7 +535,7 @@ contract("AdvertisementSurface", accounts => {
                 "bid":        BigInt("1000"),
                 "startTime":  BigInt(unixTime + 100),
                 "duration":   BigInt("100"),
-                "state": AdvertisementSurfaceAuction.enums.BidState.Outbid,
+                "state": IAdvertisementSurfaceAuction.enums.BidState.Outbid,
             }, {from: alice}));
         });
 
@@ -546,7 +548,7 @@ contract("AdvertisementSurface", accounts => {
                 "bid":        BigInt("1000"),
                 "startTime":  BigInt(unixTime + 100),
                 "duration":   BigInt("100"),
-                "state": AdvertisementSurfaceAuction.enums.BidState.Outbid,
+                "state": IAdvertisementSurfaceAuction.enums.BidState.Outbid,
             }, {from: matt}));
         });
 
@@ -559,7 +561,7 @@ contract("AdvertisementSurface", accounts => {
                 "bid":        BigInt("100"),
                 "startTime":  BigInt(unixTime + 1),
                 "duration":   BigInt("1"),
-                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+                "state": IAdvertisementSurfaceAuction.enums.BidState.Active,
             });
 
             let myBid = await advSurfaceAuction.getMyBid(BigInt("0"));
@@ -573,7 +575,7 @@ contract("AdvertisementSurface", accounts => {
             myBid = await advSurfaceAuction.getMyBid(BigInt("0"));
 
             assert.equal(daiBalanceBefore.add(new web3.utils.BN(100)).toString(), daiBalanceAfter.toString());
-            assert.equal(AdvertisementSurfaceAuction.enums.BidState.Finished, myBid[1].state);
+            assert.equal(IAdvertisementSurfaceAuction.enums.BidState.Finished, myBid[1].state);
         });
 
         it("collect not finished", async () => {
@@ -583,9 +585,9 @@ contract("AdvertisementSurface", accounts => {
                 "advERC721":  erc721NFT,
                 "advTokenId": BigInt("1"),
                 "bid":        BigInt("100"),
-                "startTime":  BigInt(unixTime + 1),
+                "startTime":  BigInt(unixTime + 2),
                 "duration":   BigInt("1"),
-                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+                "state": IAdvertisementSurfaceAuction.enums.BidState.Active,
             });
 
             let myBid = await advSurfaceAuction.getMyBid(BigInt("0"));
@@ -602,7 +604,7 @@ contract("AdvertisementSurface", accounts => {
                 "bid":        BigInt("100"),
                 "startTime":  BigInt(unixTime + 1),
                 "duration":   BigInt("1"),
-                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+                "state": IAdvertisementSurfaceAuction.enums.BidState.Active,
             });
 
             assert.equal("LogActive", tx.logs[0].event);
@@ -620,7 +622,7 @@ contract("AdvertisementSurface", accounts => {
                 "bid":        BigInt("100"),
                 "startTime":  BigInt(unixTime + 100),
                 "duration":   BigInt("1"),
-                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+                "state": IAdvertisementSurfaceAuction.enums.BidState.Active,
             });
 
             const tx = await advSurfaceAuction.newBid({
@@ -631,7 +633,7 @@ contract("AdvertisementSurface", accounts => {
                 "bid":        BigInt("1000"),
                 "startTime":  BigInt(unixTime + 100),
                 "duration":   BigInt("2"),
-                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+                "state": IAdvertisementSurfaceAuction.enums.BidState.Active,
             });
 
             assert.equal("LogOutbid", tx.logs[0].event);
@@ -654,7 +656,7 @@ contract("AdvertisementSurface", accounts => {
                 "bid":        BigInt("100"),
                 "startTime":  BigInt(unixTime + 1),
                 "duration":   BigInt("1"),
-                "state": AdvertisementSurfaceAuction.enums.BidState.Active,
+                "state": IAdvertisementSurfaceAuction.enums.BidState.Active,
             });
 
             let myBid = await advSurfaceAuction.getMyBid(BigInt("0"));

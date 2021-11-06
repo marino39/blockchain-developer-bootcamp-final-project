@@ -32,7 +32,6 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
         require(_bid.advERC721 != address(0), "the advERC721 can not be 0 address");
         require(_bid.advTokenId != 0, "the advTokenId need to be grater than 0");
         require(_bid.bid >= _paymentInfo(_bid.surTokenId).minBid, "bid must be greater or equal to minBid");
-        // todo: use oracle here for time
         require(_bid.startTime > block.timestamp, "the startTime needs to be in the future");
         require(_bid.duration > 0, "the duration needs to be grater than 0");
         require(_bid.state == BidState.Active, "the bid must be active");
@@ -62,7 +61,6 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
     }
 
     modifier isFinished(uint256 _bidId) {
-        // todo: use oracle here for time
         require(
             bids[_bidId].state == BidState.Active && bids[_bidId].startTime + bids[_bidId].duration < block.timestamp,
                 "the auction must be finished and delivered"
