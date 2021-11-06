@@ -134,8 +134,7 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
     /// @notice Creates new bid for advertisement surface
     /// @param _bid The bid structure defining the bid
     function newBid(Bid memory _bid) external override validateBid(_bid) checkPayment(_bid.surTokenId, _bid.bid * _bid.duration) {
-        require(_isBetterBid(_bid), "the bid needs to be better than current bids");
-        _bid.state = BidState.Active;
+        _processBid(_bid);
 
         bids.push(_bid);
         uint256 index = bids.length - 1;
@@ -205,7 +204,7 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
         return _bid.duration * _bid.bid;
     }
 
-    function _isBetterBid(Bid memory _bid) internal returns(bool) {
+    function _processBid(Bid memory _bid) internal {
         uint256[] storage activeBids = surTokenIdToActiveBidIds[_bid.surTokenId];
 
         uint256 overlapBidsWorth;
@@ -223,32 +222,33 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
         }
 
         bool isBetter = _getBidWorth(_bid) > overlapBidsWorth;
-        if (isBetter) {
-            uint256 i = 0;
-            while (i < activeBids.length) {
-                uint256 _bid2Id = activeBids[i];
-                Bid storage _bid2 = bids[_bid2Id];
-                if (_bid.startTime <= _bid2.startTime && _bid.startTime + _bid.duration > _bid2.startTime) {
-                    _bid2.state = BidState.Outbid;
-                    _removeBidFromActive(activeBids, i);
-
-                    emit LogOutbid(_bid2.surTokenId, _bid2.bidder, _bid2Id);
-
-                    continue;
-                }
-                if (_bid.startTime >= _bid2.startTime && _bid.startTime < _bid2.startTime + _bid2.duration) {
-                    _bid2.state = BidState.Outbid;
-                    _removeBidFromActive(activeBids, i);
-
-                    emit LogOutbid(_bid2.surTokenId, _bid2.bidder, _bid2Id);
-
-                    continue;
-                }
-                i++;
-            }
+        if (!isBetter) {
+            revert("the bid needs to be better than current bids");
         }
+        _bid.state = BidState.Active;
 
-        return isBetter;
+        uint256 i = 0;
+        while (i < activeBids.length) {
+            uint256 _bid2Id = activeBids[i];
+            Bid storage _bid2 = bids[_bid2Id];
+            if (_bid.startTime <= _bid2.startTime && _bid.startTime + _bid.duration > _bid2.startTime) {
+                _bid2.state = BidState.Outbid;
+                _removeBidFromActive(activeBids, i);
+
+                emit LogOutbid(_bid2.surTokenId, _bid2.bidder, _bid2Id);
+
+                continue;
+            }
+            if (_bid.startTime >= _bid2.startTime && _bid.startTime < _bid2.startTime + _bid2.duration) {
+                _bid2.state = BidState.Outbid;
+                _removeBidFromActive(activeBids, i);
+
+                emit LogOutbid(_bid2.surTokenId, _bid2.bidder, _bid2Id);
+
+                continue;
+            }
+            i++;
+        }
     }
 
     function _removeBidFromActive(uint256[] storage _array, uint256 _index) internal {
