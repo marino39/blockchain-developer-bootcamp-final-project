@@ -52,7 +52,7 @@ export default function Footer() {
                 spacing={4}
                 justify={{ base: 'center', md: 'space-between' }}
                 align={{ base: 'left', md: 'center' }}>
-                <Text>© 2021 AdvertisementMarket - Marcin Gorzynski</Text>
+                <Text>© 2021 dAdvrtMarket - Marcin Gorzynski</Text>
                 <Stack direction={'row'} spacing={6}>
                     <SocialButton label={'Twitter'} href={'#'}>
                         <FaTwitter />
