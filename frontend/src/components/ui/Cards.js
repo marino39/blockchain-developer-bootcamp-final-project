@@ -1,4 +1,4 @@
-import {Box, Button, Flex, Image, SimpleGrid, Stack, useColorModeValue} from "@chakra-ui/react";
+import {Box, Button, Flex, Image, SimpleGrid, useColorModeValue} from "@chakra-ui/react";
 import {useState} from "react";
 
 
@@ -34,20 +34,9 @@ function Card(props) {
                 <Flex justifyContent="space-between" alignContent="center">
                     <Box fontSize="2xl" color={useColorModeValue('gray.800', 'white')}>
                         <Box as="span" color={'gray.600'} fontSize="md">
-                            Location: &nbsp;
-                        </Box>
-                        <Box as="span" fontSize="md">
-                            New York Times Square
-                        </Box>
-                    </Box>
-                </Flex>
-
-                <Flex justifyContent="space-between" alignContent="center">
-                    <Box fontSize="2xl" color={useColorModeValue('gray.800', 'white')}>
-                        <Box as="span" color={'gray.600'} fontSize="md">
                             Min Bid: &nbsp;
                         </Box>
-                        <Box as="span" fontSize="md">
+                        <Box as="span" fontSize="sm">
                             {item.minPrice.toFixed(2)} {item.tokenSymbol}
                         </Box>
                     </Box>
@@ -57,7 +46,7 @@ function Card(props) {
 }
 
 export default function CardList(props) {
-    const {items, pageSize, onLoadPage} = props;
+    const {items, pageSize} = props;
     const [page, setPage] = useState(1);
 
     let pSize = 6;
