@@ -74,9 +74,9 @@ export default function CardList(props) {
                 setPage(page - 1);
             }}>{page - 1}</Button>)}
             <Button m={1}>{page}</Button>
-            <Button m={1} onClick={() => {
+            {items.length > page * pSize && (<Button m={1} onClick={() => {
                 setPage(page + 1);
-            }}>{page + 1}</Button>
+            }}>{page + 1}</Button>)}
         </Flex>
     </Box>)
 }
