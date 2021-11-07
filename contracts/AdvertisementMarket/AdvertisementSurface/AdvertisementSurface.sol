@@ -8,31 +8,31 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "./IAdvertisementSurface.sol";
 import "./AdvertisementSurfacePayments.sol";
 
-// @author Marcin Gorzynski
-// @title The Advertisement Surface NFT
-// @notice The ERC721 tokenized advertisement surface
+/// @author Marcin Gorzynski
+/// @title The Advertisement Surface NFT
+/// @notice The ERC721 tokenized advertisement surface
 contract AdvertisementSurface is IAdvertisementSurface, AdvertisementSurfacePayments, ERC721URIStorage, ERC721Enumerable {
 
     using SafeMath for uint256;
 
+    /// @notice The contract constructor
     constructor() ERC721("Advertisement Surface", "ADS") {}
 
-    //
-    // @dev See {IERC165-supportsInterface}.
-    //
+    ///
+    /// @dev See {IERC165-supportsInterface}.
+    ///
     function supportsInterface(
         bytes4 interfaceId
     ) public view virtual override(ERC721, IERC165, ERC721Enumerable) returns (bool) {
         return ERC721Enumerable.supportsInterface(interfaceId) ||
-            interfaceId == type(IAdvertisementSurface).interfaceId ||
-            interfaceId == type(IAdvertisementSurfacePayments).interfaceId;
+        interfaceId == type(IAdvertisementSurface).interfaceId ||
+        interfaceId == type(IAdvertisementSurfacePayments).interfaceId;
     }
 
-    // @notice The function that tokenize the advertisement surface. Once activated
-    // advertisement time slots can be auctioned to clients.
-    // @param _AdsInfo The advertisement surface description that consists of on-chain data
-    // necessary for auctioning process and off-chain metadata useful for clients e.g. location,
-    // size, resolution.
+    /// @notice The function that tokenize the advertisement surface. Once activated
+    /// advertisement time slots can be auctioned to clients.
+    /// @param _tokenURI The advertisement surface token id
+    /// @param _paymentInfo The advertisement surface payment structure
     function registerAdvertisementSurface(string memory _tokenURI, PaymentInfo memory _paymentInfo) external override {
         require(_paymentInfo.erc20 != address(0));
         require(_paymentInfo.minBid != 0);
@@ -42,31 +42,31 @@ contract AdvertisementSurface is IAdvertisementSurface, AdvertisementSurfacePaym
         _setPaymentInfo(tokenId, _paymentInfo);
     }
 
-    // @notice The function that checks is given tokenId exists
-    // @param _tokenId The id of the advertisement surface
-    // @returns If token id exists
-    function advertisementSurfaceExists(uint256 _tokenId) external view override returns(bool) {
+    /// @notice The function that checks is given tokenId exists
+    /// @param _tokenId The id of the advertisement surface
+    /// @return If token id exists
+    function advertisementSurfaceExists(uint256 _tokenId) external view override returns (bool) {
         return _exists(_tokenId);
     }
 
-    // @notice It gets PaymentInfo by the token id
-    // @param _tokenId The id of the token for which the info is returned
-    // @returns The payment info structure
-    function getPaymentInfo(uint256 _tokenId) public view override returns(PaymentInfo memory) {
+    /// @notice It gets PaymentInfo by the token id
+    /// @param _tokenId The id of the token for which the info is returned
+    /// @return The payment info structure
+    function getPaymentInfo(uint256 _tokenId) public view override returns (PaymentInfo memory) {
         require(_exists(_tokenId));
         return _getPaymentInfo(_tokenId);
     }
 
-    // @notice It sets PaymentInfo by the token id
-    // @param _tokenId The id of the token for which the info is set
-    // @param _paymentInfo The paymentInfo to update
+    /// @notice It sets PaymentInfo by the token id
+    /// @param _tokenId The id of the token for which the info is set
+    /// @param _paymentInfo The paymentInfo to update
     function setPaymentInfo(uint256 _tokenId, PaymentInfo memory _paymentInfo) external override {
         require(_exists(_tokenId));
         require(msg.sender == ownerOf(_tokenId));
         _setPaymentInfo(_tokenId, _paymentInfo);
     }
 
-    function _mint() private returns(uint256) {
+    function _mint() private returns (uint256) {
         uint256 tokenId = totalSupply().add(1);
         _safeMint(msg.sender, tokenId);
         return tokenId;

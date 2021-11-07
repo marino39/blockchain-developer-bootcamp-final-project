@@ -7,25 +7,35 @@ import "./IAdvertisementSurfaceAuction.sol";
 import "./AdvertisementSurfacePayments.sol";
 import "./IAdvertisementSurface.sol";
 
-// @author Marcin Gorzynski
-// @title The Advertisement Surface Auction functionality
-// @notice The contract used to auctioning advertisement on advertisement surfaces
+/// @author Marcin Gorzynski
+/// @title The Advertisement Surface Auction functionality
+/// @notice The contract used to auctioning advertisement on advertisement surfaces
 contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
 
     using SafeMath for uint256;
 
-    IAdvertisementSurface advertisementSurface;
+    /// @dev The advertisement surface ERC721 contract
+    IAdvertisementSurface private advertisementSurface;
 
+    /// @notice The event emitted when new highest bid is added
     event LogActive(uint256 indexed tokenId, address indexed bidder, uint256 indexed bidId);
+    /// @notice The event emitted when bid is outbid by another bid
     event LogOutbid(uint256 indexed tokenId, address indexed bidder, uint256 indexed bidId);
+    /// @notice The event emitted when bid is finished, advertisement has been executed and ERC721 has been paid
     event LogFinished(uint256 indexed tokenId, address indexed receiver, uint256 indexed bidId);
 
+    /// @dev The array of all bids ever made
     Bid[] private bids;
 
-    mapping (uint256 => uint256[]) private surTokenIdToBidIds;
-    mapping (uint256 => uint256[]) private surTokenIdToActiveBidIds;
-    mapping (address => uint256[]) private addressToBidIds;
+    /// @dev The mapping between advertisement surface token id and array of the bids made for that surface
+    mapping(uint256 => uint256[]) private surTokenIdToBidIds;
+    /// @dev The mapping between advertisement surface token id and array of active the bids made for that surface
+    mapping(uint256 => uint256[]) private surTokenIdToActiveBidIds;
+    /// @dev The mapping between bidders address and array of the bids made from that address
+    mapping(address => uint256[]) private addressToBidIds;
 
+    /// @notice The modifier validating bid structure
+    /// @param _bid The bid to be validated
     modifier validateBid(Bid memory _bid) {
         require(_surfaceExists(_bid.surTokenId), "advertisement surface do not exist");
         require(_bid.bidder == msg.sender, "bidder must be the same as transaction sender");
@@ -38,6 +48,9 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
         _;
     }
 
+    /// @notice The modifier checking if payment can be done from msg.sender
+    /// @param _tokenId The advertisement surface token id
+    /// @param _amount The amount of erc20 token to be transferred
     modifier checkPayment(uint256 _tokenId, uint256 _amount) {
         IERC20 erc20 = IERC20(advertisementSurface.getPaymentInfo(_tokenId).erc20);
         require(erc20.allowance(msg.sender, address(this)) >= _amount, "allowance missing for token transfer");
@@ -45,36 +58,46 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
         _;
     }
 
+    /// @notice The modifier checking is bidder is executing transaction
+    /// @param _bidId The bid id for which check is being done
     modifier isBidder(uint256 _bidId) {
         require(msg.sender == bids[_bidId].bidder, "you must be a bidder");
         _;
     }
 
+    /// @notice The modifier checking if advertisement surface owner is executing transaction
+    /// @param _bidId The bid id for which check is being done
     modifier isSurfaceOwner(uint256 _bidId) {
         require(msg.sender == advertisementSurface.ownerOf(bids[_bidId].surTokenId), "you must be surface owner");
         _;
     }
 
+    /// @notice The modifier checking if bid has been outbid
+    /// @param _bidId The bid id for which check is being done
     modifier isOutBid(uint256 _bidId) {
         require(bids[_bidId].state == BidState.Outbid, "the state needs to be outbid");
         _;
     }
 
+    /// @notice The modifier checking if bid has been finished and executed
+    /// @param _bidId The bid id for which check is being done
     modifier isFinished(uint256 _bidId) {
         require(
             bids[_bidId].state == BidState.Active && bids[_bidId].startTime + bids[_bidId].duration < block.timestamp,
-                "the auction must be finished and delivered"
+            "the auction must be finished and delivered"
         );
         _;
     }
 
+    /// @notice The constructor of advertisement surface auction contract
+    /// @param _advertisementSurface The advertisement surface ERC721 contract address
     constructor(address _advertisementSurface) {
         advertisementSurface = IAdvertisementSurface(_advertisementSurface);
     }
 
     /// @notice Gets the number of bids in the contract
     /// @return Number of bids
-    function getBidCount() external override view returns(uint256) {
+    function getBidCount() external override view returns (uint256) {
         return bids.length;
     }
 
@@ -160,7 +183,7 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
         uint256 preBalance = erc20Contract.balanceOf(address(this));
         erc20Contract.transfer(msg.sender, bid.bid * bid.duration);
 
-        // this will never happen as re-entrance would fail at validateBid, however it's here to satisfy project requirements
+        /// this will never happen as re-entrance would fail at validateBid, however it's here to satisfy project requirements
         assert(preBalance - erc20Contract.balanceOf(address(this)) == bid.bid * bid.duration);
 
         emit LogFinished(bid.surTokenId, msg.sender, _bidId);
@@ -187,7 +210,7 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
         uint256 preBalance = erc20Contract.balanceOf(address(this));
         erc20Contract.transfer(msg.sender, bid.bid * bid.duration);
 
-        // this will never happen as re-entrance would fail at validateBid, however it's here to satisfy project requirements
+        /// this will never happen as re-entrance would fail at validateBid, however it's here to satisfy project requirements
         assert(preBalance - erc20Contract.balanceOf(address(this)) == bid.bid * bid.duration);
 
         emit LogFinished(bid.surTokenId, msg.sender, _bidId);
@@ -196,19 +219,22 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
     /// @notice Calculates how much the bid is worth. It's required to decide which bid outbids the other bid.
     /// @param _bid The bid structure
     /// @return The number of tokens that can be collected or refunded from the bid
-    function getBidWorth(Bid memory _bid) external override pure returns(uint256) {
+    function getBidWorth(Bid memory _bid) external override pure returns (uint256) {
         return _getBidWorth(_bid);
     }
 
-    function _getBidWorth(Bid memory _bid) internal pure returns(uint256) {
+    function _getBidWorth(Bid memory _bid) internal pure returns (uint256) {
         return _bid.duration * _bid.bid;
     }
 
+    /// @notice Process new bid checking if it's highest bid and altering states of all bids
+    /// @param _bid The new bid
     function _processBid(Bid memory _bid) internal {
         uint256[] storage activeBids = surTokenIdToActiveBidIds[_bid.surTokenId];
 
+        uint256 i = 0;
         uint256 overlapBidsWorth;
-        for (uint256 i = 0; i < activeBids.length; i++) {
+        for (i = 0; i < activeBids.length; i++) {
             uint256 _bid2Id = activeBids[i];
             Bid memory _bid2 = bids[_bid2Id];
             if (_bid.startTime <= _bid2.startTime && _bid.startTime + _bid.duration > _bid2.startTime) {
@@ -227,7 +253,7 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
         }
         _bid.state = BidState.Active;
 
-        uint256 i = 0;
+        i = 0;
         while (i < activeBids.length) {
             uint256 _bid2Id = activeBids[i];
             Bid storage _bid2 = bids[_bid2Id];
@@ -251,17 +277,24 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
         }
     }
 
+    /// @notice Removed the bid from the array
+    /// @param _array The array from which bid should be removed
+    /// @param _index The index of the bid
     function _removeBidFromActive(uint256[] storage _array, uint256 _index) internal {
         require(_index < _array.length, "index out of bounds");
-        _array[_index] = _array[_array.length-1];
+        _array[_index] = _array[_array.length - 1];
         _array.pop();
     }
 
-    function _surfaceExists(uint256 _tokenId) internal view returns(bool) {
+    /// @notice Checks if advertisement surface exists
+    /// @param _tokenId The token id existence to be checked
+    function _surfaceExists(uint256 _tokenId) internal view returns (bool) {
         return advertisementSurface.advertisementSurfaceExists(_tokenId);
     }
 
-    function _paymentInfo(uint256 _tokenId) internal view returns(IAdvertisementSurface.PaymentInfo memory) {
+    /// @notice Gets payment info for given advertisement surface token
+    /// @param _tokenId The token id of the advertisement surface
+    function _paymentInfo(uint256 _tokenId) internal view returns (IAdvertisementSurface.PaymentInfo memory) {
         return advertisementSurface.getPaymentInfo(_tokenId);
     }
 
