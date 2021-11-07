@@ -9,7 +9,7 @@ module.exports = async function (deployer, network, accounts) {
     const advSurface = await AdvertisementSurface.deployed();
     await deployer.deploy(AdvertisementSurfaceAuction, advSurface.address);
 
-    if (network === "development") {
+    if (network === "develop") {
         await deployer.deploy(MockDai);
     }
 };
