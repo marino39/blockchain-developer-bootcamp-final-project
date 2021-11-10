@@ -2,59 +2,57 @@ import LandingLayout from "../components/layouts/LandingLayout";
 import CardList from "../components/ui/Cards";
 import {Button, Flex, Spacer, Text} from "@chakra-ui/react";
 import {BiPlus} from "react-icons/all";
+import {useWeb3Context} from "web3-react";
+
+import AdvertisementSurface from "../contracts/AdvertisementSurface.json"
+import {useEffect, useState} from "react";
 
 function MySurfaces(props) {
-    const items = [
-        {
-            isNew: true,
-            imageURL: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2F34%2F86%2F6d%2F34866d3ad6c701dc0cfb1c5cffa4c3b4.jpg&f=1&nofb=1",
-            name: "The New York Digital Billboard",
-            location: "Times Square, New York, Manhattan, New York, United States of America",
-            tokenSymbol: "DAI",
-            minPrice: 10,
-        },
-        {
-            isNew: true,
-            imageURL: "https://o.aolcdn.com/images/dims?quality=85&image_uri=https:%2F%2Fs.aolcdn.com%2Fhss%2Fstorage%2Fmidas%2F7fd9af0fa2e664a83a5f425d17fb57b4%2F205804456%2Fpiccadillylights.jpg&client=amp-blogside-v2&signature=1e3e05935efd274642f0f8fa188814ca1c90e801",
-            name: "Piccadilly Circus' billboard #1",
-            location: "Piccadilly Circus, London, United Kingdom",
-            tokenSymbol: "DAI",
-            minPrice: 10,
-        },
+    const context = useWeb3Context();
+    const [items, setItems] = useState([]);
+    const [balance, setBalance] = useState(0);
 
-        {
-            isNew: true,
-            imageURL: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2F34%2F86%2F6d%2F34866d3ad6c701dc0cfb1c5cffa4c3b4.jpg&f=1&nofb=1",
-            name: "The New York Digital Billboard",
-            location: "Times Square, New York, Manhattan, New York, United States of America",
-            tokenSymbol: "DAI",
-            minPrice: 10,
-        },
-        {
-            isNew: true,
-            imageURL: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2F34%2F86%2F6d%2F34866d3ad6c701dc0cfb1c5cffa4c3b4.jpg&f=1&nofb=1",
-            name: "The New York Digital Billboard",
-            location: "Times Square, New York, Manhattan, New York, United States of America",
-            tokenSymbol: "DAI",
-            minPrice: 10,
-        },
-        {
-            isNew: true,
-            imageURL: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2F34%2F86%2F6d%2F34866d3ad6c701dc0cfb1c5cffa4c3b4.jpg&f=1&nofb=1",
-            name: "The New York Digital Billboard",
-            location: "Times Square, New York, Manhattan, New York, United States of America",
-            tokenSymbol: "DAI",
-            minPrice: 10,
-        },
-        {
-            isNew: true,
-            imageURL: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2F34%2F86%2F6d%2F34866d3ad6c701dc0cfb1c5cffa4c3b4.jpg&f=1&nofb=1",
-            name: "The New York Digital Billboard",
-            location: "Times Square, New York, Manhattan, New York, United States of America",
-            tokenSymbol: "DAI",
-            minPrice: 10,
-        },
-    ]
+    const advrtSurface = new context.library.eth.Contract(
+        AdvertisementSurface.abi,
+        AdvertisementSurface.networks["5777"].address
+    );
+
+    useEffect(async () => {
+        let advertisementSurfacesList = []
+        for (let i = 0; i < balance; i++) {
+            let tokenId = await advrtSurface.methods.tokenOfOwnerByIndex(context.account, i).call();
+            let tokenURI = await advrtSurface.methods.tokenURI(tokenId).call();
+
+            let ipfsGatewayURL = 'https://ipfs.io/ipfs/' + tokenURI.substr(7);
+
+            let response = await fetch(ipfsGatewayURL);
+            let data = await response.json();
+
+            advertisementSurfacesList.push({tokenId: tokenId, tokenURI: tokenURI, data: data})
+        }
+
+        let newItems = []
+        for (let i = 0; i < advertisementSurfacesList.length; i++) {
+            let advSurf = advertisementSurfacesList[i];
+            newItems.push({
+                tokenId: advSurf.tokenId,
+                name: advSurf.data.properties.name,
+                imageURL: advSurf.data.properties.image,
+                tokenSymbol: "DAI",
+                minPrice: 10,
+            });
+        }
+
+        setItems(newItems);
+    }, [balance])
+
+    advrtSurface.methods.balanceOf(context.account).call().then(
+        (newBalance) => {
+            if (balance !== newBalance) {
+                setBalance(newBalance);
+            }
+        }
+    );
 
     return (
         <LandingLayout>

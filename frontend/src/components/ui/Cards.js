@@ -5,13 +5,12 @@ import {useState} from "react";
 function Card(props) {
     const {item} = props
     return (
-        <Box
-            bg={useColorModeValue('white', 'gray.800')}
-            maxW="sm"
-            borderWidth="1px"
-            rounded="lg"
-            shadow="lg"
-            position="relative">
+        <Box key={item.tokenId}
+             bg={useColorModeValue('white', 'gray.800')}
+             borderWidth="1px"
+             rounded="lg"
+             shadow="lg"
+             position="relative">
 
             <Image
                 src={item.imageURL}
@@ -63,8 +62,8 @@ export default function CardList(props) {
         pageItems.push(items[i]);
     }
 
-    return (<Box w="full" alignItems="center" justifyContent="center">
-        <SimpleGrid minChildWidth="300px" spacing={8} m={10}>
+    return (<Box w="full">
+        <SimpleGrid minChildWidth={300} spacing={8} m={10}>
             {pageItems.map((item) =>
                 <Card item={item}/>
             )}
