@@ -36,7 +36,7 @@ function Card(props) {
                             Min Bid: &nbsp;
                         </Box>
                         <Box as="span" fontSize="sm">
-                            {item.minPrice.toFixed(2)} {item.tokenSymbol}
+                            {item.minBid.toFixed(2)} {item.tokenSymbol}
                         </Box>
                     </Box>
                 </Flex>

@@ -4,7 +4,11 @@ import {Button, Flex, Spacer, Text} from "@chakra-ui/react";
 import {BiPlus} from "react-icons/all";
 import {useWeb3Context} from "web3-react";
 
+import {getJsonFromIPFS} from "../utils/ipfsUtils"
+
 import AdvertisementSurface from "../contracts/AdvertisementSurface.json"
+import ERC20 from "../contracts/ERC20.json"
+
 import {useEffect, useState} from "react";
 
 function MySurfaces(props) {
@@ -22,24 +26,34 @@ function MySurfaces(props) {
         for (let i = 0; i < balance; i++) {
             let tokenId = await advrtSurface.methods.tokenOfOwnerByIndex(context.account, i).call();
             let tokenURI = await advrtSurface.methods.tokenURI(tokenId).call();
+            let tokenPayment = await advrtSurface.methods.getPaymentInfo(tokenId).call();
 
-            let ipfsGatewayURL = 'https://ipfs.io/ipfs/' + tokenURI.substr(7);
+            let erc20 = new context.library.eth.Contract(ERC20.abi, tokenPayment.erc20);
+            let tokenSymbol = await erc20.methods.symbol().call();
+            let tokenDecimals = await erc20.methods.decimals().call();
 
-            let response = await fetch(ipfsGatewayURL);
-            let data = await response.json();
+            let minBid = tokenPayment.minBid / (10 ** tokenDecimals);
 
-            advertisementSurfacesList.push({tokenId: tokenId, tokenURI: tokenURI, data: data})
+            let metadata = await getJsonFromIPFS(tokenURI.substr(7));
+            advertisementSurfacesList.push({
+                tokenId: tokenId,
+                tokenURI: tokenURI,
+                metadata: metadata,
+                tokenSymbol: tokenSymbol,
+                minBid: minBid
+            });
         }
 
-        let newItems = []
+        let newItems = [];
         for (let i = 0; i < advertisementSurfacesList.length; i++) {
             let advSurf = advertisementSurfacesList[i];
+            console.log(advSurf);
             newItems.push({
                 tokenId: advSurf.tokenId,
-                name: advSurf.data.properties.name,
-                imageURL: advSurf.data.properties.image,
-                tokenSymbol: "DAI",
-                minPrice: 10,
+                name: advSurf.metadata.properties.name,
+                imageURL: advSurf.metadata.properties.image,
+                tokenSymbol: advSurf.tokenSymbol,
+                minBid: advSurf.minBid,
             });
         }
 

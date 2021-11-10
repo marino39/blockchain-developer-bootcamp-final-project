@@ -13,7 +13,7 @@ module.exports = async function (callback) {
             "QmXasBSgmZrtRnxvEMZk8cSYPGogMnUexNVW8ynLEq9CK9",
             {
                 "erc20": dai.address,
-                "minBid": BigInt("100")
+                "minBid": BigInt("10000000000000000000")
             }
         );
 
@@ -21,7 +21,7 @@ module.exports = async function (callback) {
             "QmaWeYNcqwPxM3aoAwS2GoicPoGSo79eny6EZL7Pe4Jkrx",
             {
                 "erc20": dai.address,
-                "minBid": BigInt("10000")
+                "minBid": BigInt("100000000000000000")
             }
         );
     } else {
