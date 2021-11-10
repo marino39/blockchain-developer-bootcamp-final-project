@@ -4,6 +4,7 @@ import {Button, Flex, Spacer, Text} from "@chakra-ui/react";
 import {BiPlus} from "react-icons/all";
 import {useWeb3Context} from "web3-react";
 
+import config from "../config"
 import {getJsonFromIPFS} from "../utils/ipfsUtils"
 
 import AdvertisementSurface from "../contracts/AdvertisementSurface.json"
@@ -18,7 +19,7 @@ function MySurfaces(props) {
 
     const advrtSurface = new context.library.eth.Contract(
         AdvertisementSurface.abi,
-        AdvertisementSurface.networks["5777"].address
+        AdvertisementSurface.networks[config.NetworkIdToChainId[context.networkId].toString()].address
     );
 
     useEffect(async () => {
@@ -47,7 +48,6 @@ function MySurfaces(props) {
         let newItems = [];
         for (let i = 0; i < advertisementSurfacesList.length; i++) {
             let advSurf = advertisementSurfacesList[i];
-            console.log(advSurf);
             newItems.push({
                 tokenId: advSurf.tokenId,
                 name: advSurf.metadata.properties.name,
