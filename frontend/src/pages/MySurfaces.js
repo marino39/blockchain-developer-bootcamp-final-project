@@ -1,16 +1,23 @@
-import LandingLayout from "../components/layouts/LandingLayout";
-import CardList from "../components/ui/Cards";
-import {Button, Flex, Spacer, Text} from "@chakra-ui/react";
-import {BiPlus} from "react-icons/all";
-import {useWeb3Context} from "web3-react";
+import React from "react"
+import {useEffect, useState} from "react";
 
 import config from "../config"
 import {getJsonFromIPFS} from "../utils/ipfsUtils"
 
+import LandingLayout from "../components/layouts/LandingLayout";
+import CardList from "../components/ui/Cards";
+import RegisterSurfaceModal from "../components/ui/RegisterSurfaceModal";
+
+import {
+    Flex,
+    Spacer,
+    Text,
+} from "@chakra-ui/react";
+
+import {useWeb3Context} from "web3-react";
+
 import AdvertisementSurface from "../contracts/AdvertisementSurface.json"
 import ERC20 from "../contracts/ERC20.json"
-
-import {useEffect, useState} from "react";
 
 function MySurfaces(props) {
     const context = useWeb3Context();
@@ -75,9 +82,7 @@ function MySurfaces(props) {
                     My Surfaces
                 </Text>
                 <Spacer/>
-                <Button>
-                    <BiPlus size={20}/>&nbsp; Register Surface
-                </Button>
+                <RegisterSurfaceModal/>
             </Flex>
             <CardList items={items}/>
         </LandingLayout>

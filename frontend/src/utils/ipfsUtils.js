@@ -1,5 +1,10 @@
 import config from "../config";
 
 export async function getJsonFromIPFS(cid) {
-    return (await (await fetch(config.IPFSGatewayURL + cid)).json());
+    let resp = await fetch(config.IPFSGatewayURL + cid)
+    if (!resp.ok) {
+        return null
+    }
+
+    return (await resp.json());
 }
