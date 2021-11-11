@@ -1,0 +1,9 @@
+{
+  "title": "Advertisement Surface Metadata",
+  "properties": {
+    "name": "The Walkway Billboard #1",
+    "description": "The billboard located at the New York Times Square",
+    "location": "Somewhere in the world",
+    "image": "https://i.pinimg.com/736x/01/49/30/014930b4dcdd8a0e524cd14b8317338e--facial-recognition-guerilla-marketing.jpg"
+  }
+}
