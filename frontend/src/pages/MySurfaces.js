@@ -81,17 +81,54 @@ function MySurfaces(props) {
             setItems(newItems);
         }
 
-        let subscription = advrtSurface.events.Transfer(
+        let subscriptionTransferTo = advrtSurface.events.Transfer(
             {filter: {to: context.account}},
-            function (error, event) {
-                console.log(event);
+            async function (error, event) {
+                let tokenId = event.returnValues.tokenId;
+
+                let found = false;
+                for (let i = 0; i < items.length; i++) {
+                    if (items[i].tokenId === tokenId) {
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (!found) {
+                    let newItems = [...items];
+                    let tokenInfo = await getSurfaceInfo(context, advrtSurface, tokenId);
+                    newItems.push(tokenInfoToCard(tokenInfo));
+                    setItems(newItems);
+                }
+            }
+        );
+
+        let subscriptionTransferFrom = advrtSurface.events.Transfer(
+            {filter: {from: context.account}},
+            async function (error, event) {
+                let tokenId = event.returnValues.tokenId;
+
+                let found = false;
+                let newItems = []
+                for (let i = 0; i < items.length; i++) {
+                    if (items[i].tokenId === tokenId) {
+                        found = true;
+                        continue;
+                    }
+                    newItems.push(items[i])
+                }
+
+                if (!found) {
+                    setItems(newItems);
+                }
             }
         );
 
         fetchData();
 
         return () => {
-            subscription.unsubscribe();
+            subscriptionTransferTo.unsubscribe();
+            subscriptionTransferFrom.unsubscribe();
         }
     }, [initialized])
 
