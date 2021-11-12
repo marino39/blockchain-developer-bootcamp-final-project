@@ -41,8 +41,6 @@ function MySurfaces(props) {
             let tokenSymbol = await erc20.methods.symbol().call();
             let tokenDecimals = await erc20.methods.decimals().call();
 
-            console.log(tokenPayment.minBid);
-
             let minBid = (new BigNumber(tokenPayment.minBid)).div(
                 (new BigNumber("10")).pow(new BigNumber(tokenDecimals))
             ).toNumber();
