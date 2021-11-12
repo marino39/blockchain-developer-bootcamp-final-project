@@ -8,7 +8,8 @@ import {
     ModalContent, ModalFooter,
     ModalHeader,
     ModalOverlay,
-    useDisclosure
+    useDisclosure,
+    useToast
 } from "@chakra-ui/react";
 import React, {useState} from "react";
 import {BiPlus} from "react-icons/all";
@@ -17,8 +18,12 @@ import {getJsonFromIPFS} from "../../utils/ipfsUtils";
 
 import AdvertisementSurface from "../../contracts/AdvertisementSurface.json"
 import ERC20 from "../../contracts/ERC20.json"
+import config from "../../config";
+import BigNumber from "bignumber.js";
 
 export default function RegisterSurfaceModal(props) {
+    const toast = useToast()
+
     const context = useWeb3Context();
 
     const {isOpen, onOpen, onClose} = useDisclosure()
@@ -27,6 +32,7 @@ export default function RegisterSurfaceModal(props) {
     const finalRef = React.useRef()
 
     let [erc20Symbol, setERC20Symbol] = useState("?")
+    let tokenDecimals = 0;
 
     function onOpenWrapped() {
         setERC20Symbol("?");
@@ -64,6 +70,7 @@ export default function RegisterSurfaceModal(props) {
                         } else {
                             let erc20 = new context.library.eth.Contract(ERC20.abi, values.erc20);
                             let tokenSymbol = await erc20.methods.symbol().call();
+                            tokenDecimals = await erc20.methods.decimals().call();
                             if (!tokenSymbol) {
                                 errors.erc20 = 'Not ERC20 contract';
                             }
@@ -77,11 +84,32 @@ export default function RegisterSurfaceModal(props) {
                         }
                         return errors;
                     }}
-                    onSubmit={(values, {setSubmitting}) => {
-                        setTimeout(() => {
-                            alert(JSON.stringify(values, null, 2));
-                            setSubmitting(false);
-                        }, 400);
+                    onSubmit={async (values, {setSubmitting}) => {
+                        setSubmitting(true);
+
+                        const advSurface = new context.library.eth.Contract(
+                            AdvertisementSurface.abi,
+                            AdvertisementSurface.networks[config.NetworkIdToChainId[context.networkId].toString()].address
+                        );
+
+                        const minBid = (new BigNumber(values.minBid)).multipliedBy(
+                            (new BigNumber("10")).pow(new BigNumber(tokenDecimals))
+                        ).toString();
+
+                        await advSurface.methods.registerAdvertisementSurface(
+                            values.metadata, {erc20: values.erc20, minBid: minBid}
+                        ).send({from: context.account});
+
+                        toast({
+                            title: "Transaction submitted!",
+                            description: "Your transaction has been submitted. Your surface will appear in the list once" +
+                                " confirmed",
+                            status: "success",
+                            duration: 10000,
+                            isClosable: true,
+                        });
+
+                        onClose();
                     }}
                 >
                     {({
@@ -94,7 +122,7 @@ export default function RegisterSurfaceModal(props) {
                           isSubmitting,
                           /* and other goodies */
                       }) => (
-                        <Form onSubmit={handleSubmit}>
+                        <Form>
                             <ModalContent>
                                 <ModalHeader>Register Surface</ModalHeader>
                                 <ModalCloseButton/>
@@ -144,7 +172,7 @@ export default function RegisterSurfaceModal(props) {
                                 </ModalBody>
 
                                 <ModalFooter>
-                                    <Button colorScheme="blue" mr={3} disabled={isSubmitting}>
+                                    <Button colorScheme="blue" mr={3} type="submit" disabled={isSubmitting}>
                                         Register
                                     </Button>
                                     <Button onClick={onClose}>Cancel</Button>

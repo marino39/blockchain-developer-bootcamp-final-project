@@ -18,6 +18,7 @@ import {useWeb3Context} from "web3-react";
 
 import AdvertisementSurface from "../contracts/AdvertisementSurface.json"
 import ERC20 from "../contracts/ERC20.json"
+import BigNumber from "bignumber.js";
 
 function MySurfaces(props) {
     const context = useWeb3Context();
@@ -40,7 +41,11 @@ function MySurfaces(props) {
             let tokenSymbol = await erc20.methods.symbol().call();
             let tokenDecimals = await erc20.methods.decimals().call();
 
-            let minBid = tokenPayment.minBid / (10 ** tokenDecimals);
+            console.log(tokenPayment.minBid);
+
+            let minBid = (new BigNumber(tokenPayment.minBid)).div(
+                (new BigNumber("10")).pow(new BigNumber(tokenDecimals))
+            ).toNumber();
 
             let metadata = await getJsonFromIPFS(tokenURI.substr(7));
             advertisementSurfacesList.push({
