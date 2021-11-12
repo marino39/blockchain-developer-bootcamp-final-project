@@ -20,10 +20,42 @@ import AdvertisementSurface from "../contracts/AdvertisementSurface.json"
 import ERC20 from "../contracts/ERC20.json"
 import BigNumber from "bignumber.js";
 
+async function getSurfaceInfo(context, advrtSurface, tokenId) {
+    let tokenURI = await advrtSurface.methods.tokenURI(tokenId).call();
+    let tokenPayment = await advrtSurface.methods.getPaymentInfo(tokenId).call();
+
+    let erc20 = new context.library.eth.Contract(ERC20.abi, tokenPayment.erc20);
+    let tokenSymbol = await erc20.methods.symbol().call();
+    let tokenDecimals = await erc20.methods.decimals().call();
+
+    let minBid = (new BigNumber(tokenPayment.minBid)).div(
+        (new BigNumber("10")).pow(new BigNumber(tokenDecimals))
+    ).toNumber();
+
+    let metadata = await getJsonFromIPFS(tokenURI.substr(7));
+    return {
+        tokenId: tokenId,
+        tokenURI: tokenURI,
+        metadata: metadata,
+        tokenSymbol: tokenSymbol,
+        minBid: minBid
+    };
+}
+
+function tokenInfoToCard(tokenInfo) {
+    return {
+        tokenId: tokenInfo.tokenId,
+        name: tokenInfo.metadata.properties.name,
+        imageURL: tokenInfo.metadata.properties.image,
+        tokenSymbol: tokenInfo.tokenSymbol,
+        minBid: tokenInfo.minBid,
+    };
+}
+
 function MySurfaces(props) {
     const context = useWeb3Context();
     const [items, setItems] = useState([]);
-    const [balance, setBalance] = useState(0);
+    const [initialized, setInitialized] = useState(false);
 
     const advrtSurface = new context.library.eth.Contract(
         AdvertisementSurface.abi,
@@ -32,55 +64,40 @@ function MySurfaces(props) {
 
     useEffect(() => {
         async function fetchData() {
+            const balance = await advrtSurface.methods.balanceOf(context.account).call();
+
             let advertisementSurfacesList = []
             for (let i = 0; i < balance; i++) {
                 let tokenId = await advrtSurface.methods.tokenOfOwnerByIndex(context.account, i).call();
-                let tokenURI = await advrtSurface.methods.tokenURI(tokenId).call();
-                let tokenPayment = await advrtSurface.methods.getPaymentInfo(tokenId).call();
-
-                let erc20 = new context.library.eth.Contract(ERC20.abi, tokenPayment.erc20);
-                let tokenSymbol = await erc20.methods.symbol().call();
-                let tokenDecimals = await erc20.methods.decimals().call();
-
-                let minBid = (new BigNumber(tokenPayment.minBid)).div(
-                    (new BigNumber("10")).pow(new BigNumber(tokenDecimals))
-                ).toNumber();
-
-                let metadata = await getJsonFromIPFS(tokenURI.substr(7));
-                advertisementSurfacesList.push({
-                    tokenId: tokenId,
-                    tokenURI: tokenURI,
-                    metadata: metadata,
-                    tokenSymbol: tokenSymbol,
-                    minBid: minBid
-                });
+                let tokenInfo = await getSurfaceInfo(context, advrtSurface, tokenId);
+                advertisementSurfacesList.push(tokenInfo);
             }
 
             let newItems = [];
             for (let i = 0; i < advertisementSurfacesList.length; i++) {
-                let advSurf = advertisementSurfacesList[i];
-                newItems.push({
-                    tokenId: advSurf.tokenId,
-                    name: advSurf.metadata.properties.name,
-                    imageURL: advSurf.metadata.properties.image,
-                    tokenSymbol: advSurf.tokenSymbol,
-                    minBid: advSurf.minBid,
-                });
+                newItems.push(tokenInfoToCard(advertisementSurfacesList[i]));
             }
 
             setItems(newItems);
         }
 
-        fetchData();
-    }, [balance, context.account, advrtSurface.methods, context.library.eth.Contract])
-
-    advrtSurface.methods.balanceOf(context.account).call().then(
-        (newBalance) => {
-            if (balance !== newBalance) {
-                setBalance(newBalance);
+        let subscription = advrtSurface.events.Transfer(
+            {filter: {to: context.account}},
+            function (error, event) {
+                console.log(event);
             }
+        );
+
+        fetchData();
+
+        return () => {
+            subscription.unsubscribe();
         }
-    );
+    }, [initialized])
+
+    if (!initialized) {
+        setInitialized(true);
+    }
 
     return (
         <LandingLayout>
