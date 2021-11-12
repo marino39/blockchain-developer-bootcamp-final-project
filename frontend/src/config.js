@@ -1,4 +1,4 @@
-export default {
+const config = {
     IPFSGatewayURL: "https://ipfs.io/ipfs/",
     NetworkIdToChainId: {
         1: 1,
@@ -6,3 +6,5 @@ export default {
         1337: 5777,
     }
 }
+
+export default config;

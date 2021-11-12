@@ -32,7 +32,6 @@ export default function RegisterSurfaceModal(props) {
     const finalRef = React.useRef()
 
     let [erc20Symbol, setERC20Symbol] = useState("?")
-    let tokenDecimals = 0;
 
     function onOpenWrapped() {
         setERC20Symbol("?");
@@ -70,7 +69,6 @@ export default function RegisterSurfaceModal(props) {
                         } else {
                             let erc20 = new context.library.eth.Contract(ERC20.abi, values.erc20);
                             let tokenSymbol = await erc20.methods.symbol().call();
-                            tokenDecimals = await erc20.methods.decimals().call();
                             if (!tokenSymbol) {
                                 errors.erc20 = 'Not ERC20 contract';
                             }
@@ -91,6 +89,8 @@ export default function RegisterSurfaceModal(props) {
                             AdvertisementSurface.abi,
                             AdvertisementSurface.networks[config.NetworkIdToChainId[context.networkId].toString()].address
                         );
+                        let erc20 = new context.library.eth.Contract(ERC20.abi, values.erc20);
+                        let tokenDecimals = await erc20.methods.decimals().call();
 
                         const minBid = (new BigNumber(values.minBid)).multipliedBy(
                             (new BigNumber("10")).pow(new BigNumber(tokenDecimals))

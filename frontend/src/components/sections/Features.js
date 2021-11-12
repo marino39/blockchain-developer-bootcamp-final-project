@@ -2,7 +2,6 @@ import {
     Stack,
     Container,
     Box,
-    Flex,
     Text,
     Heading,
     SimpleGrid, Image,

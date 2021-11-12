@@ -30,45 +30,49 @@ function MySurfaces(props) {
         AdvertisementSurface.networks[config.NetworkIdToChainId[context.networkId].toString()].address
     );
 
-    useEffect(async () => {
-        let advertisementSurfacesList = []
-        for (let i = 0; i < balance; i++) {
-            let tokenId = await advrtSurface.methods.tokenOfOwnerByIndex(context.account, i).call();
-            let tokenURI = await advrtSurface.methods.tokenURI(tokenId).call();
-            let tokenPayment = await advrtSurface.methods.getPaymentInfo(tokenId).call();
+    useEffect(() => {
+        async function fetchData() {
+            let advertisementSurfacesList = []
+            for (let i = 0; i < balance; i++) {
+                let tokenId = await advrtSurface.methods.tokenOfOwnerByIndex(context.account, i).call();
+                let tokenURI = await advrtSurface.methods.tokenURI(tokenId).call();
+                let tokenPayment = await advrtSurface.methods.getPaymentInfo(tokenId).call();
 
-            let erc20 = new context.library.eth.Contract(ERC20.abi, tokenPayment.erc20);
-            let tokenSymbol = await erc20.methods.symbol().call();
-            let tokenDecimals = await erc20.methods.decimals().call();
+                let erc20 = new context.library.eth.Contract(ERC20.abi, tokenPayment.erc20);
+                let tokenSymbol = await erc20.methods.symbol().call();
+                let tokenDecimals = await erc20.methods.decimals().call();
 
-            let minBid = (new BigNumber(tokenPayment.minBid)).div(
-                (new BigNumber("10")).pow(new BigNumber(tokenDecimals))
-            ).toNumber();
+                let minBid = (new BigNumber(tokenPayment.minBid)).div(
+                    (new BigNumber("10")).pow(new BigNumber(tokenDecimals))
+                ).toNumber();
 
-            let metadata = await getJsonFromIPFS(tokenURI.substr(7));
-            advertisementSurfacesList.push({
-                tokenId: tokenId,
-                tokenURI: tokenURI,
-                metadata: metadata,
-                tokenSymbol: tokenSymbol,
-                minBid: minBid
-            });
+                let metadata = await getJsonFromIPFS(tokenURI.substr(7));
+                advertisementSurfacesList.push({
+                    tokenId: tokenId,
+                    tokenURI: tokenURI,
+                    metadata: metadata,
+                    tokenSymbol: tokenSymbol,
+                    minBid: minBid
+                });
+            }
+
+            let newItems = [];
+            for (let i = 0; i < advertisementSurfacesList.length; i++) {
+                let advSurf = advertisementSurfacesList[i];
+                newItems.push({
+                    tokenId: advSurf.tokenId,
+                    name: advSurf.metadata.properties.name,
+                    imageURL: advSurf.metadata.properties.image,
+                    tokenSymbol: advSurf.tokenSymbol,
+                    minBid: advSurf.minBid,
+                });
+            }
+
+            setItems(newItems);
         }
 
-        let newItems = [];
-        for (let i = 0; i < advertisementSurfacesList.length; i++) {
-            let advSurf = advertisementSurfacesList[i];
-            newItems.push({
-                tokenId: advSurf.tokenId,
-                name: advSurf.metadata.properties.name,
-                imageURL: advSurf.metadata.properties.image,
-                tokenSymbol: advSurf.tokenSymbol,
-                minBid: advSurf.minBid,
-            });
-        }
-
-        setItems(newItems);
-    }, [balance])
+        fetchData();
+    }, [balance, context.account, advrtSurface.methods, context.library.eth.Contract])
 
     advrtSurface.methods.balanceOf(context.account).call().then(
         (newBalance) => {

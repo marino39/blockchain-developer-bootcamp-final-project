@@ -1,6 +1,5 @@
 import {
     Flex,
-    Box,
     chakra,
     Container,
     Stack,
