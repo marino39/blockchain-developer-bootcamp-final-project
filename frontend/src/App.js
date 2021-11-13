@@ -10,7 +10,8 @@ import Advertise from "./pages/Advertise";
 import { BrowserRouter, Switch, Route } from "react-router-dom"
 import { ChakraProvider } from "@chakra-ui/react"
 
-import { Connectors } from 'web3-react'
+import {Connectors} from 'web3-react'
+import Surface from "./pages/Surface";
 const { InjectedConnector } = Connectors
 
 const MetaMask = new InjectedConnector({supportedNetworks: [1, 4, 1337, 5777]})
@@ -25,15 +26,18 @@ export default function App() {
                 <Route exact path="/">
                   <Landing/>
                 </Route>
-                <Route path="/mySurfaces">
-                  <MySurfaces/>
-                </Route>
-                <Route path="/myBids">
-                  <MyBids/>
-                </Route>
-                <Route path="/advertise">
-                  <Advertise/>
-                </Route>
+                  <Route path="/mySurfaces">
+                      <MySurfaces/>
+                  </Route>
+                  <Route path="/myBids">
+                      <MyBids/>
+                  </Route>
+                  <Route path="/advertise">
+                      <Advertise/>
+                  </Route>
+                  <Route path="/surface/:id">
+                      <Surface/>
+                  </Route>
               </Switch>
             </BrowserRouter>
           </Web3Provider>
