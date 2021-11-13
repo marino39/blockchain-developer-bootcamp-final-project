@@ -96,17 +96,34 @@ export default function RegisterSurfaceModal(props) {
                             (new BigNumber("10")).pow(new BigNumber(tokenDecimals))
                         ).toString();
 
-                        await advSurface.methods.registerAdvertisementSurface(
+                        advSurface.methods.registerAdvertisementSurface(
                             values.metadata, {erc20: values.erc20, minBid: minBid}
-                        ).send({from: context.account});
-
-                        toast({
-                            title: "Transaction submitted!",
-                            description: "Your transaction has been submitted. Your surface will appear in the list once" +
-                                " confirmed",
-                            status: "success",
-                            duration: 10000,
-                            isClosable: true,
+                        ).send({from: context.account}).on('transactionHash', function (hash) {
+                            toast({
+                                title: "Transaction sent!",
+                                description: "The transaction has been sent.",
+                                status: "info",
+                                duration: 10000,
+                                isClosable: true,
+                            });
+                        }).on('confirmation', function (confirmationNumber, receipt) {
+                            if (confirmationNumber === 1) {
+                                toast({
+                                    title: "Transaction Executed!",
+                                    description: "Your Advertisement Surface has been added.",
+                                    status: "success",
+                                    duration: 10000,
+                                    isClosable: true,
+                                });
+                            }
+                        }).on('error', function (error, receipt) {
+                            toast({
+                                title: "Transaction error!",
+                                description: error.toString(),
+                                status: "error",
+                                duration: 10000,
+                                isClosable: true,
+                            });
                         });
 
                         onClose();
