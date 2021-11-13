@@ -44,37 +44,13 @@ function Card(props) {
 }
 
 export default function CardList(props) {
-    const {items, pageSize} = props;
-    const [page, setPage] = useState(1);
-
-    let pSize = 6;
-    if (pageSize !== undefined && pageSize !== 0) {
-        pSize = pageSize;
-    }
-
-    let pageItems = [];
-    for (let i = pSize * (page - 1); i < pSize * page; i++) {
-        if (i >= items.length) {
-            break;
-        }
-
-        pageItems.push(items[i]);
-    }
+    const {items} = props;
 
     return (<Box w="full">
         <SimpleGrid minChildWidth={300} spacing={8} m={10}>
-            {pageItems.map((item) =>
+            {items.map((item) =>
                 <Card key={item.tokenId} item={item}/>
             )}
         </SimpleGrid>
-        <Flex w="full" alignItems="center" justifyContent="center" mb={10}>
-            {page - 1 > 0 && (<Button m={1} onClick={() => {
-                setPage(page - 1);
-            }}>{page - 1}</Button>)}
-            <Button m={1}>{page}</Button>
-            {items.length > page * pSize && (<Button m={1} onClick={() => {
-                setPage(page + 1);
-            }}>{page + 1}</Button>)}
-        </Flex>
     </Box>)
 }

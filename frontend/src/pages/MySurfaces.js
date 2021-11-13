@@ -9,6 +9,7 @@ import CardList from "../components/ui/Cards";
 import RegisterSurfaceModal from "../components/ui/RegisterSurfaceModal";
 
 import {
+    Button,
     Flex,
     Spacer,
     Text,
@@ -54,7 +55,12 @@ function tokenInfoToCard(tokenInfo) {
 
 function MySurfaces(props) {
     const context = useWeb3Context();
+
     const [items, setItems] = useState([]);
+    const [page, setPage] = useState(1);
+    const [pageSize, setPageSize] = useState(6);
+    const [totalSize, setTotalSize] = useState(0)
+
     const [initialized, setInitialized] = useState(false);
 
     const advrtSurface = new context.library.eth.Contract(
@@ -66,43 +72,54 @@ function MySurfaces(props) {
         async function fetchData() {
             const balance = await advrtSurface.methods.balanceOf(context.account).call();
 
-            let advertisementSurfacesList = []
-            for (let i = 0; i < balance; i++) {
-                let tokenId = await advrtSurface.methods.tokenOfOwnerByIndex(context.account, i).call();
-                let tokenInfo = await getSurfaceInfo(context, advrtSurface, tokenId);
-                advertisementSurfacesList.push(tokenInfo);
-            }
-
-            let newItems = [];
-            for (let i = 0; i < advertisementSurfacesList.length; i++) {
-                newItems.push(tokenInfoToCard(advertisementSurfacesList[i]));
-            }
-
-            setItems(newItems);
+            setTotalSize(balance);
         }
 
         fetchData();
-    }, [initialized])
+    }, [initialized]);
+
+    useEffect(() => {
+        async function fetchData() {
+            const balance = await advrtSurface.methods.balanceOf(context.account).call();
+
+            let newItems = [];
+            for (let i = (page - 1) * pageSize; i < Math.min(page * pageSize, totalSize); i++) {
+                let tokenId = await advrtSurface.methods.tokenOfOwnerByIndex(context.account, i).call();
+                let tokenInfo = await getSurfaceInfo(context, advrtSurface, tokenId);
+                newItems.push(tokenInfoToCard(tokenInfo));
+            }
+
+            setItems(newItems);
+            setTotalSize(balance);
+        }
+
+        fetchData();
+    }, [page, pageSize, totalSize])
 
     useEffect(() => {
         let subscriptionTransferTo = advrtSurface.events.Transfer(
             {filter: {to: context.account}},
             async function (error, event) {
-                let tokenId = event.returnValues.tokenId;
+                if (items.length < pageSize) {
+                    let tokenId = event.returnValues.tokenId;
 
-                let found = false;
-                for (let i = 0; i < items.length; i++) {
-                    if (items[i].tokenId === tokenId) {
-                        found = true;
-                        break;
+                    let found = false;
+                    for (let i = 0; i < items.length; i++) {
+                        if (items[i].tokenId === tokenId) {
+                            found = true;
+                            break;
+                        }
                     }
-                }
 
-                if (!found) {
-                    let newItems = [...items];
-                    let tokenInfo = await getSurfaceInfo(context, advrtSurface, tokenId);
-                    newItems.push(tokenInfoToCard(tokenInfo));
-                    setItems(newItems);
+                    if (!found) {
+                        let newItems = [...items];
+                        let tokenInfo = await getSurfaceInfo(context, advrtSurface, tokenId);
+                        newItems.push(tokenInfoToCard(tokenInfo));
+                        setItems(newItems);
+                    }
+                } else {
+                    const balance = await advrtSurface.methods.balanceOf(context.account).call();
+                    setTotalSize(balance);
                 }
             }
         );
@@ -148,6 +165,15 @@ function MySurfaces(props) {
                 <RegisterSurfaceModal/>
             </Flex>
             <CardList items={items}/>
+            <Flex w="full" alignItems="center" justifyContent="center" mb={10}>
+                {page - 1 > 0 && (<Button m={1} onClick={() => {
+                    setPage(page - 1);
+                }}>{page - 1}</Button>)}
+                <Button m={1}>{page}</Button>
+                {totalSize > page * pageSize && (<Button m={1} onClick={() => {
+                    setPage(page + 1);
+                }}>{page + 1}</Button>)}
+            </Flex>
         </LandingLayout>
     );
 }
