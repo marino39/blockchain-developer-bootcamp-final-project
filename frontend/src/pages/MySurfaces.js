@@ -81,6 +81,10 @@ function MySurfaces(props) {
             setItems(newItems);
         }
 
+        fetchData();
+    }, [initialized])
+
+    useEffect(() => {
         let subscriptionTransferTo = advrtSurface.events.Transfer(
             {filter: {to: context.account}},
             async function (error, event) {
@@ -124,13 +128,11 @@ function MySurfaces(props) {
             }
         );
 
-        fetchData();
-
         return () => {
             subscriptionTransferTo.unsubscribe();
             subscriptionTransferFrom.unsubscribe();
         }
-    }, [initialized])
+    }, [items])
 
     if (!initialized) {
         setInitialized(true);
