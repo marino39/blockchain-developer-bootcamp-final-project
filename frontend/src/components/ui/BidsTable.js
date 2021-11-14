@@ -1,5 +1,6 @@
 import React from "react";
 import {Table, Thead, Tbody, Tfoot, Th, Tr, Td, Button, Box} from "@chakra-ui/react";
+import {shortAddress} from "../../utils/ethAddressUtils";
 
 export default function BidsTable(props) {
     const {items} = props;
@@ -8,7 +9,6 @@ export default function BidsTable(props) {
         <Table variant="simple" size="sm" mt={5}>
             <Thead>
                 <Tr>
-                    <Td>Surface Id</Td>
                     <Td>Bidder</Td>
                     <Td>From</Td>
                     <Td>To</Td>
@@ -20,11 +20,10 @@ export default function BidsTable(props) {
             </Thead>
             <Tbody>
                 {items.map((item) =>
-                    <Tr>
-                        <Td>{item.surfaceId}</Td>
-                        <Td>{item.bidder}</Td>
-                        <Td>{item.from}</Td>
-                        <Td>{item.to}</Td>
+                    <Tr key={item.bidId}>
+                        <Td>{shortAddress(item.bidder)}</Td>
+                        <Td>{(new Date(item.from * 1000)).toISOString()}</Td>
+                        <Td>{(new Date(item.to * 1000)).toISOString()}</Td>
                         <Td>{item.duration}</Td>
                         <Td>{item.bid}</Td>
                         <Td>{item.total}</Td>

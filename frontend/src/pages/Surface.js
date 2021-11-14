@@ -74,24 +74,30 @@ export default function Surface(props) {
     }, [initialized]);
 
     useEffect(() => {
+        if (tokenInfo.paymentToken === undefined) {
+            return;
+        }
+
         async function fetchData() {
             const activeBidSize = await advrtAuction.methods.getActiveBidCount(id).call();
 
             let newItems = [];
             for (let i = (page - 1) * pageSize; i < Math.min(page * pageSize, totalSize); i++) {
-                const [bidId, bidInfo] = await advrtAuction.methods.getActiveBid(id, i).call();
+                const ret = await advrtAuction.methods.getActiveBid(id, i).call();
+                const bidId = ret[0];
+                const bidInfo = ret[1];
 
                 const bid = (new BigNumber(bidInfo.bid)).div(
                     (new BigNumber("10")).pow(new BigNumber(tokenInfo.paymentTokenDecimals))
                 ).toString();
-                const total = (new BigNumber(bid)).mul(new BigNumber(bidInfo.duration));
+                const total = (new BigNumber(bid)).multipliedBy(new BigNumber(bidInfo.duration)).toString();
 
                 newItems.push({
                     bidId: bidId,
                     surfaceId: bidInfo.surTokenId,
                     bidder: bidInfo.bidder,
-                    from: bidInfo.startTime,
-                    to: bidInfo.startTime + bidInfo.duration,
+                    from: Number(bidInfo.startTime),
+                    to: Number(bidInfo.startTime) + Number(bidInfo.duration),
                     duration: bidInfo.duration,
                     bid: bid,
                     total: total,
@@ -105,7 +111,7 @@ export default function Surface(props) {
         }
 
         fetchData();
-    }, [page, pageSize, totalSize, tokenInfo, id])
+    }, [page, pageSize, totalSize, id, tokenInfo])
 
     if (!initialized) {
         setInitialized(true);

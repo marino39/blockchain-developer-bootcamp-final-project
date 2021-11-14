@@ -14,7 +14,6 @@ import {
 import React, {useCallback, useEffect, useState} from "react";
 import {BiPlus} from "react-icons/all";
 import {Form, Formik} from "formik";
-import {getJsonFromIPFS} from "../../utils/ipfsUtils";
 
 import AdvertisementSurfaceAuction from "../../contracts/AdvertisementSurfaceAuction.json"
 import ERC20 from "../../contracts/ERC20.json"
@@ -38,6 +37,11 @@ export default function NewBidModal(props) {
     const [isApproving, setIsApproving] = useState(false);
 
     const erc20 = new context.library.eth.Contract(ERC20.abi, tokenInfo.paymentTokenAddress);
+
+    const advrtAuction = new context.library.eth.Contract(
+        AdvertisementSurfaceAuction.abi,
+        AdvertisementSurfaceAuction.networks[config.NetworkIdToChainId[context.networkId].toString()].address
+    );
 
     const requiresApproval = (amount, bid, duration) => {
         let ret = (new BigNumber(amount)).isLessThan((new BigNumber(bid)).multipliedBy(new BigNumber(duration)));
@@ -126,20 +130,26 @@ export default function NewBidModal(props) {
             >
                 <ModalOverlay/>
                 <Formik
-                    initialValues={{erc721: '', advTokenId: '', bid: tokenInfo.minBid, startTime: '', duration: '60'}}
+                    initialValues={{
+                        erc721: '',
+                        advTokenId: '',
+                        bid: tokenInfo.minBid,
+                        startTime: (new Date()).toISOString(),
+                        duration: '60'
+                    }}
                     validate={async values => {
                         const errors = {};
                         if (!values.erc721) {
                             errors.erc721 = 'Required';
                         } else if (!context.library.utils.isAddress(values.erc721)) {
                             errors.erc721 = 'Invalid Ethereum address';
-                        } else if (await context.library.eth.getCode(values.erc20) === "0x") {
+                        } else if (await context.library.eth.getCode(values.erc721) === "0x") {
                             errors.erc721 = 'Not contract address';
                         }
 
                         if (!values.advTokenId) {
                             errors.advTokenId = 'Required';
-                        } else if (!/(^\d+)$/i.test(values.minBid)) {
+                        } else if (!/(^\d+)$/i.test(values.advTokenId)) {
                             errors.advTokenId = 'Must be a positive number';
                         } else {
                             if (values.erc721) {
@@ -147,41 +157,50 @@ export default function NewBidModal(props) {
                             }
                         }
 
-                        /*
-                            struct Bid {
-                                address bidder;       // The address making a bid.
-                                uint256 surTokenId;   // The surface token id;
-                                address advERC721;    // The contract address for advertisement ERC721 token.
-                                uint256 advTokenId;   // The advertisement to be shown.
-                                uint256 bid;          // The bid for unit of time(second). The total is bid * duration.
-                                uint64 startTime;     // The start of the advertisement.
-                                uint64 duration;      // The duration of the advertisement.
-                                BidState state;       // The bid state.
-                            }
-                         */
+                        if (!values.bid) {
+                            errors.bid = 'Required';
+                        } else if (!/(^\d+.\d+)|(^\d+)$/i.test(values.bid)) {
+                            errors.bid = 'Must be a positive number';
+                        } else if (values.bid < tokenInfo.minBid) {
+                            errors.bid = 'Must be a greater than minimal bid';
+                        }
+
+                        if (!values.startTime) {
+                            errors.startTime = 'Required';
+                        } else if (!Date.parse(values.startTime)) {
+                            errors.startTime = 'Please use format: 2021-11-14T18:20:00.111Z';
+                        }
+
+                        if (!values.duration) {
+                            errors.duration = 'Required';
+                        } else if (!/(^\d+.\d+)|(^\d+)$/i.test(values.duration)) {
+                            errors.duration = 'Must be a positive number';
+                        }
 
                         return errors;
                     }}
                     onSubmit={async (values, {setSubmitting}) => {
                         setSubmitting(true);
 
-                        /*const advSurface = new context.library.eth.Contract(
-                            AdvertisementSurface.abi,
-                            AdvertisementSurface.networks[config.NetworkIdToChainId[context.networkId].toString()].address
-                        );
-                        let erc20 = new context.library.eth.Contract(ERC20.abi, values.erc20);
-                        let tokenDecimals = await erc20.methods.decimals().call();
-
-                        const minBid = (new BigNumber(values.minBid)).multipliedBy(
-                            (new BigNumber("10")).pow(new BigNumber(tokenDecimals))
+                        const bid = (new BigNumber(values.bid)).multipliedBy(
+                            (new BigNumber("10")).pow(new BigNumber(tokenInfo.paymentTokenDecimals))
                         ).toString();
 
-                        advSurface.methods.registerAdvertisementSurface(
-                            values.metadata, {erc20: values.erc20, minBid: minBid}
+                        advrtAuction.methods.newBid(
+                            {
+                                bidder: context.account,
+                                surTokenId: tokenId,
+                                advERC721: values.erc721,
+                                advTokenId: values.advTokenId,
+                                bid: bid,
+                                startTime: Date.parse(values.startTime) / 1000,
+                                duration: values.duration,
+                                state: 1,
+                            }
                         ).send({from: context.account}).on('transactionHash', function (hash) {
                             toast({
                                 title: "Transaction sent!",
-                                description: "The transaction has been sent.",
+                                description: "Your bid has been sent.",
                                 status: "info",
                                 duration: 10000,
                                 isClosable: true,
@@ -190,7 +209,7 @@ export default function NewBidModal(props) {
                             if (confirmationNumber === 1) {
                                 toast({
                                     title: "Transaction Executed!",
-                                    description: "Your Advertisement Surface has been added.",
+                                    description: "Your bid has been added.",
                                     status: "success",
                                     duration: 10000,
                                     isClosable: true,
@@ -199,12 +218,12 @@ export default function NewBidModal(props) {
                         }).on('error', function (error, receipt) {
                             toast({
                                 title: "Transaction error!",
-                                description: error.toString(),
+                                description: error.message,
                                 status: "error",
                                 duration: 10000,
                                 isClosable: true,
                             });
-                        });*/
+                        });
 
                         onClose();
                     }}
