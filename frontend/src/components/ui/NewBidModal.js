@@ -193,7 +193,7 @@ export default function NewBidModal(props) {
                                 advERC721: values.erc721,
                                 advTokenId: values.advTokenId,
                                 bid: bid,
-                                startTime: Date.parse(values.startTime) / 1000,
+                                startTime: Math.floor(Date.parse(values.startTime) / 1000).toString(),
                                 duration: values.duration,
                                 state: 1,
                             }
