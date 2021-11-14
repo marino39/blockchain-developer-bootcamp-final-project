@@ -1,6 +1,7 @@
 import {Badge, Box, Button, Flex, Image, Spacer, Text, useColorModeValue} from "@chakra-ui/react";
 import {useParams} from "react-router-dom";
 import LandingLayout from "../components/layouts/LandingLayout";
+import BidsTable from "../components/ui/BidsTable";
 import React, {useEffect, useState} from "react";
 import {useWeb3Context} from "web3-react";
 
@@ -10,8 +11,8 @@ import config from "../config";
 import {getJsonFromIPFS} from "../utils/ipfsUtils";
 
 import AdvertisementSurface from "../contracts/AdvertisementSurface.json"
+import AdvertisementSurfaceAuction from "../contracts/AdvertisementSurfaceAuction.json"
 import ERC20 from "../contracts/ERC20.json"
-
 
 export default function Surface(props) {
     const {id} = useParams();
@@ -19,10 +20,19 @@ export default function Surface(props) {
     const [initialized, setInitialized] = useState(false);
     const [tokenInfo, setTokenInfo] = useState({});
 
+    const [items, setItems] = useState([]);
+    const [page, setPage] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
+    const [totalSize, setTotalSize] = useState(0);
 
     const advrtSurface = new context.library.eth.Contract(
         AdvertisementSurface.abi,
         AdvertisementSurface.networks[config.NetworkIdToChainId[context.networkId].toString()].address
+    );
+
+    const advrtAuction = new context.library.eth.Contract(
+        AdvertisementSurfaceAuction.abi,
+        AdvertisementSurfaceAuction.networks[config.NetworkIdToChainId[context.networkId].toString()].address
     );
 
     useEffect(() => {
@@ -47,13 +57,51 @@ export default function Surface(props) {
                 description: tokenMetadata.properties.description,
                 image: tokenMetadata.properties.image,
                 paymentToken: tokenSymbol,
+                paymentTokenDecimals: (new BigNumber(tokenDecimals)).toString(),
                 minBid: minBid,
                 isOwner: owner === context.account
             });
+
+            const activeBidSize = await advrtAuction.methods.getActiveBidCount(id).call();
+            setTotalSize(activeBidSize);
         }
 
         fetchData();
     }, [initialized]);
+
+    useEffect(() => {
+        async function fetchData() {
+            const activeBidSize = await advrtAuction.methods.getActiveBidCount(id).call();
+
+            let newItems = [];
+            for (let i = (page - 1) * pageSize; i < Math.min(page * pageSize, totalSize); i++) {
+                const [bidId, bidInfo] = await advrtAuction.methods.getActiveBid(id, i).call();
+
+                const bid = (new BigNumber(bidInfo.bid)).div(
+                    (new BigNumber("10")).pow(new BigNumber(tokenInfo.paymentTokenDecimals))
+                ).toString();
+                const total = (new BigNumber(bid)).mul(new BigNumber(bidInfo.duration));
+
+                newItems.push({
+                    bidId: bidId,
+                    surfaceId: bidInfo.surTokenId,
+                    bidder: bidInfo.bidder,
+                    from: bidInfo.startTime,
+                    to: bidInfo.startTime + bidInfo.duration,
+                    duration: bidInfo.duration,
+                    bid: bid,
+                    total: total,
+                    isOwner: tokenInfo.isOwner,
+                    isBidder: bid.bidder === context.account,
+                });
+            }
+
+            setItems(newItems);
+            setTotalSize(activeBidSize);
+        }
+
+        fetchData();
+    }, [page, pageSize, totalSize, tokenInfo, id])
 
     if (!initialized) {
         setInitialized(true);
@@ -128,7 +176,7 @@ export default function Surface(props) {
                     </Flex>
                 </Box>
             </Flex>
-            <Flex w={'full'} pl={10} pr={10} mt={5} mb={5}>
+            <Flex w={'full'} pl={10} pr={10} mt={5}>
                 <Text fontSize="xl" fontWeight="semibold">
                     Active Bids:
                 </Text>
@@ -136,6 +184,16 @@ export default function Surface(props) {
                 <Box>
                     <Button>New Bid</Button>
                 </Box>
+            </Flex>
+            <BidsTable items={items}/>
+            <Flex w="full" alignItems="center" justifyContent="center" m={10}>
+                {page - 1 > 0 && (<Button m={1} onClick={() => {
+                    setPage(page - 1);
+                }}>{page - 1}</Button>)}
+                <Button m={1}>{page}</Button>
+                {totalSize > page * pageSize && (<Button m={1} onClick={() => {
+                    setPage(page + 1);
+                }}>{page + 1}</Button>)}
             </Flex>
         </LandingLayout>
     )
