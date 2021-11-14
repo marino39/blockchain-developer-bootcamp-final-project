@@ -18,7 +18,7 @@ export default function SurfaceTable(props) {
             </Thead>
             <Tbody>
                 {items.map((item) =>
-                    <Tr>
+                    <Tr key={item.tokenId}>
                         <Td>{item.tokenId}</Td>
                         <Td>{item.name}</Td>
                         <Td>{item.description}</Td>

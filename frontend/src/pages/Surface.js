@@ -13,6 +13,7 @@ import {getJsonFromIPFS} from "../utils/ipfsUtils";
 import AdvertisementSurface from "../contracts/AdvertisementSurface.json"
 import AdvertisementSurfaceAuction from "../contracts/AdvertisementSurfaceAuction.json"
 import ERC20 from "../contracts/ERC20.json"
+import NewBidModal from "../components/ui/NewBidModal";
 
 export default function Surface(props) {
     const {id} = useParams();
@@ -57,6 +58,7 @@ export default function Surface(props) {
                 description: tokenMetadata.properties.description,
                 image: tokenMetadata.properties.image,
                 paymentToken: tokenSymbol,
+                paymentTokenAddress: paymentInfo.erc20,
                 paymentTokenDecimals: (new BigNumber(tokenDecimals)).toString(),
                 minBid: minBid,
                 isOwner: owner === context.account
@@ -64,6 +66,8 @@ export default function Surface(props) {
 
             const activeBidSize = await advrtAuction.methods.getActiveBidCount(id).call();
             setTotalSize(activeBidSize);
+
+            setInitialized(true);
         }
 
         fetchData();
@@ -182,7 +186,7 @@ export default function Surface(props) {
                 </Text>
                 <Spacer/>
                 <Box>
-                    <Button>New Bid</Button>
+                    <NewBidModal tokenId={id} tokenInfo={tokenInfo}/>
                 </Box>
             </Flex>
             <BidsTable items={items}/>
