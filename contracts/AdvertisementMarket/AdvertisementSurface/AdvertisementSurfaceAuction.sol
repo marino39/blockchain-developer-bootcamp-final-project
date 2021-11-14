@@ -27,6 +27,11 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
     /// @dev The array of all bids ever made
     Bid[] private bids;
 
+    /// @dev The count of all bids made
+    uint256 private bidsCount;
+
+    /// @dev The mapping between advertisement surface token id and bool that indicates if there are any bid for that token
+    mapping(uint256 => bool) private surTokenIdHasBids;
     /// @dev The mapping between advertisement surface token id and array of the bids made for that surface
     mapping(uint256 => uint256[]) private surTokenIdToBidIds;
     /// @dev The mapping between advertisement surface token id and array of active the bids made for that surface
@@ -98,7 +103,7 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
     /// @notice Gets the number of bids in the contract
     /// @return Number of bids
     function getBidCount() external override view returns (uint256) {
-        return bids.length;
+        return bidsCount;
     }
 
     /// @notice Gets bid structure for given bid id
@@ -126,6 +131,9 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
     /// @param _tokenId The advertisement surface id
     /// @return The number of bids for advertisement surface
     function getSurfaceBidCount(uint256 _tokenId) external override view returns(uint256) {
+        if (surTokenIdHasBids[_tokenId] == false) {
+            return 0;
+        }
         return surTokenIdToBidIds[_tokenId].length;
     }
 
@@ -142,6 +150,9 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
     /// @param _tokenId The advertisement surface id
     /// @return The number of active bids
     function getActiveBidCount(uint256 _tokenId) external override view returns(uint256) {
+        if (surTokenIdHasBids[_tokenId] == false) {
+            return 0;
+        }
         return surTokenIdToActiveBidIds[_tokenId].length;
     }
 
@@ -160,10 +171,14 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
         _processBid(_bid);
 
         bids.push(_bid);
-        uint256 index = bids.length - 1;
+        bidsCount = bidsCount + 1;
+
+        uint256 index = bidsCount - 1;
         surTokenIdToBidIds[_bid.surTokenId].push(index);
         surTokenIdToActiveBidIds[_bid.surTokenId].push(index);
         addressToBidIds[msg.sender].push(index);
+
+        surTokenIdHasBids[_bid.surTokenId] = true;
 
         IAdvertisementSurface.PaymentInfo memory paymentInfo = _paymentInfo(_bid.surTokenId);
         IERC20(paymentInfo.erc20).transferFrom(msg.sender, address(this), _bid.bid * _bid.duration);
