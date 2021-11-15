@@ -240,7 +240,7 @@ export default function NewBidModal(props) {
                       }) => (
                         <Form>
                             <ModalContent>
-                                <ModalHeader>Register Surface</ModalHeader>
+                                <ModalHeader>New Bid</ModalHeader>
                                 <ModalCloseButton/>
                                 <ModalBody pb={6}>
                                     <FormControl>
