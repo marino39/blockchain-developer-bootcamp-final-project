@@ -115,11 +115,13 @@ export default function Surface(props) {
 
                 newItems.push({
                     bidId: bidId,
+                    state: bidInfo.state,
                     surfaceId: bidInfo.surTokenId,
                     bidder: bidInfo.bidder,
                     from: Number(bidInfo.startTime),
                     to: Number(bidInfo.startTime) + Number(bidInfo.duration),
                     duration: bidInfo.duration,
+                    tokenSymbol: tokenInfo.paymentToken,
                     bid: bid,
                     total: total,
                     isOwner: tokenInfo.isOwner,
