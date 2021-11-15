@@ -1,5 +1,5 @@
-import React from "react";
-import {Table, Thead, Tbody, Tfoot, Th, Tr, Td, Button, Box, useToast} from "@chakra-ui/react";
+import React, {useEffect, useReducer, useState} from "react";
+import {Table, Thead, Tbody, Tfoot, Th, Tr, Td, Button, Box, useToast, Text} from "@chakra-ui/react";
 import {shortAddress} from "../../utils/ethAddressUtils";
 import {useWeb3Context} from "web3-react";
 import config from "../../config";
@@ -24,6 +24,8 @@ export default function BidsTable(props) {
     const toast = useToast()
 
     const context = useWeb3Context();
+
+    const [foceX, forceUpdate] = useReducer((x) => x + 1, 0);
 
     const advrtAuction = new context.library.eth.Contract(
         AdvertisementSurfaceAuction.abi,
@@ -64,6 +66,12 @@ export default function BidsTable(props) {
             });
         });
     }
+
+    useEffect(() => {
+        setTimeout(() => {
+            forceUpdate();
+        }, 1000);
+    }, [foceX]);
 
     const refund = (bidId) => {
         advrtAuction.methods.refundBid(bidId).send({from: context.account})
