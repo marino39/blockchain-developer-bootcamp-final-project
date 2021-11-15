@@ -38,31 +38,24 @@ export default function Surface(props) {
 
     const logActiveCallback = useCallback(async (error, event) => {
         console.log("LogActive", event);
-        if (items.length < pageSize) {
-            let newItems = [...items];
-            const bidInfo = await advrtAuction.methods.getBid(event.returnValues.bidId).call();
+        setTotalSize(
+            await advrtAuction.methods.getActiveBidCount(id).call()
+        );
+    }, [id, setTotalSize]);
 
-            const bid = (new BigNumber(bidInfo.bid)).div(
-                (new BigNumber("10")).pow(new BigNumber(tokenInfo.paymentTokenDecimals))
-            ).toString();
-            const total = (new BigNumber(bid)).multipliedBy(new BigNumber(bidInfo.duration)).toString();
+    const logOutbidCallback = useCallback(async (error, event) => {
+        console.log("LogOutbid", event);
+        setTotalSize(
+            await advrtAuction.methods.getActiveBidCount(id).call()
+        );
+    }, [id, setTotalSize]);
 
-            newItems.push({
-                bidId: event.returnValues.bidId,
-                surfaceId: bidInfo.surTokenId,
-                bidder: bidInfo.bidder,
-                from: Number(bidInfo.startTime),
-                to: Number(bidInfo.startTime) + Number(bidInfo.duration),
-                duration: bidInfo.duration,
-                bid: bid,
-                total: total,
-                isOwner: tokenInfo.isOwner,
-                isBidder: bid.bidder === context.account,
-            });
-
-            setItems(newItems);
-        }
-    }, [id, items, setItems]);
+    const logFinishedCallback = useCallback(async (error, event) => {
+        console.log("LogFinished", event);
+        setTotalSize(
+            await advrtAuction.methods.getActiveBidCount(id).call()
+        );
+    }, [id, setTotalSize]);
 
     useEffect(() => {
         async function fetchData() {
@@ -144,13 +137,9 @@ export default function Surface(props) {
     useEffect(() => {
         const logActiveSubscription = advrtAuction.events.LogActive({filter: {tokenId: id}}, logActiveCallback);
 
-        const logOutbidSubscription = advrtAuction.events.LogOutbid({filter: {tokenId: id}}, function (error, event) {
-            console.log("LogOutbid", event);
-        });
+        const logOutbidSubscription = advrtAuction.events.LogOutbid({filter: {tokenId: id}}, logOutbidCallback);
 
-        const logFinishedSubscription = advrtAuction.events.LogFinished({filter: {tokenId: id}}, function (error, event) {
-            console.log("LogFinished", event);
-        });
+        const logFinishedSubscription = advrtAuction.events.LogFinished({filter: {tokenId: id}}, logFinishedCallback);
 
         return () => {
             logActiveSubscription.unsubscribe();
