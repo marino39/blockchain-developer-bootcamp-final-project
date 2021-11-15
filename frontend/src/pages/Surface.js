@@ -2,7 +2,7 @@ import {Badge, Box, Button, Flex, Image, Spacer, Text, useColorModeValue} from "
 import {useParams} from "react-router-dom";
 import LandingLayout from "../components/layouts/LandingLayout";
 import BidsTable from "../components/ui/BidsTable";
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {useWeb3Context} from "web3-react";
 
 import BigNumber from "bignumber.js";
@@ -35,6 +35,34 @@ export default function Surface(props) {
         AdvertisementSurfaceAuction.abi,
         AdvertisementSurfaceAuction.networks[config.NetworkIdToChainId[context.networkId].toString()].address
     );
+
+    const logActiveCallback = useCallback(async (error, event) => {
+        console.log("LogActive", event);
+        if (items.length < pageSize) {
+            let newItems = [...items];
+            const bidInfo = await advrtAuction.methods.getBid(event.returnValues.bidId).call();
+
+            const bid = (new BigNumber(bidInfo.bid)).div(
+                (new BigNumber("10")).pow(new BigNumber(tokenInfo.paymentTokenDecimals))
+            ).toString();
+            const total = (new BigNumber(bid)).multipliedBy(new BigNumber(bidInfo.duration)).toString();
+
+            newItems.push({
+                bidId: event.returnValues.bidId,
+                surfaceId: bidInfo.surTokenId,
+                bidder: bidInfo.bidder,
+                from: Number(bidInfo.startTime),
+                to: Number(bidInfo.startTime) + Number(bidInfo.duration),
+                duration: bidInfo.duration,
+                bid: bid,
+                total: total,
+                isOwner: tokenInfo.isOwner,
+                isBidder: bid.bidder === context.account,
+            });
+
+            setItems(newItems);
+        }
+    }, [id, items, setItems]);
 
     useEffect(() => {
         async function fetchData() {
@@ -111,7 +139,25 @@ export default function Surface(props) {
         }
 
         fetchData();
-    }, [page, pageSize, totalSize, id, tokenInfo])
+    }, [page, pageSize, totalSize, id, tokenInfo]);
+
+    useEffect(() => {
+        const logActiveSubscription = advrtAuction.events.LogActive({filter: {tokenId: id}}, logActiveCallback);
+
+        const logOutbidSubscription = advrtAuction.events.LogOutbid({filter: {tokenId: id}}, function (error, event) {
+            console.log("LogOutbid", event);
+        });
+
+        const logFinishedSubscription = advrtAuction.events.LogFinished({filter: {tokenId: id}}, function (error, event) {
+            console.log("LogFinished", event);
+        });
+
+        return () => {
+            logActiveSubscription.unsubscribe();
+            logOutbidSubscription.unsubscribe();
+            logFinishedSubscription.unsubscribe();
+        }
+    }, [id]);
 
     if (!initialized) {
         setInitialized(true);
