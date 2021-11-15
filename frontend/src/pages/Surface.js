@@ -1,5 +1,5 @@
 import {Badge, Box, Button, Flex, Image, Spacer, Text, useColorModeValue} from "@chakra-ui/react";
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import LandingLayout from "../components/layouts/LandingLayout";
 import BidsTable from "../components/ui/BidsTable";
 import React, {useCallback, useEffect, useState} from "react";
@@ -220,6 +220,11 @@ export default function Surface(props) {
                     </Flex>
                     <Flex justifyContent="space-between" alignContent="center" mt={5} hidden={!tokenInfo.isOwner}>
                         <Badge colorScheme="green">You are owner</Badge>
+                    </Flex>
+                    <Flex justifyContent="space-between" alignContent="center" mt={5} hidden={!tokenInfo.isOwner}>
+                        <Link to={"/surface/view/" + id}>
+                            <Button size="sm" colorScheme="blue">View Advertisement</Button>
+                        </Link>
                     </Flex>
                 </Box>
             </Flex>

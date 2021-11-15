@@ -6,13 +6,15 @@ import Landing from "./pages/Landing"
 import MySurfaces from "./pages/MySurfaces";
 import MyBids from "./pages/MyBids";
 import Advertise from "./pages/Advertise";
+import Surface from "./pages/Surface";
+import SurfaceView from "./pages/SurfaceView";
 
-import { BrowserRouter, Switch, Route } from "react-router-dom"
-import { ChakraProvider } from "@chakra-ui/react"
+import {BrowserRouter, Switch, Route} from "react-router-dom"
+import {ChakraProvider} from "@chakra-ui/react"
 
 import {Connectors} from 'web3-react'
-import Surface from "./pages/Surface";
-const { InjectedConnector } = Connectors
+
+const {InjectedConnector} = Connectors
 
 const MetaMask = new InjectedConnector({supportedNetworks: [1, 4, 1337, 5777]})
 const connectors = {MetaMask}
@@ -24,7 +26,7 @@ export default function App() {
               <BrowserRouter>
               <Switch>
                 <Route exact path="/">
-                  <Landing/>
+                    <Landing/>
                 </Route>
                   <Route path="/mySurfaces">
                       <MySurfaces/>
@@ -34,6 +36,9 @@ export default function App() {
                   </Route>
                   <Route path="/advertise">
                       <Advertise/>
+                  </Route>
+                  <Route path="/surface/view/:id">
+                      <SurfaceView/>
                   </Route>
                   <Route path="/surface/:id">
                       <Surface/>
