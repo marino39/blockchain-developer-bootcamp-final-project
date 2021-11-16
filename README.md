@@ -57,13 +57,6 @@ advertisements with the highest bid in given time frame.
 3. They select advertisement surface
 4. They submit collect transaction and receives Dai
 
-### Advertiser - Submit Advertisement
-
-1. Users open dApp page
-2. They go to Add Advertisement page 
-3. They define advertisement: *name, description, content_url*
-4. They submit and receive tokenized advertisement (NFT)
-
 ### Advertiser - Bid for Advertisement Surface
 
 1. Users open dApp page
