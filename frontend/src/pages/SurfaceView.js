@@ -157,7 +157,7 @@ export default function SurfaceView(props) {
         )
     } else {
         return (
-            <Box w="full" h="full">
+            <Box w="full" h="100vh">
                 <Image src={bidMetadata.properties.image} w="full" h="full"/>
             </Box>
         )
