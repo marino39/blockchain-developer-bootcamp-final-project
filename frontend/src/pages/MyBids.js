@@ -80,7 +80,7 @@ function MyBids(props) {
             const myBidCount = await advrtAuction.methods.getMyBidsCount().call();
 
             let newItems = [];
-            for (let i = (page - 1) * pageSize; i < Math.min(page * pageSize, totalSize); i++) {
+            for (let i = (page - 1) * pageSize; i < Math.min(page * pageSize, myBidCount); i++) {
                 const ret = await advrtAuction.methods.getMyBid(i).call();
                 const bidId = ret[0];
                 const bidInfo = ret[1];
