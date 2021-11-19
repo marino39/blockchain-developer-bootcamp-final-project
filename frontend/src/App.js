@@ -10,7 +10,7 @@ import Surface from "./pages/Surface";
 import SurfaceView from "./pages/SurfaceView";
 
 import {BrowserRouter, Switch, Route} from "react-router-dom"
-import {ChakraProvider} from "@chakra-ui/react"
+import {ChakraProvider, DarkMode} from "@chakra-ui/react"
 
 import {Connectors} from 'web3-react'
 
@@ -22,30 +22,32 @@ const connectors = {MetaMask}
 export default function App() {
   return (
       <ChakraProvider>
-          <Web3Provider connectors={ connectors } libraryName={'web3.js'} web3Api={ Web3 }>
-              <BrowserRouter>
-              <Switch>
-                <Route exact path="/">
-                    <Landing/>
-                </Route>
-                  <Route path="/mySurfaces">
-                      <MySurfaces/>
-                  </Route>
-                  <Route path="/myBids">
-                      <MyBids/>
-                  </Route>
-                  <Route path="/advertise">
-                      <Advertise/>
-                  </Route>
-                  <Route path="/surface/view/:id">
-                      <SurfaceView/>
-                  </Route>
-                  <Route path="/surface/:id">
-                      <Surface/>
-                  </Route>
-              </Switch>
-            </BrowserRouter>
-          </Web3Provider>
+          <DarkMode>
+              <Web3Provider connectors={connectors} libraryName={'web3.js'} web3Api={Web3}>
+                  <BrowserRouter>
+                      <Switch>
+                          <Route exact path="/">
+                              <Landing/>
+                          </Route>
+                          <Route path="/mySurfaces">
+                              <MySurfaces/>
+                          </Route>
+                          <Route path="/myBids">
+                              <MyBids/>
+                          </Route>
+                          <Route path="/advertise">
+                              <Advertise/>
+                          </Route>
+                          <Route path="/surface/view/:id">
+                              <SurfaceView/>
+                          </Route>
+                          <Route path="/surface/:id">
+                              <Surface/>
+                          </Route>
+                      </Switch>
+                  </BrowserRouter>
+              </Web3Provider>
+          </DarkMode>
       </ChakraProvider>
   )
 }
