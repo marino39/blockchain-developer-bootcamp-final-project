@@ -16,6 +16,7 @@
     "ethers": "^4.0.49",
     "formik": "^2.2.9",
     "framer-motion": "^4",
+    "prebuild-install": "^7.0.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-icons": "^4.3.1",
