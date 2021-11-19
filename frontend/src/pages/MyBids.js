@@ -33,23 +33,23 @@ function MyBids(props) {
     const logActiveCallback = useCallback(async (error, event) => {
         console.log("LogActive", event);
         setTotalSize(
-            await advrtAuction.methods.getMyBidsCount().call()
+            await advrtAuction.methods.getMyBidsCount().call({from: context.account})
         );
-    }, [setTotalSize, advrtAuction]);
+    }, [context, advrtAuction]);
 
     const logOutbidCallback = useCallback(async (error, event) => {
         console.log("LogOutbid", event);
         setTotalSize(
-            await advrtAuction.methods.getMyBidsCount().call()
+            await advrtAuction.methods.getMyBidsCount().call({from: context.account})
         );
-    }, [setTotalSize, advrtAuction]);
+    }, [context, advrtAuction]);
 
     const logFinishedCallback = useCallback(async (error, event) => {
         console.log("LogFinished", event);
         setTotalSize(
-            await advrtAuction.methods.getMyBidsCount().call()
+            await advrtAuction.methods.getMyBidsCount().call({from: context.account})
         );
-    }, [setTotalSize, advrtAuction]);
+    }, [context, advrtAuction]);
 
     useEffect(() => {
         async function fetchData() {
@@ -77,11 +77,11 @@ function MyBids(props) {
 
     useEffect(() => {
         async function fetchData() {
-            const myBidCount = await advrtAuction.methods.getMyBidsCount().call();
+            const myBidCount = await advrtAuction.methods.getMyBidsCount().call({from: context.account});
 
             let newItems = [];
             for (let i = (page - 1) * pageSize; i < Math.min(page * pageSize, myBidCount); i++) {
-                const ret = await advrtAuction.methods.getMyBid(i).call();
+                const ret = await advrtAuction.methods.getMyBid(i).call({from: context.account});
                 const bidId = ret[0];
                 const bidInfo = ret[1];
 
