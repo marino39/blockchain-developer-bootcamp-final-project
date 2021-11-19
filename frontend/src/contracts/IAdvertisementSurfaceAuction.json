@@ -1,0 +1,3360 @@
+{
+  "contractName": "IAdvertisementSurfaceAuction",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "getBidCount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_bidId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getBid",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "bidder",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "surTokenId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "advERC721",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "advTokenId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "bid",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint64",
+              "name": "startTime",
+              "type": "uint64"
+            },
+            {
+              "internalType": "uint64",
+              "name": "duration",
+              "type": "uint64"
+            },
+            {
+              "internalType": "enum IAdvertisementSurfaceAuction.BidState",
+              "name": "state",
+              "type": "uint8"
+            }
+          ],
+          "internalType": "struct IAdvertisementSurfaceAuction.Bid",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getMyBidsCount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_index",
+          "type": "uint256"
+        }
+      ],
+      "name": "getMyBid",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "bidder",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "surTokenId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "advERC721",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "advTokenId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "bid",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint64",
+              "name": "startTime",
+              "type": "uint64"
+            },
+            {
+              "internalType": "uint64",
+              "name": "duration",
+              "type": "uint64"
+            },
+            {
+              "internalType": "enum IAdvertisementSurfaceAuction.BidState",
+              "name": "state",
+              "type": "uint8"
+            }
+          ],
+          "internalType": "struct IAdvertisementSurfaceAuction.Bid",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getSurfaceBidCount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_tokenId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_index",
+          "type": "uint256"
+        }
+      ],
+      "name": "getSurfaceBid",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "bidder",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "surTokenId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "advERC721",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "advTokenId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "bid",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint64",
+              "name": "startTime",
+              "type": "uint64"
+            },
+            {
+              "internalType": "uint64",
+              "name": "duration",
+              "type": "uint64"
+            },
+            {
+              "internalType": "enum IAdvertisementSurfaceAuction.BidState",
+              "name": "state",
+              "type": "uint8"
+            }
+          ],
+          "internalType": "struct IAdvertisementSurfaceAuction.Bid",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getActiveBidCount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_tokenId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_index",
+          "type": "uint256"
+        }
+      ],
+      "name": "getActiveBid",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "bidder",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "surTokenId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "advERC721",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "advTokenId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "bid",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint64",
+              "name": "startTime",
+              "type": "uint64"
+            },
+            {
+              "internalType": "uint64",
+              "name": "duration",
+              "type": "uint64"
+            },
+            {
+              "internalType": "enum IAdvertisementSurfaceAuction.BidState",
+              "name": "state",
+              "type": "uint8"
+            }
+          ],
+          "internalType": "struct IAdvertisementSurfaceAuction.Bid",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "bidder",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "surTokenId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "advERC721",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "advTokenId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "bid",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint64",
+              "name": "startTime",
+              "type": "uint64"
+            },
+            {
+              "internalType": "uint64",
+              "name": "duration",
+              "type": "uint64"
+            },
+            {
+              "internalType": "enum IAdvertisementSurfaceAuction.BidState",
+              "name": "state",
+              "type": "uint8"
+            }
+          ],
+          "internalType": "struct IAdvertisementSurfaceAuction.Bid",
+          "name": "_bid",
+          "type": "tuple"
+        }
+      ],
+      "name": "newBid",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_bidId",
+          "type": "uint256"
+        }
+      ],
+      "name": "refundBid",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_bidId",
+          "type": "uint256"
+        }
+      ],
+      "name": "collectBid",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "bidder",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "surTokenId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "advERC721",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "advTokenId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "bid",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint64",
+              "name": "startTime",
+              "type": "uint64"
+            },
+            {
+              "internalType": "uint64",
+              "name": "duration",
+              "type": "uint64"
+            },
+            {
+              "internalType": "enum IAdvertisementSurfaceAuction.BidState",
+              "name": "state",
+              "type": "uint8"
+            }
+          ],
+          "internalType": "struct IAdvertisementSurfaceAuction.Bid",
+          "name": "_bid",
+          "type": "tuple"
+        }
+      ],
+      "name": "getBidWorth",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.0+commit.c7dfd78e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_bidId\",\"type\":\"uint256\"}],\"name\":\"collectBid\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_index\",\"type\":\"uint256\"}],\"name\":\"getActiveBid\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"bidder\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"surTokenId\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"advERC721\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"advTokenId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"bid\",\"type\":\"uint256\"},{\"internalType\":\"uint64\",\"name\":\"startTime\",\"type\":\"uint64\"},{\"internalType\":\"uint64\",\"name\":\"duration\",\"type\":\"uint64\"},{\"internalType\":\"enum IAdvertisementSurfaceAuction.BidState\",\"name\":\"state\",\"type\":\"uint8\"}],\"internalType\":\"struct IAdvertisementSurfaceAuction.Bid\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"getActiveBidCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_bidId\",\"type\":\"uint256\"}],\"name\":\"getBid\",\"outputs\":[{\"components\":[{\"internalType\":\"address\",\"name\":\"bidder\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"surTokenId\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"advERC721\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"advTokenId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"bid\",\"type\":\"uint256\"},{\"internalType\":\"uint64\",\"name\":\"startTime\",\"type\":\"uint64\"},{\"internalType\":\"uint64\",\"name\":\"duration\",\"type\":\"uint64\"},{\"internalType\":\"enum IAdvertisementSurfaceAuction.BidState\",\"name\":\"state\",\"type\":\"uint8\"}],\"internalType\":\"struct IAdvertisementSurfaceAuction.Bid\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getBidCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"address\",\"name\":\"bidder\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"surTokenId\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"advERC721\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"advTokenId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"bid\",\"type\":\"uint256\"},{\"internalType\":\"uint64\",\"name\":\"startTime\",\"type\":\"uint64\"},{\"internalType\":\"uint64\",\"name\":\"duration\",\"type\":\"uint64\"},{\"internalType\":\"enum IAdvertisementSurfaceAuction.BidState\",\"name\":\"state\",\"type\":\"uint8\"}],\"internalType\":\"struct IAdvertisementSurfaceAuction.Bid\",\"name\":\"_bid\",\"type\":\"tuple\"}],\"name\":\"getBidWorth\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_index\",\"type\":\"uint256\"}],\"name\":\"getMyBid\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"bidder\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"surTokenId\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"advERC721\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"advTokenId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"bid\",\"type\":\"uint256\"},{\"internalType\":\"uint64\",\"name\":\"startTime\",\"type\":\"uint64\"},{\"internalType\":\"uint64\",\"name\":\"duration\",\"type\":\"uint64\"},{\"internalType\":\"enum IAdvertisementSurfaceAuction.BidState\",\"name\":\"state\",\"type\":\"uint8\"}],\"internalType\":\"struct IAdvertisementSurfaceAuction.Bid\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getMyBidsCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_index\",\"type\":\"uint256\"}],\"name\":\"getSurfaceBid\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"bidder\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"surTokenId\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"advERC721\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"advTokenId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"bid\",\"type\":\"uint256\"},{\"internalType\":\"uint64\",\"name\":\"startTime\",\"type\":\"uint64\"},{\"internalType\":\"uint64\",\"name\":\"duration\",\"type\":\"uint64\"},{\"internalType\":\"enum IAdvertisementSurfaceAuction.BidState\",\"name\":\"state\",\"type\":\"uint8\"}],\"internalType\":\"struct IAdvertisementSurfaceAuction.Bid\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"getSurfaceBidCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"address\",\"name\":\"bidder\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"surTokenId\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"advERC721\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"advTokenId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"bid\",\"type\":\"uint256\"},{\"internalType\":\"uint64\",\"name\":\"startTime\",\"type\":\"uint64\"},{\"internalType\":\"uint64\",\"name\":\"duration\",\"type\":\"uint64\"},{\"internalType\":\"enum IAdvertisementSurfaceAuction.BidState\",\"name\":\"state\",\"type\":\"uint8\"}],\"internalType\":\"struct IAdvertisementSurfaceAuction.Bid\",\"name\":\"_bid\",\"type\":\"tuple\"}],\"name\":\"newBid\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_bidId\",\"type\":\"uint256\"}],\"name\":\"refundBid\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"collectBid(uint256)\":{\"params\":{\"_bidId\":\"The bid id to collect payment\"}},\"getActiveBid(uint256,uint256)\":{\"params\":{\"_index\":\"The index of the bid\",\"_tokenId\":\"The advertisement surface id\"},\"returns\":{\"_0\":\"The bid id and bid structure\"}},\"getActiveBidCount(uint256)\":{\"params\":{\"_tokenId\":\"The advertisement surface id\"},\"returns\":{\"_0\":\"The number of active bids\"}},\"getBid(uint256)\":{\"params\":{\"_bidId\":\"The id of the bid\"},\"returns\":{\"_0\":\"The bid structure\"}},\"getBidCount()\":{\"returns\":{\"_0\":\"Number of bids\"}},\"getBidWorth((address,uint256,address,uint256,uint256,uint64,uint64,uint8))\":{\"params\":{\"_bid\":\"The bid structure\"},\"returns\":{\"_0\":\"The number of tokens that can be collected or refunded from the bid\"}},\"getMyBid(uint256)\":{\"params\":{\"_index\":\"The index in the array\"},\"returns\":{\"_0\":\"The bid id and bid structure\"}},\"getMyBidsCount()\":{\"returns\":{\"_0\":\"The number of bids made by msg sender\"}},\"getSurfaceBid(uint256,uint256)\":{\"params\":{\"_index\":\"The index of the bid\",\"_tokenId\":\"The advertisement surface id\"},\"returns\":{\"_0\":\"The bid id and bid structure\"}},\"getSurfaceBidCount(uint256)\":{\"params\":{\"_tokenId\":\"The advertisement surface id\"},\"returns\":{\"_0\":\"The number of bids for advertisement surface\"}},\"newBid((address,uint256,address,uint256,uint256,uint64,uint64,uint8))\":{\"params\":{\"_bid\":\"The bid structure defining the bid\"}},\"refundBid(uint256)\":{\"params\":{\"_bidId\":\"The bid id to refund payment\"}}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"collectBid(uint256)\":{\"notice\":\"Collects payment from bid in when advertisement has been already shown\"},\"getActiveBid(uint256,uint256)\":{\"notice\":\"Gets active bid id and bid structure for advertisement surface id and index\"},\"getActiveBidCount(uint256)\":{\"notice\":\"Get active bid count. The active bid is winning bid.\"},\"getBid(uint256)\":{\"notice\":\"Gets bid structure for given bid id\"},\"getBidCount()\":{\"notice\":\"Gets the number of bids in the contract\"},\"getBidWorth((address,uint256,address,uint256,uint256,uint64,uint64,uint8))\":{\"notice\":\"Calculates how much the bid is worth. It's required to decide which bid outbids the other bid.\"},\"getMyBid(uint256)\":{\"notice\":\"Gets bid id and bid structure for given index od msg sender bids\"},\"getMyBidsCount()\":{\"notice\":\"Gets the number of the bids made by msg sender\"},\"getSurfaceBid(uint256,uint256)\":{\"notice\":\"Gets bid id and bid structure for advertisement surface id and index\"},\"getSurfaceBidCount(uint256)\":{\"notice\":\"Gets the number of bids for given advertisement surface\"},\"newBid((address,uint256,address,uint256,uint256,uint64,uint64,uint8))\":{\"notice\":\"Creates new bid for advertisement surface\"},\"refundBid(uint256)\":{\"notice\":\"Refunds bid in case this bid has been outbid by someone else\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/AdvertisementMarket/AdvertisementSurface/IAdvertisementSurfaceAuction.sol\":\"IAdvertisementSurfaceAuction\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/AdvertisementMarket/AdvertisementSurface/IAdvertisementSurfaceAuction.sol\":{\"keccak256\":\"0x471a5e2d77dbb34c437a344421e3076cc81c71b860aa6b79446d100c6aeee208\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://a23facc89cf5ab52cf9774a5dffeb00f17ffe2cc9a190922ee49759fde23900d\",\"dweb:/ipfs/QmPhKoPqBdMHynQMZ2MapD588EBZZospaJ2oCzym5w9zB8\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\n\n// @author Marcin Gorzynski\n// @title The Advertisement Surface Auction interface\n// @description The interface used to bid on advertisement surfaces and collect payments and refunds.\ninterface IAdvertisementSurfaceAuction {\n\n    enum BidState {Outbid, Active, Finished}\n\n    struct Bid {\n        address bidder;       // The address making a bid.\n        uint256 surTokenId;   // The surface token id;\n        address advERC721;    // The contract address for advertisement ERC721 token.\n        uint256 advTokenId;   // The advertisement to be shown.\n        uint256 bid;          // The bid for unit of time(second). The total is bid * duration.\n        uint64 startTime;     // The start of the advertisement.\n        uint64 duration;      // The duration of the advertisement.\n        BidState state;       // The bid state.\n    }\n\n    /// @notice Gets the number of bids in the contract\n    /// @return Number of bids\n    function getBidCount() external view returns(uint256);\n\n    /// @notice Gets bid structure for given bid id\n    /// @param _bidId The id of the bid\n    /// @return The bid structure\n    function getBid(uint256 _bidId) external view returns(Bid memory);\n\n    /// @notice Gets the number of the bids made by msg sender\n    /// @return The number of bids made by msg sender\n    function getMyBidsCount() external view returns(uint256);\n\n    /// @notice Gets bid id and bid structure for given index od msg sender bids\n    /// @param _index The index in the array\n    /// @return The bid id and bid structure\n    function getMyBid(uint256 _index) external view returns(uint256, Bid memory);\n\n    /// @notice Gets the number of bids for given advertisement surface\n    /// @param _tokenId The advertisement surface id\n    /// @return The number of bids for advertisement surface\n    function getSurfaceBidCount(uint256 _tokenId) external view returns(uint256);\n\n    /// @notice Gets bid id and bid structure for advertisement surface id and index\n    /// @param _tokenId The advertisement surface id\n    /// @param _index The index of the bid\n    /// @return The bid id and bid structure\n    function getSurfaceBid(uint256 _tokenId, uint256 _index) external view returns(uint256, Bid memory);\n\n    /// @notice Get active bid count. The active bid is winning bid.\n    /// @param _tokenId The advertisement surface id\n    /// @return The number of active bids\n    function getActiveBidCount(uint256 _tokenId) external view returns(uint256);\n\n    /// @notice Gets active bid id and bid structure for advertisement surface id and index\n    /// @param _tokenId The advertisement surface id\n    /// @param _index The index of the bid\n    /// @return The bid id and bid structure\n    function getActiveBid(uint256 _tokenId, uint256 _index) external view returns(uint256, Bid memory);\n\n    /// @notice Creates new bid for advertisement surface\n    /// @param _bid The bid structure defining the bid\n    function newBid(Bid memory _bid) external;\n\n    /// @notice Refunds bid in case this bid has been outbid by someone else\n    /// @param _bidId The bid id to refund payment\n    function refundBid(uint256 _bidId) external;\n\n    /// @notice Collects payment from bid in when advertisement has been already shown\n    /// @param _bidId The bid id to collect payment\n    function collectBid(uint256 _bidId) external;\n\n    /// @notice Calculates how much the bid is worth. It's required to decide which bid outbids the other bid.\n    /// @param _bid The bid structure\n    /// @return The number of tokens that can be collected or refunded from the bid\n    function getBidWorth(Bid memory _bid) external pure returns(uint256);\n\n}",
+  "sourcePath": "/Users/marcin/Prywatne/dAdvrtMarket/contracts/AdvertisementMarket/AdvertisementSurface/IAdvertisementSurfaceAuction.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/AdvertisementMarket/AdvertisementSurface/IAdvertisementSurfaceAuction.sol",
+    "exportedSymbols": {
+      "IAdvertisementSurfaceAuction": [
+        3994
+      ]
+    },
+    "id": 3995,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3869,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "32:23:18"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "fullyImplemented": false,
+        "id": 3994,
+        "linearizedBaseContracts": [
+          3994
+        ],
+        "name": "IAdvertisementSurfaceAuction",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "IAdvertisementSurfaceAuction.BidState",
+            "id": 3873,
+            "members": [
+              {
+                "id": 3870,
+                "name": "Outbid",
+                "nodeType": "EnumValue",
+                "src": "302:6:18"
+              },
+              {
+                "id": 3871,
+                "name": "Active",
+                "nodeType": "EnumValue",
+                "src": "310:6:18"
+              },
+              {
+                "id": 3872,
+                "name": "Finished",
+                "nodeType": "EnumValue",
+                "src": "318:8:18"
+              }
+            ],
+            "name": "BidState",
+            "nodeType": "EnumDefinition",
+            "src": "287:40:18"
+          },
+          {
+            "canonicalName": "IAdvertisementSurfaceAuction.Bid",
+            "id": 3891,
+            "members": [
+              {
+                "constant": false,
+                "id": 3875,
+                "mutability": "mutable",
+                "name": "bidder",
+                "nodeType": "VariableDeclaration",
+                "scope": 3891,
+                "src": "354:14:18",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 3874,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "354:7:18",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 3877,
+                "mutability": "mutable",
+                "name": "surTokenId",
+                "nodeType": "VariableDeclaration",
+                "scope": 3891,
+                "src": "413:18:18",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 3876,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "413:7:18",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 3879,
+                "mutability": "mutable",
+                "name": "advERC721",
+                "nodeType": "VariableDeclaration",
+                "scope": 3891,
+                "src": "468:17:18",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 3878,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "468:7:18",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 3881,
+                "mutability": "mutable",
+                "name": "advTokenId",
+                "nodeType": "VariableDeclaration",
+                "scope": 3891,
+                "src": "554:18:18",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 3880,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "554:7:18",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 3883,
+                "mutability": "mutable",
+                "name": "bid",
+                "nodeType": "VariableDeclaration",
+                "scope": 3891,
+                "src": "618:11:18",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 3882,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "618:7:18",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 3885,
+                "mutability": "mutable",
+                "name": "startTime",
+                "nodeType": "VariableDeclaration",
+                "scope": 3891,
+                "src": "714:16:18",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint64",
+                  "typeString": "uint64"
+                },
+                "typeName": {
+                  "id": 3884,
+                  "name": "uint64",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "714:6:18",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint64",
+                    "typeString": "uint64"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 3887,
+                "mutability": "mutable",
+                "name": "duration",
+                "nodeType": "VariableDeclaration",
+                "scope": 3891,
+                "src": "779:15:18",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint64",
+                  "typeString": "uint64"
+                },
+                "typeName": {
+                  "id": 3886,
+                  "name": "uint64",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "779:6:18",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint64",
+                    "typeString": "uint64"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 3890,
+                "mutability": "mutable",
+                "name": "state",
+                "nodeType": "VariableDeclaration",
+                "scope": 3891,
+                "src": "847:14:18",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_enum$_BidState_$3873",
+                  "typeString": "enum IAdvertisementSurfaceAuction.BidState"
+                },
+                "typeName": {
+                  "id": 3889,
+                  "nodeType": "UserDefinedTypeName",
+                  "pathNode": {
+                    "id": 3888,
+                    "name": "BidState",
+                    "nodeType": "IdentifierPath",
+                    "referencedDeclaration": 3873,
+                    "src": "847:8:18"
+                  },
+                  "referencedDeclaration": 3873,
+                  "src": "847:8:18",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_BidState_$3873",
+                    "typeString": "enum IAdvertisementSurfaceAuction.BidState"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "Bid",
+            "nodeType": "StructDefinition",
+            "scope": 3994,
+            "src": "333:559:18",
+            "visibility": "public"
+          },
+          {
+            "documentation": {
+              "id": 3892,
+              "nodeType": "StructuredDocumentation",
+              "src": "898:82:18",
+              "text": "@notice Gets the number of bids in the contract\n @return Number of bids"
+            },
+            "functionSelector": "28f6a48a",
+            "id": 3897,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getBidCount",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3893,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1005:2:18"
+            },
+            "returnParameters": {
+              "id": 3896,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3895,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3897,
+                  "src": "1030:7:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3894,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1030:7:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1029:9:18"
+            },
+            "scope": 3994,
+            "src": "985:54:18",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 3898,
+              "nodeType": "StructuredDocumentation",
+              "src": "1045:121:18",
+              "text": "@notice Gets bid structure for given bid id\n @param _bidId The id of the bid\n @return The bid structure"
+            },
+            "functionSelector": "3c889e6f",
+            "id": 3906,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getBid",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3901,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3900,
+                  "mutability": "mutable",
+                  "name": "_bidId",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3906,
+                  "src": "1187:14:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3899,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1187:7:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1186:16:18"
+            },
+            "returnParameters": {
+              "id": 3905,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3904,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3906,
+                  "src": "1225:10:18",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Bid_$3891_memory_ptr",
+                    "typeString": "struct IAdvertisementSurfaceAuction.Bid"
+                  },
+                  "typeName": {
+                    "id": 3903,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 3902,
+                      "name": "Bid",
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 3891,
+                      "src": "1225:3:18"
+                    },
+                    "referencedDeclaration": 3891,
+                    "src": "1225:3:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Bid_$3891_storage_ptr",
+                      "typeString": "struct IAdvertisementSurfaceAuction.Bid"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1224:12:18"
+            },
+            "scope": 3994,
+            "src": "1171:66:18",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 3907,
+              "nodeType": "StructuredDocumentation",
+              "src": "1243:112:18",
+              "text": "@notice Gets the number of the bids made by msg sender\n @return The number of bids made by msg sender"
+            },
+            "functionSelector": "a1b4c4e7",
+            "id": 3912,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getMyBidsCount",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3908,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1383:2:18"
+            },
+            "returnParameters": {
+              "id": 3911,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3910,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3912,
+                  "src": "1408:7:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3909,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1408:7:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1407:9:18"
+            },
+            "scope": 3994,
+            "src": "1360:57:18",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 3913,
+              "nodeType": "StructuredDocumentation",
+              "src": "1423:166:18",
+              "text": "@notice Gets bid id and bid structure for given index od msg sender bids\n @param _index The index in the array\n @return The bid id and bid structure"
+            },
+            "functionSelector": "8df6d6e6",
+            "id": 3923,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getMyBid",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3916,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3915,
+                  "mutability": "mutable",
+                  "name": "_index",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3923,
+                  "src": "1612:14:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3914,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1612:7:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1611:16:18"
+            },
+            "returnParameters": {
+              "id": 3922,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3918,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3923,
+                  "src": "1650:7:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3917,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1650:7:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3921,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3923,
+                  "src": "1659:10:18",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Bid_$3891_memory_ptr",
+                    "typeString": "struct IAdvertisementSurfaceAuction.Bid"
+                  },
+                  "typeName": {
+                    "id": 3920,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 3919,
+                      "name": "Bid",
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 3891,
+                      "src": "1659:3:18"
+                    },
+                    "referencedDeclaration": 3891,
+                    "src": "1659:3:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Bid_$3891_storage_ptr",
+                      "typeString": "struct IAdvertisementSurfaceAuction.Bid"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1649:21:18"
+            },
+            "scope": 3994,
+            "src": "1594:77:18",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 3924,
+              "nodeType": "StructuredDocumentation",
+              "src": "1677:181:18",
+              "text": "@notice Gets the number of bids for given advertisement surface\n @param _tokenId The advertisement surface id\n @return The number of bids for advertisement surface"
+            },
+            "functionSelector": "e18b26bd",
+            "id": 3931,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getSurfaceBidCount",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3927,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3926,
+                  "mutability": "mutable",
+                  "name": "_tokenId",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3931,
+                  "src": "1891:16:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3925,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1891:7:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1890:18:18"
+            },
+            "returnParameters": {
+              "id": 3930,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3929,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3931,
+                  "src": "1931:7:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3928,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1931:7:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1930:9:18"
+            },
+            "scope": 3994,
+            "src": "1863:77:18",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 3932,
+              "nodeType": "StructuredDocumentation",
+              "src": "1946:221:18",
+              "text": "@notice Gets bid id and bid structure for advertisement surface id and index\n @param _tokenId The advertisement surface id\n @param _index The index of the bid\n @return The bid id and bid structure"
+            },
+            "functionSelector": "e2c64c87",
+            "id": 3944,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getSurfaceBid",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3937,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3934,
+                  "mutability": "mutable",
+                  "name": "_tokenId",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3944,
+                  "src": "2195:16:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3933,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2195:7:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3936,
+                  "mutability": "mutable",
+                  "name": "_index",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3944,
+                  "src": "2213:14:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3935,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2213:7:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2194:34:18"
+            },
+            "returnParameters": {
+              "id": 3943,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3939,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3944,
+                  "src": "2251:7:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3938,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2251:7:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3942,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3944,
+                  "src": "2260:10:18",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Bid_$3891_memory_ptr",
+                    "typeString": "struct IAdvertisementSurfaceAuction.Bid"
+                  },
+                  "typeName": {
+                    "id": 3941,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 3940,
+                      "name": "Bid",
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 3891,
+                      "src": "2260:3:18"
+                    },
+                    "referencedDeclaration": 3891,
+                    "src": "2260:3:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Bid_$3891_storage_ptr",
+                      "typeString": "struct IAdvertisementSurfaceAuction.Bid"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2250:21:18"
+            },
+            "scope": 3994,
+            "src": "2172:100:18",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 3945,
+              "nodeType": "StructuredDocumentation",
+              "src": "2278:159:18",
+              "text": "@notice Get active bid count. The active bid is winning bid.\n @param _tokenId The advertisement surface id\n @return The number of active bids"
+            },
+            "functionSelector": "2d13da02",
+            "id": 3952,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getActiveBidCount",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3948,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3947,
+                  "mutability": "mutable",
+                  "name": "_tokenId",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3952,
+                  "src": "2469:16:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3946,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2469:7:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2468:18:18"
+            },
+            "returnParameters": {
+              "id": 3951,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3950,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3952,
+                  "src": "2509:7:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3949,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2509:7:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2508:9:18"
+            },
+            "scope": 3994,
+            "src": "2442:76:18",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 3953,
+              "nodeType": "StructuredDocumentation",
+              "src": "2524:228:18",
+              "text": "@notice Gets active bid id and bid structure for advertisement surface id and index\n @param _tokenId The advertisement surface id\n @param _index The index of the bid\n @return The bid id and bid structure"
+            },
+            "functionSelector": "bc3aa281",
+            "id": 3965,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getActiveBid",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3958,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3955,
+                  "mutability": "mutable",
+                  "name": "_tokenId",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3965,
+                  "src": "2779:16:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3954,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2779:7:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3957,
+                  "mutability": "mutable",
+                  "name": "_index",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3965,
+                  "src": "2797:14:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3956,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2797:7:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2778:34:18"
+            },
+            "returnParameters": {
+              "id": 3964,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3960,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3965,
+                  "src": "2835:7:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3959,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2835:7:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3963,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3965,
+                  "src": "2844:10:18",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Bid_$3891_memory_ptr",
+                    "typeString": "struct IAdvertisementSurfaceAuction.Bid"
+                  },
+                  "typeName": {
+                    "id": 3962,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 3961,
+                      "name": "Bid",
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 3891,
+                      "src": "2844:3:18"
+                    },
+                    "referencedDeclaration": 3891,
+                    "src": "2844:3:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Bid_$3891_storage_ptr",
+                      "typeString": "struct IAdvertisementSurfaceAuction.Bid"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2834:21:18"
+            },
+            "scope": 3994,
+            "src": "2757:99:18",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 3966,
+              "nodeType": "StructuredDocumentation",
+              "src": "2862:108:18",
+              "text": "@notice Creates new bid for advertisement surface\n @param _bid The bid structure defining the bid"
+            },
+            "functionSelector": "f28ef037",
+            "id": 3972,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "newBid",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3970,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3969,
+                  "mutability": "mutable",
+                  "name": "_bid",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3972,
+                  "src": "2991:15:18",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Bid_$3891_memory_ptr",
+                    "typeString": "struct IAdvertisementSurfaceAuction.Bid"
+                  },
+                  "typeName": {
+                    "id": 3968,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 3967,
+                      "name": "Bid",
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 3891,
+                      "src": "2991:3:18"
+                    },
+                    "referencedDeclaration": 3891,
+                    "src": "2991:3:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Bid_$3891_storage_ptr",
+                      "typeString": "struct IAdvertisementSurfaceAuction.Bid"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2990:17:18"
+            },
+            "returnParameters": {
+              "id": 3971,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "3016:0:18"
+            },
+            "scope": 3994,
+            "src": "2975:42:18",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 3973,
+              "nodeType": "StructuredDocumentation",
+              "src": "3023:123:18",
+              "text": "@notice Refunds bid in case this bid has been outbid by someone else\n @param _bidId The bid id to refund payment"
+            },
+            "functionSelector": "26d29ce0",
+            "id": 3978,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "refundBid",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3976,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3975,
+                  "mutability": "mutable",
+                  "name": "_bidId",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3978,
+                  "src": "3170:14:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3974,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3170:7:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3169:16:18"
+            },
+            "returnParameters": {
+              "id": 3977,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "3194:0:18"
+            },
+            "scope": 3994,
+            "src": "3151:44:18",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 3979,
+              "nodeType": "StructuredDocumentation",
+              "src": "3201:134:18",
+              "text": "@notice Collects payment from bid in when advertisement has been already shown\n @param _bidId The bid id to collect payment"
+            },
+            "functionSelector": "86e7b7cd",
+            "id": 3984,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "collectBid",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3982,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3981,
+                  "mutability": "mutable",
+                  "name": "_bidId",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3984,
+                  "src": "3360:14:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3980,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3360:7:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3359:16:18"
+            },
+            "returnParameters": {
+              "id": 3983,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "3384:0:18"
+            },
+            "scope": 3994,
+            "src": "3340:45:18",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 3985,
+              "nodeType": "StructuredDocumentation",
+              "src": "3391:228:18",
+              "text": "@notice Calculates how much the bid is worth. It's required to decide which bid outbids the other bid.\n @param _bid The bid structure\n @return The number of tokens that can be collected or refunded from the bid"
+            },
+            "functionSelector": "0534370d",
+            "id": 3993,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getBidWorth",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3989,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3988,
+                  "mutability": "mutable",
+                  "name": "_bid",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3993,
+                  "src": "3645:15:18",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Bid_$3891_memory_ptr",
+                    "typeString": "struct IAdvertisementSurfaceAuction.Bid"
+                  },
+                  "typeName": {
+                    "id": 3987,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 3986,
+                      "name": "Bid",
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 3891,
+                      "src": "3645:3:18"
+                    },
+                    "referencedDeclaration": 3891,
+                    "src": "3645:3:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Bid_$3891_storage_ptr",
+                      "typeString": "struct IAdvertisementSurfaceAuction.Bid"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3644:17:18"
+            },
+            "returnParameters": {
+              "id": 3992,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3991,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3993,
+                  "src": "3684:7:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3990,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3684:7:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3683:9:18"
+            },
+            "scope": 3994,
+            "src": "3624:69:18",
+            "stateMutability": "pure",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 3995,
+        "src": "241:3455:18"
+      }
+    ],
+    "src": "32:3664:18"
+  },
+  "legacyAST": {
+    "absolutePath": "project:/contracts/AdvertisementMarket/AdvertisementSurface/IAdvertisementSurfaceAuction.sol",
+    "exportedSymbols": {
+      "IAdvertisementSurfaceAuction": [
+        3994
+      ]
+    },
+    "id": 3995,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3869,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "32:23:18"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "fullyImplemented": false,
+        "id": 3994,
+        "linearizedBaseContracts": [
+          3994
+        ],
+        "name": "IAdvertisementSurfaceAuction",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "IAdvertisementSurfaceAuction.BidState",
+            "id": 3873,
+            "members": [
+              {
+                "id": 3870,
+                "name": "Outbid",
+                "nodeType": "EnumValue",
+                "src": "302:6:18"
+              },
+              {
+                "id": 3871,
+                "name": "Active",
+                "nodeType": "EnumValue",
+                "src": "310:6:18"
+              },
+              {
+                "id": 3872,
+                "name": "Finished",
+                "nodeType": "EnumValue",
+                "src": "318:8:18"
+              }
+            ],
+            "name": "BidState",
+            "nodeType": "EnumDefinition",
+            "src": "287:40:18"
+          },
+          {
+            "canonicalName": "IAdvertisementSurfaceAuction.Bid",
+            "id": 3891,
+            "members": [
+              {
+                "constant": false,
+                "id": 3875,
+                "mutability": "mutable",
+                "name": "bidder",
+                "nodeType": "VariableDeclaration",
+                "scope": 3891,
+                "src": "354:14:18",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 3874,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "354:7:18",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 3877,
+                "mutability": "mutable",
+                "name": "surTokenId",
+                "nodeType": "VariableDeclaration",
+                "scope": 3891,
+                "src": "413:18:18",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 3876,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "413:7:18",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 3879,
+                "mutability": "mutable",
+                "name": "advERC721",
+                "nodeType": "VariableDeclaration",
+                "scope": 3891,
+                "src": "468:17:18",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 3878,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "468:7:18",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 3881,
+                "mutability": "mutable",
+                "name": "advTokenId",
+                "nodeType": "VariableDeclaration",
+                "scope": 3891,
+                "src": "554:18:18",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 3880,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "554:7:18",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 3883,
+                "mutability": "mutable",
+                "name": "bid",
+                "nodeType": "VariableDeclaration",
+                "scope": 3891,
+                "src": "618:11:18",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 3882,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "618:7:18",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 3885,
+                "mutability": "mutable",
+                "name": "startTime",
+                "nodeType": "VariableDeclaration",
+                "scope": 3891,
+                "src": "714:16:18",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint64",
+                  "typeString": "uint64"
+                },
+                "typeName": {
+                  "id": 3884,
+                  "name": "uint64",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "714:6:18",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint64",
+                    "typeString": "uint64"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 3887,
+                "mutability": "mutable",
+                "name": "duration",
+                "nodeType": "VariableDeclaration",
+                "scope": 3891,
+                "src": "779:15:18",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint64",
+                  "typeString": "uint64"
+                },
+                "typeName": {
+                  "id": 3886,
+                  "name": "uint64",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "779:6:18",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint64",
+                    "typeString": "uint64"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 3890,
+                "mutability": "mutable",
+                "name": "state",
+                "nodeType": "VariableDeclaration",
+                "scope": 3891,
+                "src": "847:14:18",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_enum$_BidState_$3873",
+                  "typeString": "enum IAdvertisementSurfaceAuction.BidState"
+                },
+                "typeName": {
+                  "id": 3889,
+                  "nodeType": "UserDefinedTypeName",
+                  "pathNode": {
+                    "id": 3888,
+                    "name": "BidState",
+                    "nodeType": "IdentifierPath",
+                    "referencedDeclaration": 3873,
+                    "src": "847:8:18"
+                  },
+                  "referencedDeclaration": 3873,
+                  "src": "847:8:18",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_BidState_$3873",
+                    "typeString": "enum IAdvertisementSurfaceAuction.BidState"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "Bid",
+            "nodeType": "StructDefinition",
+            "scope": 3994,
+            "src": "333:559:18",
+            "visibility": "public"
+          },
+          {
+            "documentation": {
+              "id": 3892,
+              "nodeType": "StructuredDocumentation",
+              "src": "898:82:18",
+              "text": "@notice Gets the number of bids in the contract\n @return Number of bids"
+            },
+            "functionSelector": "28f6a48a",
+            "id": 3897,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getBidCount",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3893,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1005:2:18"
+            },
+            "returnParameters": {
+              "id": 3896,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3895,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3897,
+                  "src": "1030:7:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3894,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1030:7:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1029:9:18"
+            },
+            "scope": 3994,
+            "src": "985:54:18",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 3898,
+              "nodeType": "StructuredDocumentation",
+              "src": "1045:121:18",
+              "text": "@notice Gets bid structure for given bid id\n @param _bidId The id of the bid\n @return The bid structure"
+            },
+            "functionSelector": "3c889e6f",
+            "id": 3906,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getBid",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3901,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3900,
+                  "mutability": "mutable",
+                  "name": "_bidId",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3906,
+                  "src": "1187:14:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3899,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1187:7:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1186:16:18"
+            },
+            "returnParameters": {
+              "id": 3905,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3904,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3906,
+                  "src": "1225:10:18",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Bid_$3891_memory_ptr",
+                    "typeString": "struct IAdvertisementSurfaceAuction.Bid"
+                  },
+                  "typeName": {
+                    "id": 3903,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 3902,
+                      "name": "Bid",
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 3891,
+                      "src": "1225:3:18"
+                    },
+                    "referencedDeclaration": 3891,
+                    "src": "1225:3:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Bid_$3891_storage_ptr",
+                      "typeString": "struct IAdvertisementSurfaceAuction.Bid"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1224:12:18"
+            },
+            "scope": 3994,
+            "src": "1171:66:18",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 3907,
+              "nodeType": "StructuredDocumentation",
+              "src": "1243:112:18",
+              "text": "@notice Gets the number of the bids made by msg sender\n @return The number of bids made by msg sender"
+            },
+            "functionSelector": "a1b4c4e7",
+            "id": 3912,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getMyBidsCount",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3908,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1383:2:18"
+            },
+            "returnParameters": {
+              "id": 3911,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3910,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3912,
+                  "src": "1408:7:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3909,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1408:7:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1407:9:18"
+            },
+            "scope": 3994,
+            "src": "1360:57:18",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 3913,
+              "nodeType": "StructuredDocumentation",
+              "src": "1423:166:18",
+              "text": "@notice Gets bid id and bid structure for given index od msg sender bids\n @param _index The index in the array\n @return The bid id and bid structure"
+            },
+            "functionSelector": "8df6d6e6",
+            "id": 3923,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getMyBid",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3916,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3915,
+                  "mutability": "mutable",
+                  "name": "_index",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3923,
+                  "src": "1612:14:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3914,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1612:7:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1611:16:18"
+            },
+            "returnParameters": {
+              "id": 3922,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3918,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3923,
+                  "src": "1650:7:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3917,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1650:7:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3921,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3923,
+                  "src": "1659:10:18",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Bid_$3891_memory_ptr",
+                    "typeString": "struct IAdvertisementSurfaceAuction.Bid"
+                  },
+                  "typeName": {
+                    "id": 3920,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 3919,
+                      "name": "Bid",
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 3891,
+                      "src": "1659:3:18"
+                    },
+                    "referencedDeclaration": 3891,
+                    "src": "1659:3:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Bid_$3891_storage_ptr",
+                      "typeString": "struct IAdvertisementSurfaceAuction.Bid"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1649:21:18"
+            },
+            "scope": 3994,
+            "src": "1594:77:18",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 3924,
+              "nodeType": "StructuredDocumentation",
+              "src": "1677:181:18",
+              "text": "@notice Gets the number of bids for given advertisement surface\n @param _tokenId The advertisement surface id\n @return The number of bids for advertisement surface"
+            },
+            "functionSelector": "e18b26bd",
+            "id": 3931,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getSurfaceBidCount",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3927,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3926,
+                  "mutability": "mutable",
+                  "name": "_tokenId",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3931,
+                  "src": "1891:16:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3925,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1891:7:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1890:18:18"
+            },
+            "returnParameters": {
+              "id": 3930,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3929,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3931,
+                  "src": "1931:7:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3928,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1931:7:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1930:9:18"
+            },
+            "scope": 3994,
+            "src": "1863:77:18",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 3932,
+              "nodeType": "StructuredDocumentation",
+              "src": "1946:221:18",
+              "text": "@notice Gets bid id and bid structure for advertisement surface id and index\n @param _tokenId The advertisement surface id\n @param _index The index of the bid\n @return The bid id and bid structure"
+            },
+            "functionSelector": "e2c64c87",
+            "id": 3944,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getSurfaceBid",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3937,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3934,
+                  "mutability": "mutable",
+                  "name": "_tokenId",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3944,
+                  "src": "2195:16:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3933,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2195:7:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3936,
+                  "mutability": "mutable",
+                  "name": "_index",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3944,
+                  "src": "2213:14:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3935,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2213:7:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2194:34:18"
+            },
+            "returnParameters": {
+              "id": 3943,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3939,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3944,
+                  "src": "2251:7:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3938,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2251:7:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3942,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3944,
+                  "src": "2260:10:18",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Bid_$3891_memory_ptr",
+                    "typeString": "struct IAdvertisementSurfaceAuction.Bid"
+                  },
+                  "typeName": {
+                    "id": 3941,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 3940,
+                      "name": "Bid",
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 3891,
+                      "src": "2260:3:18"
+                    },
+                    "referencedDeclaration": 3891,
+                    "src": "2260:3:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Bid_$3891_storage_ptr",
+                      "typeString": "struct IAdvertisementSurfaceAuction.Bid"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2250:21:18"
+            },
+            "scope": 3994,
+            "src": "2172:100:18",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 3945,
+              "nodeType": "StructuredDocumentation",
+              "src": "2278:159:18",
+              "text": "@notice Get active bid count. The active bid is winning bid.\n @param _tokenId The advertisement surface id\n @return The number of active bids"
+            },
+            "functionSelector": "2d13da02",
+            "id": 3952,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getActiveBidCount",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3948,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3947,
+                  "mutability": "mutable",
+                  "name": "_tokenId",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3952,
+                  "src": "2469:16:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3946,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2469:7:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2468:18:18"
+            },
+            "returnParameters": {
+              "id": 3951,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3950,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3952,
+                  "src": "2509:7:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3949,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2509:7:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2508:9:18"
+            },
+            "scope": 3994,
+            "src": "2442:76:18",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 3953,
+              "nodeType": "StructuredDocumentation",
+              "src": "2524:228:18",
+              "text": "@notice Gets active bid id and bid structure for advertisement surface id and index\n @param _tokenId The advertisement surface id\n @param _index The index of the bid\n @return The bid id and bid structure"
+            },
+            "functionSelector": "bc3aa281",
+            "id": 3965,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getActiveBid",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3958,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3955,
+                  "mutability": "mutable",
+                  "name": "_tokenId",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3965,
+                  "src": "2779:16:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3954,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2779:7:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3957,
+                  "mutability": "mutable",
+                  "name": "_index",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3965,
+                  "src": "2797:14:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3956,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2797:7:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2778:34:18"
+            },
+            "returnParameters": {
+              "id": 3964,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3960,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3965,
+                  "src": "2835:7:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3959,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2835:7:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3963,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3965,
+                  "src": "2844:10:18",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Bid_$3891_memory_ptr",
+                    "typeString": "struct IAdvertisementSurfaceAuction.Bid"
+                  },
+                  "typeName": {
+                    "id": 3962,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 3961,
+                      "name": "Bid",
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 3891,
+                      "src": "2844:3:18"
+                    },
+                    "referencedDeclaration": 3891,
+                    "src": "2844:3:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Bid_$3891_storage_ptr",
+                      "typeString": "struct IAdvertisementSurfaceAuction.Bid"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2834:21:18"
+            },
+            "scope": 3994,
+            "src": "2757:99:18",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 3966,
+              "nodeType": "StructuredDocumentation",
+              "src": "2862:108:18",
+              "text": "@notice Creates new bid for advertisement surface\n @param _bid The bid structure defining the bid"
+            },
+            "functionSelector": "f28ef037",
+            "id": 3972,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "newBid",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3970,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3969,
+                  "mutability": "mutable",
+                  "name": "_bid",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3972,
+                  "src": "2991:15:18",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Bid_$3891_memory_ptr",
+                    "typeString": "struct IAdvertisementSurfaceAuction.Bid"
+                  },
+                  "typeName": {
+                    "id": 3968,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 3967,
+                      "name": "Bid",
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 3891,
+                      "src": "2991:3:18"
+                    },
+                    "referencedDeclaration": 3891,
+                    "src": "2991:3:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Bid_$3891_storage_ptr",
+                      "typeString": "struct IAdvertisementSurfaceAuction.Bid"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2990:17:18"
+            },
+            "returnParameters": {
+              "id": 3971,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "3016:0:18"
+            },
+            "scope": 3994,
+            "src": "2975:42:18",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 3973,
+              "nodeType": "StructuredDocumentation",
+              "src": "3023:123:18",
+              "text": "@notice Refunds bid in case this bid has been outbid by someone else\n @param _bidId The bid id to refund payment"
+            },
+            "functionSelector": "26d29ce0",
+            "id": 3978,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "refundBid",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3976,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3975,
+                  "mutability": "mutable",
+                  "name": "_bidId",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3978,
+                  "src": "3170:14:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3974,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3170:7:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3169:16:18"
+            },
+            "returnParameters": {
+              "id": 3977,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "3194:0:18"
+            },
+            "scope": 3994,
+            "src": "3151:44:18",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 3979,
+              "nodeType": "StructuredDocumentation",
+              "src": "3201:134:18",
+              "text": "@notice Collects payment from bid in when advertisement has been already shown\n @param _bidId The bid id to collect payment"
+            },
+            "functionSelector": "86e7b7cd",
+            "id": 3984,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "collectBid",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3982,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3981,
+                  "mutability": "mutable",
+                  "name": "_bidId",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3984,
+                  "src": "3360:14:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3980,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3360:7:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3359:16:18"
+            },
+            "returnParameters": {
+              "id": 3983,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "3384:0:18"
+            },
+            "scope": 3994,
+            "src": "3340:45:18",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 3985,
+              "nodeType": "StructuredDocumentation",
+              "src": "3391:228:18",
+              "text": "@notice Calculates how much the bid is worth. It's required to decide which bid outbids the other bid.\n @param _bid The bid structure\n @return The number of tokens that can be collected or refunded from the bid"
+            },
+            "functionSelector": "0534370d",
+            "id": 3993,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getBidWorth",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3989,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3988,
+                  "mutability": "mutable",
+                  "name": "_bid",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3993,
+                  "src": "3645:15:18",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Bid_$3891_memory_ptr",
+                    "typeString": "struct IAdvertisementSurfaceAuction.Bid"
+                  },
+                  "typeName": {
+                    "id": 3987,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 3986,
+                      "name": "Bid",
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 3891,
+                      "src": "3645:3:18"
+                    },
+                    "referencedDeclaration": 3891,
+                    "src": "3645:3:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Bid_$3891_storage_ptr",
+                      "typeString": "struct IAdvertisementSurfaceAuction.Bid"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3644:17:18"
+            },
+            "returnParameters": {
+              "id": 3992,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3991,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3993,
+                  "src": "3684:7:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3990,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3684:7:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3683:9:18"
+            },
+            "scope": 3994,
+            "src": "3624:69:18",
+            "stateMutability": "pure",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 3995,
+        "src": "241:3455:18"
+      }
+    ],
+    "src": "32:3664:18"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.0+commit.c7dfd78e.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.3",
+  "updatedAt": "2021-11-07T16:40:07.818Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {
+      "collectBid(uint256)": {
+        "params": {
+          "_bidId": "The bid id to collect payment"
+        }
+      },
+      "getActiveBid(uint256,uint256)": {
+        "params": {
+          "_index": "The index of the bid",
+          "_tokenId": "The advertisement surface id"
+        },
+        "returns": {
+          "_0": "The bid id and bid structure"
+        }
+      },
+      "getActiveBidCount(uint256)": {
+        "params": {
+          "_tokenId": "The advertisement surface id"
+        },
+        "returns": {
+          "_0": "The number of active bids"
+        }
+      },
+      "getBid(uint256)": {
+        "params": {
+          "_bidId": "The id of the bid"
+        },
+        "returns": {
+          "_0": "The bid structure"
+        }
+      },
+      "getBidCount()": {
+        "returns": {
+          "_0": "Number of bids"
+        }
+      },
+      "getBidWorth((address,uint256,address,uint256,uint256,uint64,uint64,uint8))": {
+        "params": {
+          "_bid": "The bid structure"
+        },
+        "returns": {
+          "_0": "The number of tokens that can be collected or refunded from the bid"
+        }
+      },
+      "getMyBid(uint256)": {
+        "params": {
+          "_index": "The index in the array"
+        },
+        "returns": {
+          "_0": "The bid id and bid structure"
+        }
+      },
+      "getMyBidsCount()": {
+        "returns": {
+          "_0": "The number of bids made by msg sender"
+        }
+      },
+      "getSurfaceBid(uint256,uint256)": {
+        "params": {
+          "_index": "The index of the bid",
+          "_tokenId": "The advertisement surface id"
+        },
+        "returns": {
+          "_0": "The bid id and bid structure"
+        }
+      },
+      "getSurfaceBidCount(uint256)": {
+        "params": {
+          "_tokenId": "The advertisement surface id"
+        },
+        "returns": {
+          "_0": "The number of bids for advertisement surface"
+        }
+      },
+      "newBid((address,uint256,address,uint256,uint256,uint64,uint64,uint8))": {
+        "params": {
+          "_bid": "The bid structure defining the bid"
+        }
+      },
+      "refundBid(uint256)": {
+        "params": {
+          "_bidId": "The bid id to refund payment"
+        }
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "collectBid(uint256)": {
+        "notice": "Collects payment from bid in when advertisement has been already shown"
+      },
+      "getActiveBid(uint256,uint256)": {
+        "notice": "Gets active bid id and bid structure for advertisement surface id and index"
+      },
+      "getActiveBidCount(uint256)": {
+        "notice": "Get active bid count. The active bid is winning bid."
+      },
+      "getBid(uint256)": {
+        "notice": "Gets bid structure for given bid id"
+      },
+      "getBidCount()": {
+        "notice": "Gets the number of bids in the contract"
+      },
+      "getBidWorth((address,uint256,address,uint256,uint256,uint64,uint64,uint8))": {
+        "notice": "Calculates how much the bid is worth. It's required to decide which bid outbids the other bid."
+      },
+      "getMyBid(uint256)": {
+        "notice": "Gets bid id and bid structure for given index od msg sender bids"
+      },
+      "getMyBidsCount()": {
+        "notice": "Gets the number of the bids made by msg sender"
+      },
+      "getSurfaceBid(uint256,uint256)": {
+        "notice": "Gets bid id and bid structure for advertisement surface id and index"
+      },
+      "getSurfaceBidCount(uint256)": {
+        "notice": "Gets the number of bids for given advertisement surface"
+      },
+      "newBid((address,uint256,address,uint256,uint256,uint64,uint64,uint8))": {
+        "notice": "Creates new bid for advertisement surface"
+      },
+      "refundBid(uint256)": {
+        "notice": "Refunds bid in case this bid has been outbid by someone else"
+      }
+    },
+    "version": 1
+  }
+}

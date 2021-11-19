@@ -4,5 +4,3 @@ build
 
 .env
 .secret
-
-frontend/src/contracts

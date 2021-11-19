@@ -1,0 +1,1583 @@
+{
+  "contractName": "AdvertisementSurfacePayments",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getPaymentInfo",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "erc20",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "minBid",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct IAdvertisementSurfacePayments.PaymentInfo",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_tokenId",
+          "type": "uint256"
+        },
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "erc20",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "minBid",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct IAdvertisementSurfacePayments.PaymentInfo",
+          "name": "_paymentInfo",
+          "type": "tuple"
+        }
+      ],
+      "name": "setPaymentInfo",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.0+commit.c7dfd78e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"getPaymentInfo\",\"outputs\":[{\"components\":[{\"internalType\":\"address\",\"name\":\"erc20\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"minBid\",\"type\":\"uint256\"}],\"internalType\":\"struct IAdvertisementSurfacePayments.PaymentInfo\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"erc20\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"minBid\",\"type\":\"uint256\"}],\"internalType\":\"struct IAdvertisementSurfacePayments.PaymentInfo\",\"name\":\"_paymentInfo\",\"type\":\"tuple\"}],\"name\":\"setPaymentInfo\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"author\":\"Marcin Gorzynski\",\"kind\":\"dev\",\"methods\":{},\"stateVariables\":{\"tokenIdToPaymentInfo\":{\"details\":\"The mapping of advertisement surface token to payment info\"}},\"title\":\"The Advertisement Surface Payments functionality\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"notice\":\"The abstract contract that keeps track of payment method for given advertisement surface token id\",\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/AdvertisementMarket/AdvertisementSurface/AdvertisementSurfacePayments.sol\":\"AdvertisementSurfacePayments\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"@openzeppelin/contracts/token/ERC20/IERC20.sol\":{\"keccak256\":\"0x027b891937d20ccf213fdb9c31531574256de774bda99d3a70ecef6e1913ed2a\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://087318b21c528119f649899f5b5580566dd8d7b0303d4904bd0e8580c3545f14\",\"dweb:/ipfs/Qmbn5Mj7aUn8hJuQ8VrQjjEXRsXyJKykgnjR9p4C3nfLtL\"]},\"@openzeppelin/contracts/utils/math/SafeMath.sol\":{\"keccak256\":\"0x8666f020bd8fc9dc14f07e2ebc52b5f236ab4cdde7c77679b08cb2f94730043b\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://163776cbf565c722232393aa2d62cbe8a2ffb5805986abf4906c00e1e07450a6\",\"dweb:/ipfs/QmPZoN9T3cb6o8bGhjBPZcz7im8T8DWhpr3tjLwhJJHx9N\"]},\"project:/contracts/AdvertisementMarket/AdvertisementSurface/AdvertisementSurfacePayments.sol\":{\"keccak256\":\"0x9ad36ab45837964fa65b06451342b2db98cc0d06fde2a0d902f04d87da2a320a\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://a00344ab98517b5087252335da7b3caeb899fa3c33bbb5e19b4e5488c6405f32\",\"dweb:/ipfs/QmYN5GN2LPDrpLxxt9XfX5jzJddpMyRQvdAJpmBz92oqad\"]},\"project:/contracts/AdvertisementMarket/AdvertisementSurface/IAdvertisementSurfacePayments.sol\":{\"keccak256\":\"0x03e988486080f3c0263ca9f174c44043dd4556e026c28a80e36bfa799438cfa7\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://108751887ef947ccfb31a86020fada8d69558dfbdb81b6e89879a4f974d453a4\",\"dweb:/ipfs/QmQ3Tvhtqyc6PMWFk5ybrKn3TFB8fNwnLzLASdGpN5dtp8\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\n\nimport \"./IAdvertisementSurfacePayments.sol\";\n\nimport \"@openzeppelin/contracts/utils/math/SafeMath.sol\";\nimport \"@openzeppelin/contracts/token/ERC20/IERC20.sol\";\n\n/// @author Marcin Gorzynski\n/// @title The Advertisement Surface Payments functionality\n/// @notice The abstract contract that keeps track of payment method for given advertisement surface token id\nabstract contract AdvertisementSurfacePayments is IAdvertisementSurfacePayments {\n\n    using SafeMath for uint256;\n\n    /// @dev The mapping of advertisement surface token to payment info\n    mapping(uint256 => PaymentInfo) private tokenIdToPaymentInfo;\n\n    /// @dev Gets payment info for given advertisement surface token\n    /// @param _tokenId The advertisement surface token id\n    /// @return The payment info\n    function _getPaymentInfo(uint256 _tokenId) internal view returns (PaymentInfo memory) {\n        return tokenIdToPaymentInfo[_tokenId];\n    }\n\n    /// @dev Sets payment info for given advertisement surface token\n    /// @param _tokenId The advertisement surface token id\n    /// @param _paymentInfo The payment info\n    function _setPaymentInfo(uint256 _tokenId, PaymentInfo memory _paymentInfo) internal {\n        if (tokenIdToPaymentInfo[_tokenId].erc20 == address(0)) {\n            tokenIdToPaymentInfo[_tokenId] = _paymentInfo;\n        } else {\n            tokenIdToPaymentInfo[_tokenId].minBid = _paymentInfo.minBid;\n        }\n    }\n\n}",
+  "sourcePath": "/Users/marcin/Prywatne/dAdvrtMarket/contracts/AdvertisementMarket/AdvertisementSurface/AdvertisementSurfacePayments.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/AdvertisementMarket/AdvertisementSurface/AdvertisementSurfacePayments.sol",
+    "exportedSymbols": {
+      "AdvertisementSurfacePayments": [
+        3837
+      ],
+      "IAdvertisementSurfacePayments": [
+        4018
+      ],
+      "IERC20": [
+        77
+      ],
+      "SafeMath": [
+        2421
+      ]
+    },
+    "id": 3838,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3771,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "32:23:16"
+      },
+      {
+        "absolutePath": "project:/contracts/AdvertisementMarket/AdvertisementSurface/IAdvertisementSurfacePayments.sol",
+        "file": "./IAdvertisementSurfacePayments.sol",
+        "id": 3772,
+        "nodeType": "ImportDirective",
+        "scope": 3838,
+        "sourceUnit": 4019,
+        "src": "57:45:16",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "@openzeppelin/contracts/utils/math/SafeMath.sol",
+        "file": "@openzeppelin/contracts/utils/math/SafeMath.sol",
+        "id": 3773,
+        "nodeType": "ImportDirective",
+        "scope": 3838,
+        "sourceUnit": 2422,
+        "src": "104:57:16",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+        "file": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+        "id": 3774,
+        "nodeType": "ImportDirective",
+        "scope": 3838,
+        "sourceUnit": 78,
+        "src": "162:56:16",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "abstract": true,
+        "baseContracts": [
+          {
+            "baseName": {
+              "id": 3776,
+              "name": "IAdvertisementSurfacePayments",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 4018,
+              "src": "469:29:16"
+            },
+            "id": 3777,
+            "nodeType": "InheritanceSpecifier",
+            "src": "469:29:16"
+          }
+        ],
+        "contractDependencies": [
+          4018
+        ],
+        "contractKind": "contract",
+        "documentation": {
+          "id": 3775,
+          "nodeType": "StructuredDocumentation",
+          "src": "220:199:16",
+          "text": "@author Marcin Gorzynski\n @title The Advertisement Surface Payments functionality\n @notice The abstract contract that keeps track of payment method for given advertisement surface token id"
+        },
+        "fullyImplemented": false,
+        "id": 3837,
+        "linearizedBaseContracts": [
+          3837,
+          4018
+        ],
+        "name": "AdvertisementSurfacePayments",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "id": 3780,
+            "libraryName": {
+              "id": 3778,
+              "name": "SafeMath",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 2421,
+              "src": "512:8:16"
+            },
+            "nodeType": "UsingForDirective",
+            "src": "506:27:16",
+            "typeName": {
+              "id": 3779,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "525:7:16",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            }
+          },
+          {
+            "constant": false,
+            "documentation": {
+              "id": 3781,
+              "nodeType": "StructuredDocumentation",
+              "src": "539:67:16",
+              "text": "@dev The mapping of advertisement surface token to payment info"
+            },
+            "id": 3786,
+            "mutability": "mutable",
+            "name": "tokenIdToPaymentInfo",
+            "nodeType": "VariableDeclaration",
+            "scope": 3837,
+            "src": "611:60:16",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_PaymentInfo_$4001_storage_$",
+              "typeString": "mapping(uint256 => struct IAdvertisementSurfacePayments.PaymentInfo)"
+            },
+            "typeName": {
+              "id": 3785,
+              "keyType": {
+                "id": 3782,
+                "name": "uint256",
+                "nodeType": "ElementaryTypeName",
+                "src": "619:7:16",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "611:31:16",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_PaymentInfo_$4001_storage_$",
+                "typeString": "mapping(uint256 => struct IAdvertisementSurfacePayments.PaymentInfo)"
+              },
+              "valueType": {
+                "id": 3784,
+                "nodeType": "UserDefinedTypeName",
+                "pathNode": {
+                  "id": 3783,
+                  "name": "PaymentInfo",
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 4001,
+                  "src": "630:11:16"
+                },
+                "referencedDeclaration": 4001,
+                "src": "630:11:16",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_PaymentInfo_$4001_storage_ptr",
+                  "typeString": "struct IAdvertisementSurfacePayments.PaymentInfo"
+                }
+              }
+            },
+            "visibility": "private"
+          },
+          {
+            "body": {
+              "id": 3799,
+              "nodeType": "Block",
+              "src": "925:54:16",
+              "statements": [
+                {
+                  "expression": {
+                    "baseExpression": {
+                      "id": 3795,
+                      "name": "tokenIdToPaymentInfo",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 3786,
+                      "src": "942:20:16",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_PaymentInfo_$4001_storage_$",
+                        "typeString": "mapping(uint256 => struct IAdvertisementSurfacePayments.PaymentInfo storage ref)"
+                      }
+                    },
+                    "id": 3797,
+                    "indexExpression": {
+                      "id": 3796,
+                      "name": "_tokenId",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 3789,
+                      "src": "963:8:16",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "isConstant": false,
+                    "isLValue": true,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "nodeType": "IndexAccess",
+                    "src": "942:30:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_PaymentInfo_$4001_storage",
+                      "typeString": "struct IAdvertisementSurfacePayments.PaymentInfo storage ref"
+                    }
+                  },
+                  "functionReturnParameters": 3794,
+                  "id": 3798,
+                  "nodeType": "Return",
+                  "src": "935:37:16"
+                }
+              ]
+            },
+            "documentation": {
+              "id": 3787,
+              "nodeType": "StructuredDocumentation",
+              "src": "678:156:16",
+              "text": "@dev Gets payment info for given advertisement surface token\n @param _tokenId The advertisement surface token id\n @return The payment info"
+            },
+            "id": 3800,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "_getPaymentInfo",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3790,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3789,
+                  "mutability": "mutable",
+                  "name": "_tokenId",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3800,
+                  "src": "864:16:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3788,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "864:7:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "863:18:16"
+            },
+            "returnParameters": {
+              "id": 3794,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3793,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3800,
+                  "src": "905:18:16",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_PaymentInfo_$4001_memory_ptr",
+                    "typeString": "struct IAdvertisementSurfacePayments.PaymentInfo"
+                  },
+                  "typeName": {
+                    "id": 3792,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 3791,
+                      "name": "PaymentInfo",
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 4001,
+                      "src": "905:11:16"
+                    },
+                    "referencedDeclaration": 4001,
+                    "src": "905:11:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_PaymentInfo_$4001_storage_ptr",
+                      "typeString": "struct IAdvertisementSurfacePayments.PaymentInfo"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "904:20:16"
+            },
+            "scope": 3837,
+            "src": "839:140:16",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 3835,
+              "nodeType": "Block",
+              "src": "1243:232:16",
+              "statements": [
+                {
+                  "condition": {
+                    "commonType": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    },
+                    "id": 3817,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftExpression": {
+                      "expression": {
+                        "baseExpression": {
+                          "id": 3809,
+                          "name": "tokenIdToPaymentInfo",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 3786,
+                          "src": "1257:20:16",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_PaymentInfo_$4001_storage_$",
+                            "typeString": "mapping(uint256 => struct IAdvertisementSurfacePayments.PaymentInfo storage ref)"
+                          }
+                        },
+                        "id": 3811,
+                        "indexExpression": {
+                          "id": 3810,
+                          "name": "_tokenId",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 3803,
+                          "src": "1278:8:16",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "1257:30:16",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_PaymentInfo_$4001_storage",
+                          "typeString": "struct IAdvertisementSurfacePayments.PaymentInfo storage ref"
+                        }
+                      },
+                      "id": 3812,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "erc20",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 3998,
+                      "src": "1257:36:16",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "nodeType": "BinaryOperation",
+                    "operator": "==",
+                    "rightExpression": {
+                      "arguments": [
+                        {
+                          "hexValue": "30",
+                          "id": 3815,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "number",
+                          "lValueRequested": false,
+                          "nodeType": "Literal",
+                          "src": "1305:1:16",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_rational_0_by_1",
+                            "typeString": "int_const 0"
+                          },
+                          "value": "0"
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": [
+                          {
+                            "typeIdentifier": "t_rational_0_by_1",
+                            "typeString": "int_const 0"
+                          }
+                        ],
+                        "id": 3814,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "lValueRequested": false,
+                        "nodeType": "ElementaryTypeNameExpression",
+                        "src": "1297:7:16",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_address_$",
+                          "typeString": "type(address)"
+                        },
+                        "typeName": {
+                          "id": 3813,
+                          "name": "address",
+                          "nodeType": "ElementaryTypeName",
+                          "src": "1297:7:16",
+                          "typeDescriptions": {}
+                        }
+                      },
+                      "id": 3816,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "typeConversion",
+                      "lValueRequested": false,
+                      "names": [],
+                      "nodeType": "FunctionCall",
+                      "src": "1297:10:16",
+                      "tryCall": false,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "src": "1257:50:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "falseBody": {
+                    "id": 3833,
+                    "nodeType": "Block",
+                    "src": "1385:84:16",
+                    "statements": [
+                      {
+                        "expression": {
+                          "id": 3831,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "leftHandSide": {
+                            "expression": {
+                              "baseExpression": {
+                                "id": 3825,
+                                "name": "tokenIdToPaymentInfo",
+                                "nodeType": "Identifier",
+                                "overloadedDeclarations": [],
+                                "referencedDeclaration": 3786,
+                                "src": "1399:20:16",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_PaymentInfo_$4001_storage_$",
+                                  "typeString": "mapping(uint256 => struct IAdvertisementSurfacePayments.PaymentInfo storage ref)"
+                                }
+                              },
+                              "id": 3827,
+                              "indexExpression": {
+                                "id": 3826,
+                                "name": "_tokenId",
+                                "nodeType": "Identifier",
+                                "overloadedDeclarations": [],
+                                "referencedDeclaration": 3803,
+                                "src": "1420:8:16",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              },
+                              "isConstant": false,
+                              "isLValue": true,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "nodeType": "IndexAccess",
+                              "src": "1399:30:16",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_struct$_PaymentInfo_$4001_storage",
+                                "typeString": "struct IAdvertisementSurfacePayments.PaymentInfo storage ref"
+                              }
+                            },
+                            "id": 3828,
+                            "isConstant": false,
+                            "isLValue": true,
+                            "isPure": false,
+                            "lValueRequested": true,
+                            "memberName": "minBid",
+                            "nodeType": "MemberAccess",
+                            "referencedDeclaration": 4000,
+                            "src": "1399:37:16",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_uint256",
+                              "typeString": "uint256"
+                            }
+                          },
+                          "nodeType": "Assignment",
+                          "operator": "=",
+                          "rightHandSide": {
+                            "expression": {
+                              "id": 3829,
+                              "name": "_paymentInfo",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 3806,
+                              "src": "1439:12:16",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_struct$_PaymentInfo_$4001_memory_ptr",
+                                "typeString": "struct IAdvertisementSurfacePayments.PaymentInfo memory"
+                              }
+                            },
+                            "id": 3830,
+                            "isConstant": false,
+                            "isLValue": true,
+                            "isPure": false,
+                            "lValueRequested": false,
+                            "memberName": "minBid",
+                            "nodeType": "MemberAccess",
+                            "referencedDeclaration": 4000,
+                            "src": "1439:19:16",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_uint256",
+                              "typeString": "uint256"
+                            }
+                          },
+                          "src": "1399:59:16",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          }
+                        },
+                        "id": 3832,
+                        "nodeType": "ExpressionStatement",
+                        "src": "1399:59:16"
+                      }
+                    ]
+                  },
+                  "id": 3834,
+                  "nodeType": "IfStatement",
+                  "src": "1253:216:16",
+                  "trueBody": {
+                    "id": 3824,
+                    "nodeType": "Block",
+                    "src": "1309:70:16",
+                    "statements": [
+                      {
+                        "expression": {
+                          "id": 3822,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "leftHandSide": {
+                            "baseExpression": {
+                              "id": 3818,
+                              "name": "tokenIdToPaymentInfo",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 3786,
+                              "src": "1323:20:16",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_PaymentInfo_$4001_storage_$",
+                                "typeString": "mapping(uint256 => struct IAdvertisementSurfacePayments.PaymentInfo storage ref)"
+                              }
+                            },
+                            "id": 3820,
+                            "indexExpression": {
+                              "id": 3819,
+                              "name": "_tokenId",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 3803,
+                              "src": "1344:8:16",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_uint256",
+                                "typeString": "uint256"
+                              }
+                            },
+                            "isConstant": false,
+                            "isLValue": true,
+                            "isPure": false,
+                            "lValueRequested": true,
+                            "nodeType": "IndexAccess",
+                            "src": "1323:30:16",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_struct$_PaymentInfo_$4001_storage",
+                              "typeString": "struct IAdvertisementSurfacePayments.PaymentInfo storage ref"
+                            }
+                          },
+                          "nodeType": "Assignment",
+                          "operator": "=",
+                          "rightHandSide": {
+                            "id": 3821,
+                            "name": "_paymentInfo",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 3806,
+                            "src": "1356:12:16",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_struct$_PaymentInfo_$4001_memory_ptr",
+                              "typeString": "struct IAdvertisementSurfacePayments.PaymentInfo memory"
+                            }
+                          },
+                          "src": "1323:45:16",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_struct$_PaymentInfo_$4001_storage",
+                            "typeString": "struct IAdvertisementSurfacePayments.PaymentInfo storage ref"
+                          }
+                        },
+                        "id": 3823,
+                        "nodeType": "ExpressionStatement",
+                        "src": "1323:45:16"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "documentation": {
+              "id": 3801,
+              "nodeType": "StructuredDocumentation",
+              "src": "985:168:16",
+              "text": "@dev Sets payment info for given advertisement surface token\n @param _tokenId The advertisement surface token id\n @param _paymentInfo The payment info"
+            },
+            "id": 3836,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "_setPaymentInfo",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3807,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3803,
+                  "mutability": "mutable",
+                  "name": "_tokenId",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3836,
+                  "src": "1183:16:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3802,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1183:7:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3806,
+                  "mutability": "mutable",
+                  "name": "_paymentInfo",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3836,
+                  "src": "1201:31:16",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_PaymentInfo_$4001_memory_ptr",
+                    "typeString": "struct IAdvertisementSurfacePayments.PaymentInfo"
+                  },
+                  "typeName": {
+                    "id": 3805,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 3804,
+                      "name": "PaymentInfo",
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 4001,
+                      "src": "1201:11:16"
+                    },
+                    "referencedDeclaration": 4001,
+                    "src": "1201:11:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_PaymentInfo_$4001_storage_ptr",
+                      "typeString": "struct IAdvertisementSurfacePayments.PaymentInfo"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1182:51:16"
+            },
+            "returnParameters": {
+              "id": 3808,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1243:0:16"
+            },
+            "scope": 3837,
+            "src": "1158:317:16",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "internal"
+          }
+        ],
+        "scope": 3838,
+        "src": "419:1059:16"
+      }
+    ],
+    "src": "32:1446:16"
+  },
+  "legacyAST": {
+    "absolutePath": "project:/contracts/AdvertisementMarket/AdvertisementSurface/AdvertisementSurfacePayments.sol",
+    "exportedSymbols": {
+      "AdvertisementSurfacePayments": [
+        3837
+      ],
+      "IAdvertisementSurfacePayments": [
+        4018
+      ],
+      "IERC20": [
+        77
+      ],
+      "SafeMath": [
+        2421
+      ]
+    },
+    "id": 3838,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3771,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "32:23:16"
+      },
+      {
+        "absolutePath": "project:/contracts/AdvertisementMarket/AdvertisementSurface/IAdvertisementSurfacePayments.sol",
+        "file": "./IAdvertisementSurfacePayments.sol",
+        "id": 3772,
+        "nodeType": "ImportDirective",
+        "scope": 3838,
+        "sourceUnit": 4019,
+        "src": "57:45:16",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "@openzeppelin/contracts/utils/math/SafeMath.sol",
+        "file": "@openzeppelin/contracts/utils/math/SafeMath.sol",
+        "id": 3773,
+        "nodeType": "ImportDirective",
+        "scope": 3838,
+        "sourceUnit": 2422,
+        "src": "104:57:16",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+        "file": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+        "id": 3774,
+        "nodeType": "ImportDirective",
+        "scope": 3838,
+        "sourceUnit": 78,
+        "src": "162:56:16",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "abstract": true,
+        "baseContracts": [
+          {
+            "baseName": {
+              "id": 3776,
+              "name": "IAdvertisementSurfacePayments",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 4018,
+              "src": "469:29:16"
+            },
+            "id": 3777,
+            "nodeType": "InheritanceSpecifier",
+            "src": "469:29:16"
+          }
+        ],
+        "contractDependencies": [
+          4018
+        ],
+        "contractKind": "contract",
+        "documentation": {
+          "id": 3775,
+          "nodeType": "StructuredDocumentation",
+          "src": "220:199:16",
+          "text": "@author Marcin Gorzynski\n @title The Advertisement Surface Payments functionality\n @notice The abstract contract that keeps track of payment method for given advertisement surface token id"
+        },
+        "fullyImplemented": false,
+        "id": 3837,
+        "linearizedBaseContracts": [
+          3837,
+          4018
+        ],
+        "name": "AdvertisementSurfacePayments",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "id": 3780,
+            "libraryName": {
+              "id": 3778,
+              "name": "SafeMath",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 2421,
+              "src": "512:8:16"
+            },
+            "nodeType": "UsingForDirective",
+            "src": "506:27:16",
+            "typeName": {
+              "id": 3779,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "525:7:16",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            }
+          },
+          {
+            "constant": false,
+            "documentation": {
+              "id": 3781,
+              "nodeType": "StructuredDocumentation",
+              "src": "539:67:16",
+              "text": "@dev The mapping of advertisement surface token to payment info"
+            },
+            "id": 3786,
+            "mutability": "mutable",
+            "name": "tokenIdToPaymentInfo",
+            "nodeType": "VariableDeclaration",
+            "scope": 3837,
+            "src": "611:60:16",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_PaymentInfo_$4001_storage_$",
+              "typeString": "mapping(uint256 => struct IAdvertisementSurfacePayments.PaymentInfo)"
+            },
+            "typeName": {
+              "id": 3785,
+              "keyType": {
+                "id": 3782,
+                "name": "uint256",
+                "nodeType": "ElementaryTypeName",
+                "src": "619:7:16",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "611:31:16",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_PaymentInfo_$4001_storage_$",
+                "typeString": "mapping(uint256 => struct IAdvertisementSurfacePayments.PaymentInfo)"
+              },
+              "valueType": {
+                "id": 3784,
+                "nodeType": "UserDefinedTypeName",
+                "pathNode": {
+                  "id": 3783,
+                  "name": "PaymentInfo",
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 4001,
+                  "src": "630:11:16"
+                },
+                "referencedDeclaration": 4001,
+                "src": "630:11:16",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_PaymentInfo_$4001_storage_ptr",
+                  "typeString": "struct IAdvertisementSurfacePayments.PaymentInfo"
+                }
+              }
+            },
+            "visibility": "private"
+          },
+          {
+            "body": {
+              "id": 3799,
+              "nodeType": "Block",
+              "src": "925:54:16",
+              "statements": [
+                {
+                  "expression": {
+                    "baseExpression": {
+                      "id": 3795,
+                      "name": "tokenIdToPaymentInfo",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 3786,
+                      "src": "942:20:16",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_PaymentInfo_$4001_storage_$",
+                        "typeString": "mapping(uint256 => struct IAdvertisementSurfacePayments.PaymentInfo storage ref)"
+                      }
+                    },
+                    "id": 3797,
+                    "indexExpression": {
+                      "id": 3796,
+                      "name": "_tokenId",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 3789,
+                      "src": "963:8:16",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "isConstant": false,
+                    "isLValue": true,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "nodeType": "IndexAccess",
+                    "src": "942:30:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_PaymentInfo_$4001_storage",
+                      "typeString": "struct IAdvertisementSurfacePayments.PaymentInfo storage ref"
+                    }
+                  },
+                  "functionReturnParameters": 3794,
+                  "id": 3798,
+                  "nodeType": "Return",
+                  "src": "935:37:16"
+                }
+              ]
+            },
+            "documentation": {
+              "id": 3787,
+              "nodeType": "StructuredDocumentation",
+              "src": "678:156:16",
+              "text": "@dev Gets payment info for given advertisement surface token\n @param _tokenId The advertisement surface token id\n @return The payment info"
+            },
+            "id": 3800,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "_getPaymentInfo",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3790,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3789,
+                  "mutability": "mutable",
+                  "name": "_tokenId",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3800,
+                  "src": "864:16:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3788,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "864:7:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "863:18:16"
+            },
+            "returnParameters": {
+              "id": 3794,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3793,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3800,
+                  "src": "905:18:16",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_PaymentInfo_$4001_memory_ptr",
+                    "typeString": "struct IAdvertisementSurfacePayments.PaymentInfo"
+                  },
+                  "typeName": {
+                    "id": 3792,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 3791,
+                      "name": "PaymentInfo",
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 4001,
+                      "src": "905:11:16"
+                    },
+                    "referencedDeclaration": 4001,
+                    "src": "905:11:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_PaymentInfo_$4001_storage_ptr",
+                      "typeString": "struct IAdvertisementSurfacePayments.PaymentInfo"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "904:20:16"
+            },
+            "scope": 3837,
+            "src": "839:140:16",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 3835,
+              "nodeType": "Block",
+              "src": "1243:232:16",
+              "statements": [
+                {
+                  "condition": {
+                    "commonType": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    },
+                    "id": 3817,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftExpression": {
+                      "expression": {
+                        "baseExpression": {
+                          "id": 3809,
+                          "name": "tokenIdToPaymentInfo",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 3786,
+                          "src": "1257:20:16",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_PaymentInfo_$4001_storage_$",
+                            "typeString": "mapping(uint256 => struct IAdvertisementSurfacePayments.PaymentInfo storage ref)"
+                          }
+                        },
+                        "id": 3811,
+                        "indexExpression": {
+                          "id": 3810,
+                          "name": "_tokenId",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 3803,
+                          "src": "1278:8:16",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "1257:30:16",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_PaymentInfo_$4001_storage",
+                          "typeString": "struct IAdvertisementSurfacePayments.PaymentInfo storage ref"
+                        }
+                      },
+                      "id": 3812,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "erc20",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 3998,
+                      "src": "1257:36:16",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "nodeType": "BinaryOperation",
+                    "operator": "==",
+                    "rightExpression": {
+                      "arguments": [
+                        {
+                          "hexValue": "30",
+                          "id": 3815,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "number",
+                          "lValueRequested": false,
+                          "nodeType": "Literal",
+                          "src": "1305:1:16",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_rational_0_by_1",
+                            "typeString": "int_const 0"
+                          },
+                          "value": "0"
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": [
+                          {
+                            "typeIdentifier": "t_rational_0_by_1",
+                            "typeString": "int_const 0"
+                          }
+                        ],
+                        "id": 3814,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "lValueRequested": false,
+                        "nodeType": "ElementaryTypeNameExpression",
+                        "src": "1297:7:16",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_address_$",
+                          "typeString": "type(address)"
+                        },
+                        "typeName": {
+                          "id": 3813,
+                          "name": "address",
+                          "nodeType": "ElementaryTypeName",
+                          "src": "1297:7:16",
+                          "typeDescriptions": {}
+                        }
+                      },
+                      "id": 3816,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "typeConversion",
+                      "lValueRequested": false,
+                      "names": [],
+                      "nodeType": "FunctionCall",
+                      "src": "1297:10:16",
+                      "tryCall": false,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "src": "1257:50:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "falseBody": {
+                    "id": 3833,
+                    "nodeType": "Block",
+                    "src": "1385:84:16",
+                    "statements": [
+                      {
+                        "expression": {
+                          "id": 3831,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "leftHandSide": {
+                            "expression": {
+                              "baseExpression": {
+                                "id": 3825,
+                                "name": "tokenIdToPaymentInfo",
+                                "nodeType": "Identifier",
+                                "overloadedDeclarations": [],
+                                "referencedDeclaration": 3786,
+                                "src": "1399:20:16",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_PaymentInfo_$4001_storage_$",
+                                  "typeString": "mapping(uint256 => struct IAdvertisementSurfacePayments.PaymentInfo storage ref)"
+                                }
+                              },
+                              "id": 3827,
+                              "indexExpression": {
+                                "id": 3826,
+                                "name": "_tokenId",
+                                "nodeType": "Identifier",
+                                "overloadedDeclarations": [],
+                                "referencedDeclaration": 3803,
+                                "src": "1420:8:16",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              },
+                              "isConstant": false,
+                              "isLValue": true,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "nodeType": "IndexAccess",
+                              "src": "1399:30:16",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_struct$_PaymentInfo_$4001_storage",
+                                "typeString": "struct IAdvertisementSurfacePayments.PaymentInfo storage ref"
+                              }
+                            },
+                            "id": 3828,
+                            "isConstant": false,
+                            "isLValue": true,
+                            "isPure": false,
+                            "lValueRequested": true,
+                            "memberName": "minBid",
+                            "nodeType": "MemberAccess",
+                            "referencedDeclaration": 4000,
+                            "src": "1399:37:16",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_uint256",
+                              "typeString": "uint256"
+                            }
+                          },
+                          "nodeType": "Assignment",
+                          "operator": "=",
+                          "rightHandSide": {
+                            "expression": {
+                              "id": 3829,
+                              "name": "_paymentInfo",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 3806,
+                              "src": "1439:12:16",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_struct$_PaymentInfo_$4001_memory_ptr",
+                                "typeString": "struct IAdvertisementSurfacePayments.PaymentInfo memory"
+                              }
+                            },
+                            "id": 3830,
+                            "isConstant": false,
+                            "isLValue": true,
+                            "isPure": false,
+                            "lValueRequested": false,
+                            "memberName": "minBid",
+                            "nodeType": "MemberAccess",
+                            "referencedDeclaration": 4000,
+                            "src": "1439:19:16",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_uint256",
+                              "typeString": "uint256"
+                            }
+                          },
+                          "src": "1399:59:16",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          }
+                        },
+                        "id": 3832,
+                        "nodeType": "ExpressionStatement",
+                        "src": "1399:59:16"
+                      }
+                    ]
+                  },
+                  "id": 3834,
+                  "nodeType": "IfStatement",
+                  "src": "1253:216:16",
+                  "trueBody": {
+                    "id": 3824,
+                    "nodeType": "Block",
+                    "src": "1309:70:16",
+                    "statements": [
+                      {
+                        "expression": {
+                          "id": 3822,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "leftHandSide": {
+                            "baseExpression": {
+                              "id": 3818,
+                              "name": "tokenIdToPaymentInfo",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 3786,
+                              "src": "1323:20:16",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_PaymentInfo_$4001_storage_$",
+                                "typeString": "mapping(uint256 => struct IAdvertisementSurfacePayments.PaymentInfo storage ref)"
+                              }
+                            },
+                            "id": 3820,
+                            "indexExpression": {
+                              "id": 3819,
+                              "name": "_tokenId",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 3803,
+                              "src": "1344:8:16",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_uint256",
+                                "typeString": "uint256"
+                              }
+                            },
+                            "isConstant": false,
+                            "isLValue": true,
+                            "isPure": false,
+                            "lValueRequested": true,
+                            "nodeType": "IndexAccess",
+                            "src": "1323:30:16",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_struct$_PaymentInfo_$4001_storage",
+                              "typeString": "struct IAdvertisementSurfacePayments.PaymentInfo storage ref"
+                            }
+                          },
+                          "nodeType": "Assignment",
+                          "operator": "=",
+                          "rightHandSide": {
+                            "id": 3821,
+                            "name": "_paymentInfo",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 3806,
+                            "src": "1356:12:16",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_struct$_PaymentInfo_$4001_memory_ptr",
+                              "typeString": "struct IAdvertisementSurfacePayments.PaymentInfo memory"
+                            }
+                          },
+                          "src": "1323:45:16",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_struct$_PaymentInfo_$4001_storage",
+                            "typeString": "struct IAdvertisementSurfacePayments.PaymentInfo storage ref"
+                          }
+                        },
+                        "id": 3823,
+                        "nodeType": "ExpressionStatement",
+                        "src": "1323:45:16"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "documentation": {
+              "id": 3801,
+              "nodeType": "StructuredDocumentation",
+              "src": "985:168:16",
+              "text": "@dev Sets payment info for given advertisement surface token\n @param _tokenId The advertisement surface token id\n @param _paymentInfo The payment info"
+            },
+            "id": 3836,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "_setPaymentInfo",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3807,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3803,
+                  "mutability": "mutable",
+                  "name": "_tokenId",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3836,
+                  "src": "1183:16:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3802,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1183:7:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3806,
+                  "mutability": "mutable",
+                  "name": "_paymentInfo",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3836,
+                  "src": "1201:31:16",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_PaymentInfo_$4001_memory_ptr",
+                    "typeString": "struct IAdvertisementSurfacePayments.PaymentInfo"
+                  },
+                  "typeName": {
+                    "id": 3805,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 3804,
+                      "name": "PaymentInfo",
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 4001,
+                      "src": "1201:11:16"
+                    },
+                    "referencedDeclaration": 4001,
+                    "src": "1201:11:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_PaymentInfo_$4001_storage_ptr",
+                      "typeString": "struct IAdvertisementSurfacePayments.PaymentInfo"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1182:51:16"
+            },
+            "returnParameters": {
+              "id": 3808,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1243:0:16"
+            },
+            "scope": 3837,
+            "src": "1158:317:16",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "internal"
+          }
+        ],
+        "scope": 3838,
+        "src": "419:1059:16"
+      }
+    ],
+    "src": "32:1446:16"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.0+commit.c7dfd78e.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.3",
+  "updatedAt": "2021-11-07T16:40:07.814Z",
+  "devdoc": {
+    "author": "Marcin Gorzynski",
+    "kind": "dev",
+    "methods": {},
+    "stateVariables": {
+      "tokenIdToPaymentInfo": {
+        "details": "The mapping of advertisement surface token to payment info"
+      }
+    },
+    "title": "The Advertisement Surface Payments functionality",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "notice": "The abstract contract that keeps track of payment method for given advertisement surface token id",
+    "version": 1
+  }
+}
