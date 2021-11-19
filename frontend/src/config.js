@@ -2,7 +2,7 @@ const config = {
     IPFSGatewayURL: "https://ipfs.io/ipfs/",
     NetworkIdToChainId: {
         1: 1,
-        4: 4,
+        3: 3,
         1337: 5777,
     }
 }

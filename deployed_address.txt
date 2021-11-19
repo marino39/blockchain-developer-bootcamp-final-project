@@ -1,0 +1,7 @@
+Contract Name: AdvertisementSurface
+Address: 0x5f6d936476bAd620C724538E00E771E588700201
+Network: Ropsten
+
+Contract Name: AdvertisementSurfaceAuction
+Address: 0x1cBD1307c79E63D0bbc4454E318A0a8136Ed37Cf
+Network: Ropsten
