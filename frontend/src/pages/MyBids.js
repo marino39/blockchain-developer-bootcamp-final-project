@@ -15,41 +15,41 @@ function MyBids(props) {
 
     const [items, setItems] = useState([]);
     const [page, setPage] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
+    const [pageSize,] = useState(10);
     const [totalSize, setTotalSize] = useState(0);
 
     const [initialized, setInitialized] = useState(false);
 
-    const advrtSurface = new context.library.eth.Contract(
+    const [advrtSurface,] = useState(new context.library.eth.Contract(
         AdvertisementSurface.abi,
         AdvertisementSurface.networks[config.NetworkIdToChainId[context.networkId].toString()].address
-    );
+    ));
 
-    const advrtAuction = new context.library.eth.Contract(
+    const [advrtAuction,] = useState(new context.library.eth.Contract(
         AdvertisementSurfaceAuction.abi,
         AdvertisementSurfaceAuction.networks[config.NetworkIdToChainId[context.networkId].toString()].address
-    );
+    ));
 
     const logActiveCallback = useCallback(async (error, event) => {
         console.log("LogActive", event);
         setTotalSize(
             await advrtAuction.methods.getMyBidsCount().call()
         );
-    }, [setTotalSize]);
+    }, [setTotalSize, advrtAuction]);
 
     const logOutbidCallback = useCallback(async (error, event) => {
         console.log("LogOutbid", event);
         setTotalSize(
             await advrtAuction.methods.getMyBidsCount().call()
         );
-    }, [setTotalSize]);
+    }, [setTotalSize, advrtAuction]);
 
     const logFinishedCallback = useCallback(async (error, event) => {
         console.log("LogFinished", event);
         setTotalSize(
             await advrtAuction.methods.getMyBidsCount().call()
         );
-    }, [setTotalSize]);
+    }, [setTotalSize, advrtAuction]);
 
     useEffect(() => {
         async function fetchData() {
@@ -73,7 +73,7 @@ function MyBids(props) {
             logOutbidSubscription.unsubscribe();
             logFinishedSubscription.unsubscribe();
         }
-    }, [initialized]);
+    }, [initialized, context, advrtAuction, logActiveCallback, logOutbidCallback, logFinishedCallback]);
 
     useEffect(() => {
         async function fetchData() {
@@ -117,7 +117,7 @@ function MyBids(props) {
         }
 
         fetchData();
-    }, [page, pageSize, totalSize]);
+    }, [context, advrtSurface, advrtAuction, page, pageSize, totalSize]);
 
     return (
         <LandingLayout>

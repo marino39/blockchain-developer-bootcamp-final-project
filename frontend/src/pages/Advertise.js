@@ -15,15 +15,15 @@ function Advertise(props) {
 
     const [items, setItems] = useState([]);
     const [page, setPage] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
+    const [pageSize,] = useState(10);
     const [totalSize, setTotalSize] = useState(0)
 
     const [initialized, setInitialized] = useState(false);
 
-    const advrtSurface = new context.library.eth.Contract(
+    const [advrtSurface,] = useState(new context.library.eth.Contract(
         AdvertisementSurface.abi,
         AdvertisementSurface.networks[config.NetworkIdToChainId[context.networkId].toString()].address
-    );
+    ));
 
     useEffect(() => {
         async function fetchData() {
@@ -33,7 +33,7 @@ function Advertise(props) {
 
         fetchData();
 
-    }, [initialized]);
+    }, [initialized, advrtSurface]);
 
     useEffect(() => {
         async function fetchData() {
@@ -59,7 +59,7 @@ function Advertise(props) {
 
         fetchData();
 
-    }, [totalSize, page, pageSize]);
+    }, [advrtSurface, totalSize, page, pageSize]);
 
     if (!initialized) {
         setInitialized(true);

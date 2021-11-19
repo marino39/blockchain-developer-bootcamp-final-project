@@ -53,20 +53,20 @@ function tokenInfoToCard(tokenInfo) {
     };
 }
 
-function MySurfaces(props) {
+function MySurfaces() {
     const context = useWeb3Context();
 
     const [items, setItems] = useState([]);
     const [page, setPage] = useState(1);
-    const [pageSize, setPageSize] = useState(6);
+    const [pageSize,] = useState(6);
     const [totalSize, setTotalSize] = useState(0)
 
     const [initialized, setInitialized] = useState(false);
 
-    const advrtSurface = new context.library.eth.Contract(
+    const [advrtSurface,] = useState(new context.library.eth.Contract(
         AdvertisementSurface.abi,
         AdvertisementSurface.networks[config.NetworkIdToChainId[context.networkId].toString()].address
-    );
+    ));
 
     useEffect(() => {
         async function fetchData() {
@@ -76,7 +76,7 @@ function MySurfaces(props) {
         }
 
         fetchData();
-    }, [initialized]);
+    }, [initialized, context, advrtSurface]);
 
     useEffect(() => {
         async function fetchData() {
@@ -94,7 +94,7 @@ function MySurfaces(props) {
         }
 
         fetchData();
-    }, [page, pageSize, totalSize])
+    }, [context, advrtSurface, page, pageSize, totalSize])
 
     useEffect(() => {
         let subscriptionTransferTo = advrtSurface.events.Transfer(
@@ -149,7 +149,7 @@ function MySurfaces(props) {
             subscriptionTransferTo.unsubscribe();
             subscriptionTransferFrom.unsubscribe();
         }
-    }, [items])
+    }, [context, advrtSurface, items, pageSize])
 
     if (!initialized) {
         setInitialized(true);

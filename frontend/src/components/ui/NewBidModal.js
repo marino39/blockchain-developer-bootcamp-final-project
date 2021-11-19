@@ -36,19 +36,19 @@ export default function NewBidModal(props) {
     const [approvedAmount, setApprovedAmount] = useState("0");
     const [isApproving, setIsApproving] = useState(false);
 
-    const erc20 = new context.library.eth.Contract(ERC20.abi, tokenInfo.paymentTokenAddress);
-
-    const advrtAuction = new context.library.eth.Contract(
+    const [advrtAuction,] = useState(new context.library.eth.Contract(
         AdvertisementSurfaceAuction.abi,
         AdvertisementSurfaceAuction.networks[config.NetworkIdToChainId[context.networkId].toString()].address
-    );
+    ));
 
     const requiresApproval = (amount, bid, duration) => {
         let ret = (new BigNumber(amount)).isLessThan((new BigNumber(bid)).multipliedBy(new BigNumber(duration)));
         return ret
     }
 
-    const approve = () => {
+    const approve = useCallback(() => {
+        const erc20 = new context.library.eth.Contract(ERC20.abi, tokenInfo.paymentTokenAddress);
+
         setIsApproving(true);
         erc20.methods.approve(
             AdvertisementSurfaceAuction.networks[config.NetworkIdToChainId[context.networkId].toString()].address,
@@ -79,12 +79,14 @@ export default function NewBidModal(props) {
                 isClosable: true,
             });
         });
-    }
+    }, [context, toast, tokenInfo]);
 
     useEffect(() => {
         if (tokenInfo.paymentToken === undefined) {
             return;
         }
+
+        const erc20 = new context.library.eth.Contract(ERC20.abi, tokenInfo.paymentTokenAddress);
 
         async function fetchData() {
             const amount = await erc20.methods.allowance(
@@ -111,7 +113,7 @@ export default function NewBidModal(props) {
         return () => {
             approveSubscription.unsubscribe();
         }
-    }, [initialized, tokenInfo]);
+    }, [initialized, context, tokenInfo]);
 
     if (!initialized) {
         setInitialized(true);

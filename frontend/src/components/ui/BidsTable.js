@@ -1,5 +1,5 @@
-import React, {useEffect, useReducer, useState} from "react";
-import {Table, Thead, Tbody, Tfoot, Th, Tr, Td, Button, Box, useToast, Text} from "@chakra-ui/react";
+import React, {useEffect, useReducer} from "react";
+import {Table, Thead, Tbody, Tfoot, Tr, Td, Button, useToast} from "@chakra-ui/react";
 import {shortAddress} from "../../utils/ethAddressUtils";
 import {useWeb3Context} from "web3-react";
 import config from "../../config";

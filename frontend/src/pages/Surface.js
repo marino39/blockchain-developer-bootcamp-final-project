@@ -23,39 +23,39 @@ export default function Surface(props) {
 
     const [items, setItems] = useState([]);
     const [page, setPage] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
+    const [pageSize,] = useState(10);
     const [totalSize, setTotalSize] = useState(0);
 
-    const advrtSurface = new context.library.eth.Contract(
+    const [advrtSurface,] = useState(new context.library.eth.Contract(
         AdvertisementSurface.abi,
         AdvertisementSurface.networks[config.NetworkIdToChainId[context.networkId].toString()].address
-    );
+    ));
 
-    const advrtAuction = new context.library.eth.Contract(
+    const [advrtAuction,] = useState(new context.library.eth.Contract(
         AdvertisementSurfaceAuction.abi,
         AdvertisementSurfaceAuction.networks[config.NetworkIdToChainId[context.networkId].toString()].address
-    );
+    ));
 
     const logActiveCallback = useCallback(async (error, event) => {
         console.log("LogActive", event);
         setTotalSize(
             await advrtAuction.methods.getActiveBidCount(id).call()
         );
-    }, [id, setTotalSize]);
+    }, [id, advrtAuction]);
 
     const logOutbidCallback = useCallback(async (error, event) => {
         console.log("LogOutbid", event);
         setTotalSize(
             await advrtAuction.methods.getActiveBidCount(id).call()
         );
-    }, [id, setTotalSize]);
+    }, [id, advrtAuction]);
 
     const logFinishedCallback = useCallback(async (error, event) => {
         console.log("LogFinished", event);
         setTotalSize(
             await advrtAuction.methods.getActiveBidCount(id).call()
         );
-    }, [id, setTotalSize]);
+    }, [id, advrtAuction]);
 
     useEffect(() => {
         async function fetchData() {
@@ -92,7 +92,7 @@ export default function Surface(props) {
         }
 
         fetchData();
-    }, [initialized]);
+    }, [initialized, context, advrtSurface, advrtAuction, id]);
 
     useEffect(() => {
         if (tokenInfo.paymentToken === undefined) {
@@ -134,7 +134,7 @@ export default function Surface(props) {
         }
 
         fetchData();
-    }, [page, pageSize, totalSize, id, tokenInfo]);
+    }, [context, advrtAuction, page, pageSize, totalSize, id, tokenInfo]);
 
     useEffect(() => {
         const logActiveSubscription = advrtAuction.events.LogActive({filter: {tokenId: id}}, logActiveCallback);
@@ -148,7 +148,7 @@ export default function Surface(props) {
             logOutbidSubscription.unsubscribe();
             logFinishedSubscription.unsubscribe();
         }
-    }, [id]);
+    }, [id, advrtAuction, logActiveCallback, logOutbidCallback, logFinishedCallback]);
 
     if (!initialized) {
         setInitialized(true);

@@ -16,7 +16,7 @@ import {Connectors} from 'web3-react'
 
 const {InjectedConnector} = Connectors
 
-const MetaMask = new InjectedConnector({supportedNetworks: [1, 3, 1337, 5777]})
+const MetaMask = new InjectedConnector({supportedNetworks: [1, 3, 4, 1337, 5777]})
 const connectors = {MetaMask}
 
 export default function App() {

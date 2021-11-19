@@ -22,31 +22,31 @@ export default function SurfaceView(props) {
 
     const [foceX, forceUpdate] = useReducer((x) => x + 1, 0);
 
-    const advrtAuction = new context.library.eth.Contract(
+    const [advrtAuction,] = useState(new context.library.eth.Contract(
         AdvertisementSurfaceAuction.abi,
         AdvertisementSurfaceAuction.networks[config.NetworkIdToChainId[context.networkId].toString()].address
-    );
+    ));
 
     const logActiveCallback = useCallback(async (error, event) => {
         console.log("LogActive", event);
         setBidsCount(
             await advrtAuction.methods.getActiveBidCount(id).call()
         );
-    }, [id]);
+    }, [id, advrtAuction]);
 
     const logOutbidCallback = useCallback(async (error, event) => {
         console.log("LogOutbid", event);
         setBidsCount(
             await advrtAuction.methods.getActiveBidCount(id).call()
         );
-    }, [id]);
+    }, [id, advrtAuction]);
 
     const logFinishedCallback = useCallback(async (error, event) => {
         console.log("LogFinished", event);
         setBidsCount(
             await advrtAuction.methods.getActiveBidCount(id).call()
         );
-    }, [id]);
+    }, [id, advrtAuction]);
 
     useEffect(() => {
         async function fetchData() {
@@ -75,7 +75,7 @@ export default function SurfaceView(props) {
         }
 
         fetchData();
-    }, [initialized, bidsCount]);
+    }, [initialized, id, advrtAuction, bidsCount]);
 
     useEffect(() => {
         async function fetchData() {
@@ -123,7 +123,7 @@ export default function SurfaceView(props) {
         }
 
         fetchData();
-    }, [bid])
+    }, [context, bid])
 
     useEffect(() => {
         const logActiveSubscription = advrtAuction.events.LogActive({filter: {tokenId: id}}, logActiveCallback);
@@ -137,7 +137,7 @@ export default function SurfaceView(props) {
             logOutbidSubscription.unsubscribe();
             logFinishedSubscription.unsubscribe();
         }
-    }, [id])
+    }, [id, advrtAuction, logActiveCallback, logOutbidCallback, logFinishedCallback])
 
     useEffect(() => {
         setTimeout(() => {

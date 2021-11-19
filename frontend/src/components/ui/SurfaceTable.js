@@ -1,5 +1,5 @@
 import React from "react";
-import {Table, Thead, Tbody, Tfoot, Th, Tr, Td, Button} from "@chakra-ui/react";
+import {Table, Thead, Tbody, Tfoot, Tr, Td, Button} from "@chakra-ui/react";
 import {Link} from "react-router-dom";
 
 export default function SurfaceTable(props) {
