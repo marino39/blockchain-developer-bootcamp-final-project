@@ -261,7 +261,7 @@ export default function NewBidModal(props) {
                                     </FormControl>
 
                                     <FormControl mt={4}>
-                                        <FormLabel>Payment Token Address</FormLabel>
+                                        <FormLabel>Advertisement Token Id</FormLabel>
                                         <Input name="advTokenId" value={values.advTokenId}
                                                placeholder="Advertisement token Id"
                                                onChange={handleChange} onBlur={handleBlur}
