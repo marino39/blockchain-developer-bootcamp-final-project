@@ -33,9 +33,8 @@ possible form of such a market.
 2. As a user I want to receive payment for my digital surface usage for advertisement.
 
 3. As a user I want to find place where I can show my advertisement.
-4. As a user I want to register my advertisement in the system.
-5. As a user I want to bid for advertisement surface.
-6. As a user I want to have my advertisement displayed on the advertisement surface of my choice.
+4. As a user I want to bid for advertisement surface.
+5. As a user I want to have my advertisement displayed on the advertisement surface of my choice.
 
 ## Workflows
 
@@ -43,12 +42,13 @@ possible form of such a market.
 
 1. Users open dApp page
 2. User go to My Surfaces page
-3. They go to Add Surface page
-4. They prepare advertisement surface specification: *name, description,
- size, resolution, location, default_content_url, minimal_bid*
-5. They submit and receive tokenized advertisement surface (NFT)
-6. They open surface page on the surface device. The page will stream
-advertisements with the highest bid in given time frame.
+3. They go to Register Surface page
+4. They prepare advertisement surface metadata and pin it to ipfs and provide CID(content id).
+5. They provide ERC20 contract address for payments.
+6. They provide minimal bid for 1 sec of advertisement display,
+7. They submit and receive tokenized advertisement surface (NFT)
+8. They open surface page on the surface device. The page will stream advertisements with the highest bid in given time
+   frame.
 
 ### Operator - Fee collection
 
@@ -62,7 +62,71 @@ advertisements with the highest bid in given time frame.
 1. Users open dApp page
 2. They go to Advertise page
 3. They select advertisement surfaces that they want to use
-4. They select day/week/month
-5. They select times
-6. They select their bid (need to be bigger than minimal bid for surface)
-7. They submit & deposit Dai (bid x time in seconds)
+4. They provide ERC721 contract address for tokenized advertisement
+5. They provide token id of the tokenized advertisement
+6. They provide their bid
+7. Approve contract to be able to move funds (done only once)
+8. They provide start time of the advertisement
+9. They provide duration of the advertisement
+10. They submit & deposit Dai (bid x time in seconds)
+
+## Deployed version url
+
+[https://dadvrtmarket.vercel.app/](https://dadvrtmarket.vercel.app/) *(Supported networks: Ropsten, Localhost)*
+
+## Build & Run
+
+### Prerequisites
+
+- Node.js == v14
+- Truffle and Ganache
+- Yarn
+
+### Contracts
+
+- Run ```yarn install```
+- Run local testnet ```truffle development```
+- Migrate contracts ```truffle migrate --network develop```
+
+### Front-end
+
+- Go to ***frontend*** directory
+- Run ```yarn install```
+- Run ```echo "SKIP_PREFLIGHT_CHECK=true" >> .env```
+- Run ```yarn start```
+- Open ***localhost:3000***
+
+### Populating with mock data
+
+- Mint MockDai coins for 3 first accounts  ```truffle exec scripts/mint_mock_dai.js --network develop```
+- Register mock advertisement surfaces for first
+  account ```truffle exec scripts/register_mock_surfaces.js --network develop```
+- Mint advertisement NFTs for first account ```truffle exec scripts/mint_mock_nfts.js --network develop```
+
+### Directory structure
+
+- ```contracts```: The solidity contracts
+- ```examples```: The NFS metadata examples for advertisement surfaces as well as ads. I'm pinning them on IPFS so they
+  can be used in the app.
+- ```frontend```: The REACT client
+- ```frontend/src/contracts```: The contracts abi
+- ```migrations```: The truffle migrations
+- ```scripts```: The scripts to populate contracts with data
+- ```test```: The truffle tests directory
+
+### Configuration
+
+## .env
+
+- ```INFURA_URL``` - for mainnet
+- ```INFURA_ROPSTEN_URL``` - for ropsten
+
+## .secret
+
+The file should contain mnemonic used for deployments for masinnet and ropsten.
+
+## Screencast link
+
+## Public Ethereum wallet for certificate
+
+```marcin.gorzynski.eth```
