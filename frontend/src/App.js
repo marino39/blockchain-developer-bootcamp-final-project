@@ -10,7 +10,7 @@ import Surface from "./pages/Surface";
 import SurfaceView from "./pages/SurfaceView";
 
 import {BrowserRouter, Switch, Route} from "react-router-dom"
-import {ChakraProvider, ColorModeScript, useColorMode} from "@chakra-ui/react"
+import {ChakraProvider, ColorModeScript} from "@chakra-ui/react"
 
 import {Connectors} from 'web3-react'
 import theme from "./theme";
