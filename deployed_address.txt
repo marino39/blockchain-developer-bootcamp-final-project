@@ -5,3 +5,12 @@ Network: Ropsten
 Contract Name: AdvertisementSurfaceAuction
 Address: 0x1cBD1307c79E63D0bbc4454E318A0a8136Ed37Cf
 Network: Ropsten
+
+Contract Name: MockNFT
+Description: The mock ERC721 contract that conforms to ERC721 Metadata standard.
+Address: 0x28D4743fC3FE8b94f7C4634C9a6493419053E337
+Pre-minted tokens:
+   1. Pepsi advertisement
+   2. Porsche advertisement
+   3. Go Vegan advertisement
+Network: Ropsten
