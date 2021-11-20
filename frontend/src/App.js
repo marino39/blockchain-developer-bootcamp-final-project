@@ -14,6 +14,7 @@ import {ChakraProvider, ColorModeScript} from "@chakra-ui/react"
 
 import {Connectors} from 'web3-react'
 import theme from "./theme";
+import IsWalletConnected from "./utils/IsWalletConnected";
 
 const {InjectedConnector} = Connectors
 
@@ -31,19 +32,29 @@ export default function App() {
                           <Landing/>
                       </Route>
                       <Route path="/mySurfaces">
-                          <MySurfaces/>
+                          <IsWalletConnected>
+                              <MySurfaces/>
+                          </IsWalletConnected>
                       </Route>
                       <Route path="/myBids">
-                          <MyBids/>
+                          <IsWalletConnected>
+                              <MyBids/>
+                          </IsWalletConnected>
                       </Route>
                       <Route path="/advertise">
-                          <Advertise/>
+                          <IsWalletConnected>
+                              <Advertise/>
+                          </IsWalletConnected>
                       </Route>
                       <Route path="/surface/view/:id">
-                          <SurfaceView/>
+                          <IsWalletConnected>
+                              <SurfaceView/>
+                          </IsWalletConnected>
                       </Route>
                       <Route path="/surface/:id">
-                          <Surface/>
+                          <IsWalletConnected>
+                              <Surface/>
+                          </IsWalletConnected>
                       </Route>
                   </Switch>
               </BrowserRouter>
