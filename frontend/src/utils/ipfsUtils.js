@@ -8,3 +8,12 @@ export async function getJsonFromIPFS(cid) {
 
     return (await resp.json());
 }
+
+export async function getJsonFromUrl(url) {
+    let resp = await fetch(url)
+    if (!resp.ok) {
+        return null
+    }
+
+    return (await resp.json());
+}

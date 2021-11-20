@@ -8,7 +8,7 @@ import AdvertisementSurfaceAuction from "../contracts/AdvertisementSurfaceAuctio
 import ERC721 from "../contracts/ERC721.json"
 
 import {useParams} from "react-router-dom";
-import {getJsonFromIPFS} from "../utils/ipfsUtils";
+import {getJsonFromIPFS, getJsonFromUrl} from "../utils/ipfsUtils";
 
 export default function SurfaceView(props) {
     const {id} = useParams();
@@ -116,6 +116,8 @@ export default function SurfaceView(props) {
             let metadata = {}
             if (tokenURI.startsWith("ipfs://")) {
                 metadata = await getJsonFromIPFS(tokenURI.substr(7));
+            } else {
+                metadata = await getJsonFromUrl(tokenURI);
             }
 
             console.log(metadata);
