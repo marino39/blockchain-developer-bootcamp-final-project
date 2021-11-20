@@ -116,14 +116,34 @@ possible form of such a market.
 
 ### Configuration
 
-## .env
+#### .env
 
 - ```INFURA_URL``` - for mainnet
 - ```INFURA_ROPSTEN_URL``` - for ropsten
 
-## .secret
+#### .secret
 
 The file should contain mnemonic used for deployments for masinnet and ropsten.
+
+### ERC721 Metadata on IPFS(CIDs)
+
+#### AdvertisementSurfaces:
+
+- QmXasBSgmZrtRnxvEMZk8cSYPGogMnUexNVW8ynLEq9CK9
+- QmaWeYNcqwPxM3aoAwS2GoicPoGSo79eny6EZL7Pe4Jkrx
+- QmNcpqxvEwyEkLezxTsqee7espu7MN6Rbnc8MkYvFEya6U
+
+To be used in Advertisement Surface registration.
+
+#### Advertisements
+
+- QmcYD2z5vWW9cymyarCPSgd2GJ5VnzbJkzMJpSAWH3mjtg
+- QmXhx957X3gdSDmHkC3KhTQ6B3FRksr39MQyk4Suwn4tRC
+- QmPqsXpRQj25uLNzRdimUWDFvnb7Q6UeT3P7bmAmHogM2i
+
+They are used by a script to provide dummy advertisement NFTs.
+
+***I will keep them pinned***
 
 ## Screencast link
 
