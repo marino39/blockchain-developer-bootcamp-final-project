@@ -91,6 +91,11 @@ possible form of such a market.
 ### Front-end
 
 - Go to ***frontend*** directory
+- Make sure that you have installed follwing deps in your OS(required by web3-react):
+  - build-tools
+  - libusb-devel
+  - libusbx-devel
+  - libudev-devel
 - Run ```yarn install```
 - Run ```echo "SKIP_PREFLIGHT_CHECK=true" >> .env```
 - Run ```yarn start```
