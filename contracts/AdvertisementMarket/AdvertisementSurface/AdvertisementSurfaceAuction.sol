@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity 0.8.0;
 
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
@@ -198,7 +198,6 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
         uint256 preBalance = erc20Contract.balanceOf(address(this));
         erc20Contract.transfer(msg.sender, bid.bid * bid.duration);
 
-        /// this will never happen as re-entrance would fail at validateBid, however it's here to satisfy project requirements
         assert(preBalance - erc20Contract.balanceOf(address(this)) == bid.bid * bid.duration);
 
         emit LogFinished(bid.surTokenId, msg.sender, _bidId);
@@ -225,7 +224,6 @@ contract AdvertisementSurfaceAuction is IAdvertisementSurfaceAuction {
         uint256 preBalance = erc20Contract.balanceOf(address(this));
         erc20Contract.transfer(msg.sender, bid.bid * bid.duration);
 
-        /// this will never happen as re-entrance would fail at validateBid, however it's here to satisfy project requirements
         assert(preBalance - erc20Contract.balanceOf(address(this)) == bid.bid * bid.duration);
 
         emit LogFinished(bid.surTokenId, msg.sender, _bidId);

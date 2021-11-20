@@ -85,7 +85,7 @@ possible form of such a market.
 ### Contracts
 
 - Run ```yarn install```
-- Run local testnet ```truffle development```
+- Run local testnet ```truffle development``` // port: 9545
 - Migrate contracts ```truffle migrate --network develop```
 
 ### Front-end
@@ -102,6 +102,10 @@ possible form of such a market.
 - Register mock advertisement surfaces for first
   account ```truffle exec scripts/register_mock_surfaces.js --network develop```
 - Mint advertisement NFTs for first account ```truffle exec scripts/mint_mock_nfts.js --network develop```
+
+### Running tests
+
+- Run ```truffle test```
 
 ### Directory structure
 
@@ -123,7 +127,7 @@ possible form of such a market.
 
 #### .secret
 
-The file should contain mnemonic used for deployments for masinnet and ropsten.
+The file should contain mnemonic used for deployments for mainnet and ropsten.
 
 ### ERC721 Metadata on IPFS(CIDs)
 
@@ -146,6 +150,8 @@ They are used by a script to provide dummy advertisement NFTs.
 ***I will keep them pinned***
 
 ## Screencast link
+
+[https://www.youtube.com/watch?v=ET_9lJBzidM](https://www.youtube.com/watch?v=ET_9lJBzidM)
 
 ## Public Ethereum wallet for certificate
 
