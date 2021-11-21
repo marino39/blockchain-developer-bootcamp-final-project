@@ -85,6 +85,7 @@ possible form of such a market.
 ### Contracts
 
 - Run ```yarn install```
+- Run ```echo "your secret" >> .secret```
 - Run local testnet ```truffle development``` // port: 9545
 - Migrate contracts ```truffle migrate --network develop```
 
@@ -160,4 +161,4 @@ They are used by a script to provide dummy advertisement NFTs.
 
 ## Public Ethereum wallet for certificate
 
-```marcin.gorzynski.eth```
+```marcin.gorzynski.eth / 0x6Ee02cC6AcFc6af5912499EE265B92B195b49E44```

@@ -1,0 +1,370 @@
+------------------------------------------ Install / Build / Test / Run --------------------------------------------
+
+⋊> ~/P/consensys-academy git clone git@github.com:marino39/blockchain-developer-bootcamp-final-project.git                                                                                          10:20:48
+Cloning into 'blockchain-developer-bootcamp-final-project'...
+Enter passphrase for key '/Users/marcin/.ssh/id_rsa':
+remote: Enumerating objects: 829, done.
+remote: Counting objects: 100% (829/829), done.
+remote: Compressing objects: 100% (544/544), done.
+remote: Total 829 (delta 495), reused 591 (delta 257), pack-reused 0
+Receiving objects: 100% (829/829), 4.54 MiB | 1.18 MiB/s, done.
+Resolving deltas: 100% (495/495), done.
+⋊> ~/P/consensys-academy cd blockchain-developer-bootcamp-final-project/                                                                                                                            10:21:08
+⋊> ~/P/c/blockchain-developer-bootcamp-final-project on master ◦ yarn install                                                                                                                       10:22:14
+yarn install v1.22.17
+[1/4] 🔍  Resolving packages...
+[2/4] 🚚  Fetching packages...
+[3/4] 🔗  Linking dependencies...
+warning "@openzeppelin/test-helpers > chai-bn@0.2.2" has unmet peer dependency "bn.js@^4.11.0".
+warning "@truffle/hdwallet-provider > @trufflesuite/web3-provider-engine > eth-block-tracker > @babel/plugin-transform-runtime@7.16.0" has unmet peer dependency "@babel/core@^7.0.0-0".
+warning "@truffle/hdwallet-provider > @trufflesuite/web3-provider-engine > eth-block-tracker > @babel/plugin-transform-runtime > babel-plugin-polyfill-corejs2@0.2.3" has unmet peer dependency "@babel/core@^7.0.0-0".
+warning "@truffle/hdwallet-provider > @trufflesuite/web3-provider-engine > eth-block-tracker > @babel/plugin-transform-runtime > babel-plugin-polyfill-corejs3@0.3.0" has unmet peer dependency "@babel/core@^7.0.0-0".
+warning "@truffle/hdwallet-provider > @trufflesuite/web3-provider-engine > eth-block-tracker > @babel/plugin-transform-runtime > babel-plugin-polyfill-regenerator@0.2.3" has unmet peer dependency "@babel/core@^7.0.0-0".
+warning "@truffle/hdwallet-provider > @trufflesuite/web3-provider-engine > eth-block-tracker > @babel/plugin-transform-runtime > babel-plugin-polyfill-corejs2 > @babel/helper-define-polyfill-provider@0.2.4" has unmet peer dependency "@babel/core@^7.4.0-0".
+warning "@truffle/hdwallet-provider > @trufflesuite/web3-provider-engine > eth-block-tracker > @babel/plugin-transform-runtime > babel-plugin-polyfill-corejs2 > @babel/helper-define-polyfill-provider > @babel/helper-compilation-targets@7.16.0" has unmet peer dependency "@babel/core@^7.0.0".
+[4/4] 🔨  Building fresh packages...
+✨  Done in 15.42s.                                                                                                   10:23:33
+⋊> ~/P/c/blockchain-developer-bootcamp-final-project on master ◦ truffle test                                                                                                                       10:23:34
+Using network 'test'.
+
+
+Compiling your contracts...
+===========================
+> Compiling ./contracts/AdvertisementMarket/AdvertisementSurface/AdvertisementSurface.sol
+> Compiling ./contracts/AdvertisementMarket/AdvertisementSurface/AdvertisementSurfaceAuction.sol
+> Compiling ./contracts/AdvertisementMarket/AdvertisementSurface/AdvertisementSurfacePayments.sol
+> Compiling ./contracts/AdvertisementMarket/AdvertisementSurface/IAdvertisementSurface.sol
+> Compiling ./contracts/AdvertisementMarket/AdvertisementSurface/IAdvertisementSurfaceAuction.sol
+> Compiling ./contracts/AdvertisementMarket/AdvertisementSurface/IAdvertisementSurfacePayments.sol
+> Compiling ./contracts/AdvertisementMarket/Mocks/MockDai.sol
+> Compiling ./contracts/AdvertisementMarket/Mocks/MockNFT.sol
+> Compiling ./contracts/Migrations.sol
+> Compiling @openzeppelin/contracts/token/ERC20/ERC20.sol
+> Compiling @openzeppelin/contracts/token/ERC20/IERC20.sol
+> Compiling @openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol
+> Compiling @openzeppelin/contracts/token/ERC721/ERC721.sol
+> Compiling @openzeppelin/contracts/token/ERC721/IERC721.sol
+> Compiling @openzeppelin/contracts/token/ERC721/IERC721Receiver.sol
+> Compiling @openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol
+> Compiling @openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol
+> Compiling @openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol
+> Compiling @openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol
+> Compiling @openzeppelin/contracts/utils/Address.sol
+> Compiling @openzeppelin/contracts/utils/Context.sol
+> Compiling @openzeppelin/contracts/utils/Strings.sol
+> Compiling @openzeppelin/contracts/utils/introspection/ERC165.sol
+> Compiling @openzeppelin/contracts/utils/introspection/IERC165.sol
+> Compiling @openzeppelin/contracts/utils/math/SafeMath.sol
+> Compilation warnings encountered:
+
+    Warning: Function state mutability can be restricted to pure
+  --> /Users/marcin/Prywatne/dAdvrtMarket/contracts/AdvertisementMarket/AdvertisementSurface/AdvertisementSurface.sol:81:5:
+   |
+81 |     function _baseURI() internal view override returns (string memory) {
+   |     ^ (Relevant source part starts here and spans across multiple lines).
+
+,Warning: Function state mutability can be restricted to pure
+  --> /Users/marcin/Prywatne/dAdvrtMarket/contracts/AdvertisementMarket/Mocks/MockNFT.sol:21:5:
+   |
+21 |     function _baseURI() internal view override returns (string memory) {
+   |     ^ (Relevant source part starts here and spans across multiple lines).
+
+,Warning: Function state mutability can be restricted to pure
+  --> project:/contracts/AdvertisementMarket/AdvertisementSurface/AdvertisementSurface.sol:81:5:
+   |
+81 |     function _baseURI() internal view override returns (string memory) {
+   |     ^ (Relevant source part starts here and spans across multiple lines).
+
+,Warning: Function state mutability can be restricted to pure
+  --> project:/contracts/AdvertisementMarket/Mocks/MockNFT.sol:21:5:
+   |
+21 |     function _baseURI() internal view override returns (string memory) {
+   |     ^ (Relevant source part starts here and spans across multiple lines).
+
+
+> Artifacts written to /var/folders/61/lcnvk13d60lb3795dn4cdjk80000gn/T/test--59869-NVKC0O1Brj1l
+> Compiled successfully using:
+   - solc: 0.8.0+commit.c7dfd78e.Emscripten.clang
+
+
+  Contract: AdvertisementSurface
+    The ERC721 functionality
+      ✓ ERC721Metadata contract (63ms)
+      ✓ register advertisement surface (176ms)
+    The Auction System
+      ✓ add single bid simple (275ms)
+      ✓ add two bids simple (395ms)
+      ✓ add two bids overlap right (597ms)
+      ✓ add two bids overlap left (368ms)
+      ✓ add two bids overlap inner (336ms)
+      ✓ add two bids overlap outer (327ms)
+      ✓ add two bids overlap inner bigger worth (579ms)
+      ✓ add two bids overlap inner bigger worth refund outbid bid (647ms)
+      ✓ add two bids overlap inner bigger worth refund outbid bid not bidder (560ms)
+      ✓ add two bids overlap inner bigger worth refund active bid (652ms)
+      ✓ add two bids overlap inner bigger worth 3 bids (1217ms)
+      ✓ add single bid to not existing surface (110ms)
+      ✓ add single bid for startTime that already passed (129ms)
+      ✓ add single bid for bidder with zero address (133ms)
+      ✓ add single bid for ERC721 zero address (165ms)
+      ✓ add single bid for ERC721 zero token id (188ms)
+      ✓ add single bid for bid 0 (153ms)
+      ✓ add single bid for bid less minimal bid (142ms)
+      ✓ add single bid for duration 0 (192ms)
+      ✓ add single bid for state not active (95ms)
+      ✓ add single bid for no allowance to transfer (299ms)
+      ✓ add single bid for too small balance to transfer (94ms)
+      ✓ collect (4531ms)
+      ✓ collect not finished (195ms)
+      ✓ events LogActive (108ms)
+      ✓ events LogOutbid (754ms)
+      ✓ events LogFinished (4789ms)
+
+
+  29 passing (48s)
+
+------------------------------------------------ Run Blockchain(Other Console) --------------------------------------
+
+⋊> ~/P/c/blockchain-developer-bootcamp-final-project on master ◦ truffle development                                                                                                                10:25:13
+Truffle Develop started at http://127.0.0.1:9545/
+
+Accounts:
+(0) 0x87f1ac0aa06d58633c9b54fe59c93cd374ff8f7b
+(1) 0xa997f52bc43d591a148285a6a5dd32ca41790534
+(2) 0x3d308d1584f55e4bdd759a4ef5503c928469a0af
+(3) 0x0fe52867b6fae950cdc739762baf5afbc35fa2c2
+(4) 0xff6f0056686943007c0f2f8d311371401829bcda
+(5) 0xb66a7ac028b8e069f5ebbecd9c648d396e516384
+(6) 0x0ef9396b0a38b11be05532745801f054399bfb38
+(7) 0x5dd0f1650cb2c9303f01d7a4b145742ca534144f
+(8) 0x66d52cffe9fe7d6a5fd24cb7733ef8cda471a9f9
+(9) 0xec2e9df76c57f6b563e3d0917a71c6a95c37ded0
+
+Private Keys:
+(0) x
+(1) y
+(2) z
+(3) x
+(4) y
+(5) z
+(6) x
+(7) y
+(8) z
+(9) x
+
+Mnemonic: xyz
+
+⚠️  Important ⚠️  : This mnemonic was created for you by Truffle. It is not secure.
+Ensure you do not use it on production blockchains, or else you risk losing funds.
+
+truffle(develop)>
+
+--------------------------------------------------------------------------------------------------------------------
+
+⋊> ~/P/c/blockchain-developer-bootcamp-final-project on master ◦ truffle migrate --network develop                                                                                                  10:24:42
+
+Compiling your contracts...
+===========================
+> Compiling ./contracts/AdvertisementMarket/AdvertisementSurface/AdvertisementSurface.sol
+> Compiling ./contracts/AdvertisementMarket/AdvertisementSurface/AdvertisementSurfaceAuction.sol
+> Compiling ./contracts/AdvertisementMarket/AdvertisementSurface/AdvertisementSurfacePayments.sol
+> Compiling ./contracts/AdvertisementMarket/AdvertisementSurface/IAdvertisementSurface.sol
+> Compiling ./contracts/AdvertisementMarket/AdvertisementSurface/IAdvertisementSurfaceAuction.sol
+> Compiling ./contracts/AdvertisementMarket/AdvertisementSurface/IAdvertisementSurfacePayments.sol
+> Compiling ./contracts/AdvertisementMarket/Mocks/MockDai.sol
+> Compiling ./contracts/AdvertisementMarket/Mocks/MockNFT.sol
+> Compiling ./contracts/Migrations.sol
+> Compiling @openzeppelin/contracts/token/ERC20/ERC20.sol
+> Compiling @openzeppelin/contracts/token/ERC20/IERC20.sol
+> Compiling @openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol
+> Compiling @openzeppelin/contracts/token/ERC721/ERC721.sol
+> Compiling @openzeppelin/contracts/token/ERC721/IERC721.sol
+> Compiling @openzeppelin/contracts/token/ERC721/IERC721Receiver.sol
+> Compiling @openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol
+> Compiling @openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol
+> Compiling @openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol
+> Compiling @openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol
+> Compiling @openzeppelin/contracts/utils/Address.sol
+> Compiling @openzeppelin/contracts/utils/Context.sol
+> Compiling @openzeppelin/contracts/utils/Strings.sol
+> Compiling @openzeppelin/contracts/utils/introspection/ERC165.sol
+> Compiling @openzeppelin/contracts/utils/introspection/IERC165.sol
+> Compiling @openzeppelin/contracts/utils/math/SafeMath.sol
+> Compilation warnings encountered:
+
+    Warning: Function state mutability can be restricted to pure
+  --> /Users/marcin/Prywatne/dAdvrtMarket/contracts/AdvertisementMarket/AdvertisementSurface/AdvertisementSurface.sol:81:5:
+   |
+81 |     function _baseURI() internal view override returns (string memory) {
+   |     ^ (Relevant source part starts here and spans across multiple lines).
+
+,Warning: Function state mutability can be restricted to pure
+  --> /Users/marcin/Prywatne/dAdvrtMarket/contracts/AdvertisementMarket/Mocks/MockNFT.sol:21:5:
+   |
+21 |     function _baseURI() internal view override returns (string memory) {
+   |     ^ (Relevant source part starts here and spans across multiple lines).
+
+,Warning: Function state mutability can be restricted to pure
+  --> project:/contracts/AdvertisementMarket/AdvertisementSurface/AdvertisementSurface.sol:81:5:
+   |
+81 |     function _baseURI() internal view override returns (string memory) {
+   |     ^ (Relevant source part starts here and spans across multiple lines).
+
+,Warning: Function state mutability can be restricted to pure
+  --> project:/contracts/AdvertisementMarket/Mocks/MockNFT.sol:21:5:
+   |
+21 |     function _baseURI() internal view override returns (string memory) {
+   |     ^ (Relevant source part starts here and spans across multiple lines).
+
+
+> Artifacts written to /Users/marcin/Prywatne/consensys-academy/blockchain-developer-bootcamp-final-project/frontend/src/contracts
+> Compiled successfully using:
+   - solc: 0.8.0+commit.c7dfd78e.Emscripten.clang
+
+Starting migrations...
+======================
+> Network name:    'develop'
+> Network id:      5777
+> Block gas limit: 6721975 (0x6691b7)
+
+
+1_initial_migration.js
+======================
+
+   Replacing 'Migrations'
+   ----------------------
+   > transaction hash:    0x2bfb102bae64c9018c1999b89b38f7fa76d3984800d20f3fca9b071c52c33a3b
+   > Blocks: 0            Seconds: 0
+   > contract address:    0x25Cff2F1044b5Bd2E400d8C1630FfCb53a344A5A
+   > block number:        1
+   > block timestamp:     1637486743
+   > account:             0x87f1aC0aA06D58633c9B54FE59C93cD374ff8F7b
+   > balance:             99.9995114
+   > gas used:            244300 (0x3ba4c)
+   > gas price:           2 gwei
+   > value sent:          0 ETH
+   > total cost:          0.0004886 ETH
+
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:           0.0004886 ETH
+
+
+2_advertisement_surface_migration.js
+====================================
+
+   Replacing 'AdvertisementSurface'
+   --------------------------------
+   > transaction hash:    0x2786793d4099945621f5750eee11d946fdcfe17f657ccfd55e5c69a38b64b84a
+   > Blocks: 0            Seconds: 0
+   > contract address:    0xC29e0Ca02F5a03B42762F1a1844ea6220C881645
+   > block number:        3
+   > block timestamp:     1637486744
+   > account:             0x87f1aC0aA06D58633c9B54FE59C93cD374ff8F7b
+   > balance:             99.99303295
+   > gas used:            3196712 (0x30c728)
+   > gas price:           2 gwei
+   > value sent:          0 ETH
+   > total cost:          0.006393424 ETH
+
+
+   Replacing 'AdvertisementSurfaceAuction'
+   ---------------------------------------
+   > transaction hash:    0xfc709cba44ed84841dcd02f13282505796f9984d23bda34e4d50535d99c284df
+   > Blocks: 0            Seconds: 0
+   > contract address:    0xB2E4d6f9b83C2e313Af5496a9AC1980D14CF848a
+   > block number:        4
+   > block timestamp:     1637486744
+   > account:             0x87f1aC0aA06D58633c9B54FE59C93cD374ff8F7b
+   > balance:             99.985952602
+   > gas used:            3540174 (0x3604ce)
+   > gas price:           2 gwei
+   > value sent:          0 ETH
+   > total cost:          0.007080348 ETH
+
+
+   Replacing 'MockDai'
+   -------------------
+   > transaction hash:    0x0a7633ac66d736be0558bf40e5c76106637243d1029fbf8e12c2067a4bba4fba
+   > Blocks: 0            Seconds: 0
+   > contract address:    0x502e8bE7bCE32c07c80242328fa462D595D4A3F0
+   > block number:        5
+   > block timestamp:     1637486744
+   > account:             0x87f1aC0aA06D58633c9B54FE59C93cD374ff8F7b
+   > balance:             99.983416216
+   > gas used:            1268193 (0x1359e1)
+   > gas price:           2 gwei
+   > value sent:          0 ETH
+   > total cost:          0.002536386 ETH
+
+
+   Replacing 'MockNFT'
+   -------------------
+   > transaction hash:    0xb642fed2ab7278746c2dc71957050cee6b2ba59be0f3706963023940a7c967bb
+   > Blocks: 0            Seconds: 0
+   > contract address:    0x5912a267C7B4CC0d046A10590657A7e8e1324F40
+   > block number:        6
+   > block timestamp:     1637486744
+   > account:             0x87f1aC0aA06D58633c9B54FE59C93cD374ff8F7b
+   > balance:             99.977588166
+   > gas used:            2914025 (0x2c76e9)
+   > gas price:           2 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00582805 ETH
+
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:         0.021838208 ETH
+
+
+3_mock_nft_for_ropsten.js
+=========================
+
+   > Saving migration to chain.
+   -------------------------------------
+   > Total cost:                   0 ETH
+
+
+Summary
+=======
+> Total deployments:   5
+> Final cost:          0.022326808 ETH
+
+
+⋊> ~/P/c/blockchain-developer-bootcamp-final-project on master ⨯ cd frontend/                                                                                                                       10:25:45
+⋊> ~/P/c/b/frontend on master ⨯ yarn install                                                                                                                                                        10:26:25
+yarn install v1.22.17
+[1/4] 🔍  Resolving packages...
+[2/4] 🚚  Fetching packages...
+[3/4] 🔗  Linking dependencies...
+[4/4] 🔨  Building fresh packages...
+✨  Done in 49.32s.
+⋊> ~/P/c/b/frontend on master ⨯ echo "SKIP_PREFLIGHT_CHECK=true" >> .env                                                                                                                            10:27:29
+⋊> ~/P/c/b/frontend on master ⨯ cd ..                                                                                                                                                               10:30:21
+⋊> ~/P/c/blockchain-developer-bootcamp-final-project on master ⨯ truffle exec scripts/mint_mock_dai.js --network develop                                                                            10:31:26
+Using network 'develop'.
+
+MockDai(DAI) Contract Address:  0x502e8bE7bCE32c07c80242328fa462D595D4A3F0
+Minted:
+0x87f1aC0aA06D58633c9B54FE59C93cD374ff8F7b : 100000000000000000000000
+0xA997F52bC43D591a148285a6A5DD32CA41790534 : 100000000000000000000000
+0x3d308d1584F55E4BDd759a4EF5503c928469a0Af : 100000000000000000000000
+⋊> ~/P/c/blockchain-developer-bootcamp-final-project on master ⨯ truffle exec scripts/register_mock_surfaces.js --network develop                                                                   10:31:43
+Using network 'develop'.
+
+⋊> ~/P/c/blockchain-developer-bootcamp-final-project on master ⨯ truffle exec scripts/mint_mock_nfts.js --network develop                                                                           10:31:54
+Using network 'develop'.
+
+MockNFT(ADV) Contract Address:  0x5912a267C7B4CC0d046A10590657A7e8e1324F40
+Minted:
+0x87f1aC0aA06D58633c9B54FE59C93cD374ff8F7b : 3
+⋊> ~/P/c/blockchain-developer-bootcamp-final-project on master ⨯
+
+--------------------------------------------------- Run Front-end --------------------------------------------------
+
+⋊> ~/P/c/blockchain-developer-bootcamp-final-project on master ⨯ cd frontend/                                                                                                                       10:36:05
+⋊> ~/P/c/b/frontend on master ⨯ yarn start
